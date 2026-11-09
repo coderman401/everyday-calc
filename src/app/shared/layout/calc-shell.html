@@ -1,0 +1,32 @@
+<div class="wrap page">
+  <header class="page__head">
+    <a class="back" routerLink="/">
+      <mat-icon fontIcon="arrow_back" />
+      All calculators
+    </a>
+    <h1 class="page__title">{{ title() }}</h1>
+    <p class="page__lead">{{ lead() }}</p>
+  </header>
+
+  <div class="layout">
+    <div class="main" #inputsEl>
+      <ng-content select="[slot=inputs]" />
+    </div>
+    <div class="side" #resultsEl id="results">
+      <ng-content select="[slot=results]" />
+    </div>
+  </div>
+
+  <div class="below">
+    <ng-content />
+    <app-related-calculators />
+  </div>
+</div>
+
+<div class="bar" [class.is-shown]="showBar()" [attr.inert]="showBar() ? null : ''">
+  <div class="bar__text">
+    <span class="label">{{ barLabel() }}</span>
+    <span class="bar__value num">{{ barText() }}</span>
+  </div>
+  <button mat-flat-button type="button" (click)="scrollToResults()">See results</button>
+</div>

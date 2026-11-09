@@ -1,0 +1,128 @@
+<app-calc-shell
+  title="BMI Calculator"
+  lead="Body mass index from your height and weight, where it falls on the scale, and the weight range that is healthy for your height. For adults aged 18 and over."
+  barLabel="Your BMI"
+  [barText]="barText()"
+>
+  <form slot="inputs" class="card" aria-labelledby="inputs-h" (submit)="$event.preventDefault()">
+    <h2 id="inputs-h" class="inputs__h">Your measurements</h2>
+
+    <div class="fields">
+      <div class="toggle">
+        <span class="label" id="units-label">Units</span>
+        <mat-button-toggle-group
+          class="seg"
+          hideSingleSelectionIndicator
+          aria-labelledby="units-label"
+          [value]="units()"
+          (change)="setUnits($event.value)"
+        >
+          <mat-button-toggle value="metric">Metric</mat-button-toggle>
+          <mat-button-toggle value="imperial">Imperial</mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+
+      @if (units() === 'metric') {
+        <app-number-field
+          label="Height"
+          suffix="cm"
+          inputmode="decimal"
+          [decimals]="1"
+          [(value)]="cm"
+          [min]="100"
+          [max]="230"
+          [step]="1"
+          minLabel="100 cm"
+          maxLabel="230 cm"
+        />
+        <app-number-field
+          label="Weight"
+          suffix="kg"
+          inputmode="decimal"
+          [decimals]="1"
+          [(value)]="kg"
+          [min]="20"
+          [max]="250"
+          [step]="0.5"
+          minLabel="20 kg"
+          maxLabel="250 kg"
+        />
+      } @else {
+        <div class="pair">
+          <app-number-field label="Height (feet)" suffix="ft" [slider]="false" [(value)]="ft" [min]="3" [max]="7" />
+          <app-number-field
+            label="Height (inches)"
+            suffix="in"
+            inputmode="decimal"
+            [decimals]="1"
+            [slider]="false"
+            [(value)]="inch"
+            [min]="0"
+            [max]="11.9"
+          />
+        </div>
+        <app-number-field
+          label="Weight"
+          suffix="lb"
+          inputmode="decimal"
+          [decimals]="1"
+          [(value)]="lb"
+          [min]="44"
+          [max]="550"
+          [step]="1"
+          minLabel="44 lb"
+          maxLabel="550 lb"
+        />
+      }
+
+      <div class="toggle">
+        <span class="label" id="standard-label">Cut-offs for the categories</span>
+        <mat-button-toggle-group
+          class="seg"
+          hideSingleSelectionIndicator
+          aria-labelledby="standard-label"
+          [value]="standard()"
+          (change)="setStandard($event.value)"
+        >
+          <mat-button-toggle value="asia">Asia-Pacific</mat-button-toggle>
+          <mat-button-toggle value="who">WHO global</mat-button-toggle>
+        </mat-button-toggle-group>
+        <span class="muted note">Asia-Pacific limits are the ones commonly used for South Asians.</span>
+      </div>
+    </div>
+
+    <button mat-button type="button" class="reset" (click)="reset()">
+      <mat-icon fontIcon="restart_alt" />
+      Reset to defaults
+    </button>
+  </form>
+
+  <section slot="results" class="card res" aria-label="Results">
+    <p class="label" id="bmi-label">Your BMI</p>
+    <p class="hero-fig" aria-labelledby="bmi-label"><app-count [value]="result().bmi" [format]="oneDecimal" [duration]="300" /></p>
+    <p class="pill"><span class="tone" [style.background]="'var(--c-' + result().category.tone + ')'" aria-hidden="true"></span>{{ result().category.label }}</p>
+
+    <h3 class="res__h">Where you are on the scale</h3>
+    <app-scale
+      [segments]="segments()"
+      [value]="result().bmi"
+      [markerText]="oneDecimal(result().bmi)"
+      [summary]="scaleSummary()"
+      [activeId]="result().category.id"
+    />
+
+    <div class="rows">
+      <div class="row">
+        <p class="row__label">Healthy weight for your height</p>
+        <p class="row__value num">{{ healthyText() }}</p>
+      </div>
+      <div class="row row--total">
+        <p class="row__label">To reach that range</p>
+        <p class="row__value num">{{ gapText() }}</p>
+      </div>
+    </div>
+    <p class="note safe">BMI is a screening tool, not a diagnosis. For advice on your weight, talk to a doctor.</p>
+  </section>
+
+  <app-explainer [content]="explainer()" />
+</app-calc-shell>

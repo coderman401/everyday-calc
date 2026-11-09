@@ -1,0 +1,100 @@
+<app-calc-shell
+  title="Pregnancy Calculator"
+  lead="The due date from your last period or the conception date, how far along you are today, and when each trimester begins."
+  barLabel="Due date"
+  [barText]="barText()"
+>
+  <form slot="inputs" class="card" aria-labelledby="inputs-h" (submit)="$event.preventDefault()">
+    <h2 id="inputs-h" class="inputs__h">Your dates</h2>
+
+    <div class="fields">
+      <div class="toggle">
+        <span class="label" id="method-label">I know</span>
+        <mat-button-toggle-group
+          class="seg"
+          hideSingleSelectionIndicator
+          aria-labelledby="method-label"
+          [value]="method()"
+          (change)="setMethod($event.value)"
+        >
+          <mat-button-toggle value="lmp">My last period</mat-button-toggle>
+          <mat-button-toggle value="conception">The conception date</mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+
+      <app-date-field
+        [label]="dateLabel()"
+        hint="Day / month / year. Up to 300 days back."
+        [(value)]="date"
+        [min]="minDate"
+        [max]="maxDate"
+      />
+
+      @if (method() === 'lmp') {
+        <app-number-field
+          label="Cycle length"
+          suffix="days"
+          [(value)]="cycleLength"
+          [min]="21"
+          [max]="45"
+          hint="28 is the usual guess. A longer or shorter cycle moves the date."
+          minLabel="21 days"
+          maxLabel="45 days"
+        />
+      }
+    </div>
+
+    <button mat-button type="button" class="reset" (click)="reset()">
+      <mat-icon fontIcon="restart_alt" />
+      Reset to defaults
+    </button>
+  </form>
+
+  <section slot="results" class="card res" aria-label="Results">
+    <p class="label" id="due-label">Your due date</p>
+    <p class="hero-fig" aria-labelledby="due-label">{{ dueText() }}</p>
+    <p class="note">{{ dueNote() }}</p>
+    <p class="pill">{{ progress() }}</p>
+
+    @if (started()) {
+      <div class="baby">
+        <app-fruit [icon]="baby().icon" [tone]="baby().tone" [size]="56" />
+        <div>
+          <p class="baby__title">{{ baby().title }}</p>
+          @if (baby().facts) {
+            <p class="note num">{{ baby().facts }}</p>
+          }
+        </div>
+      </div>
+    }
+
+    <h3 class="res__h">Where you are in the 40 weeks</h3>
+    <app-scale
+      [segments]="segments"
+      [value]="result().weeksExact"
+      [markerText]="markerText()"
+      [summary]="scaleSummary()"
+      [activeId]="activeId()"
+    />
+
+    <div class="rows">
+      @for (row of rows(); track row.label) {
+        <div class="row">
+          <p class="row__label">{{ row.label }}</p>
+          <p class="row__value num">{{ row.value }}@if (row.sub) {<span class="muted">{{ row.sub }}</span>}</p>
+        </div>
+      }
+    </div>
+    <p class="note safe">An estimate, not medical advice. Only about one baby in twenty arrives on the due date.</p>
+  </section>
+
+  <app-data-table
+    heading="Key dates"
+    lead="Counted from the first day of the last period, the way your doctor will count."
+    [columns]="['Milestone', 'Weeks pregnant', 'Date']"
+    [rows]="tableRows()"
+  />
+  <app-week-guide [current]="weeksDone()" [started]="started()" />
+  <app-trimester-guide [current]="started() ? result().trimester : null" />
+  <app-explainer [content]="explainer()" />
+</app-calc-shell>

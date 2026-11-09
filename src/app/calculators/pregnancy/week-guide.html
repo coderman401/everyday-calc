@@ -1,0 +1,51 @@
+<section class="card wg" aria-labelledby="wg-h">
+  <h2 id="wg-h">Your baby, week by week</h2>
+  <p class="muted wg__lead">
+    Pick any week. Sizes are typical averages; your own scan is the one that counts.
+  </p>
+
+  <div class="wg__detail" aria-live="polite">
+    <app-fruit [icon]="info().icon" [tone]="info().tone" [size]="104" />
+    <div class="wg__body">
+      <p class="label">
+        Week {{ shown() }} · {{ trimesterName() }}
+        @if (shown() === currentWeek() && started()) {
+          <span class="here">You are here</span>
+        }
+      </p>
+      <h3>{{ title() }}</h3>
+      <div class="wg__facts">
+        <p><span class="label">Length</span><span class="num">{{ length() }}</span></p>
+        <p><span class="label">Weight</span><span class="num">{{ weight() }}</span></p>
+      </div>
+      <p class="wg__note">{{ info().note }}</p>
+      @if (shown() !== currentWeek()) {
+        <button mat-button type="button" class="wg__back" (click)="backToCurrent()">Back to week {{ currentWeek() }}</button>
+      }
+    </div>
+  </div>
+
+  <p class="note wg__measure">Weeks 4 to 19 are measured crown to rump, from week 20 crown to heel.</p>
+
+  @for (g of groups; track g.t.id) {
+    <div class="wg__group">
+      <h3 class="label">{{ g.t.name }} · {{ g.t.weeks.toLowerCase() }}</h3>
+      <div class="wg__grid">
+        @for (w of g.weeks; track w.week) {
+          <button
+            type="button"
+            class="wk"
+            [class.is-current]="w.week === currentWeek() && started()"
+            [class.is-picked]="w.week === shown()"
+            [attr.aria-pressed]="w.week === shown()"
+            [attr.aria-label]="'Week ' + w.week + (w.name ? ', ' + w.name : '')"
+            (click)="pick(w.week)"
+          >
+            <app-fruit [icon]="w.icon" [tone]="w.tone" [size]="32" />
+            <span class="num">{{ w.week }}</span>
+          </button>
+        }
+      </div>
+    </div>
+  }
+</section>

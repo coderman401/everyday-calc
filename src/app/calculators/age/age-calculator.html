@@ -1,0 +1,71 @@
+<app-calc-shell
+  title="Age Calculator"
+  lead="Exact age in years, months and days from a date of birth, with the totals in months, weeks, days and hours, and the next birthday."
+  barLabel="Age"
+  [barText]="barText()"
+>
+  <form slot="inputs" class="card" aria-labelledby="inputs-h" (submit)="$event.preventDefault()">
+    <h2 id="inputs-h" class="inputs__h">Your dates</h2>
+
+    <div class="fields">
+      <app-date-field
+        label="Date of birth"
+        startView="multi-year"
+        [(value)]="dob"
+        [min]="minDob"
+        [max]="asOf()"
+      />
+      <div class="with-action">
+        <app-date-field
+          label="Age on"
+          hint="Starts as today. Change it to find the age on any other date."
+          [(value)]="asOf"
+          [min]="dob()"
+          [max]="maxAsOf"
+        />
+        <button mat-stroked-button type="button" class="today" [disabled]="isToday()" (click)="asOf.set(today)">
+          Today
+        </button>
+      </div>
+    </div>
+
+    <button mat-button type="button" class="reset" (click)="reset()">
+      <mat-icon fontIcon="restart_alt" />
+      Reset to today
+    </button>
+  </form>
+
+  <section slot="results" class="card res" aria-label="Results">
+    @if (result(); as r) {
+      <p class="label" id="age-label">Your age</p>
+      <p class="hero-fig" aria-labelledby="age-label">{{ heading() }}</p>
+      <p class="note">{{ sub() }}</p>
+
+      <div class="rows">
+        @for (row of rows(); track row.label) {
+          <div class="row">
+            <p class="row__label">{{ row.label }}</p>
+            <p class="row__value num">{{ row.value }}</p>
+          </div>
+        }
+        <div class="row">
+          <p class="row__label">Born on a</p>
+          <p class="row__value">{{ bornText() }}</p>
+        </div>
+        <div class="row row--total">
+          <p class="row__label">{{ r.isBirthday ? 'Birthday' : 'Next birthday' }}</p>
+          <p class="row__value">
+            {{ nextText() }}
+            <span class="muted">{{ r.isBirthday ? 'Today, turning ' + r.turning : 'Turning ' + r.turning }}</span>
+          </p>
+        </div>
+      </div>
+    } @else {
+      <p class="label">Your age</p>
+      <p class="hero-fig">–</p>
+      <p class="note">The “Age on” date is before the date of birth. Pick a later date.</p>
+    }
+  </section>
+
+  <app-explainer [content]="explainer()" />
+</app-calc-shell>

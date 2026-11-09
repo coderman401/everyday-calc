@@ -1,0 +1,118 @@
+:host {
+  display: block;
+}
+
+.scale__chart {
+  container-type: inline-size;
+  position: relative;
+  padding-top: 44px;
+  padding-bottom: 28px;
+  margin-inline: var(--s-3);
+}
+
+.scale__bar {
+  display: flex;
+  gap: 3px;
+  height: 14px;
+}
+
+.scale__seg {
+  flex-grow: 0;
+  flex-shrink: 0;
+  background: var(--seg);
+  opacity: 0.55;
+  transition: opacity 200ms var(--ease-out);
+
+  &:first-child {
+    border-radius: 7px 0 0 7px;
+  }
+  &:last-child {
+    border-radius: 0 7px 7px 0;
+  }
+  &.is-active {
+    opacity: 1;
+  }
+}
+
+/* The marker slides to its new place instead of jumping. --at is 0 to 100; 1cqw is 1% of the
+   chart's width, so the slide is a transform and never touches layout. */
+.scale__marker {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: translateX(calc(var(--at) * 1cqw - 50%));
+  transition: transform 450ms var(--ease-out);
+}
+
+.scale__bubble {
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--card);
+  font-size: 0.875rem;
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+.scale__pin {
+  width: 2px;
+  height: 14px;
+  background: var(--ink);
+}
+
+.scale__ticks {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 20px;
+
+  span {
+    position: absolute;
+    transform: translateX(-50%);
+    font-size: 0.8125rem;
+    color: var(--muted);
+  }
+}
+
+.scale__legend {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1);
+  margin: var(--s-4) 0 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    display: flex;
+    align-items: baseline;
+    gap: var(--s-2);
+    padding-block: var(--s-1);
+    color: var(--muted);
+
+    &.is-active {
+      color: var(--ink);
+
+      .scale__name {
+        font-weight: 650;
+      }
+    }
+  }
+
+  .dot {
+    align-self: center;
+  }
+
+  .muted {
+    margin-left: auto;
+    font-size: 0.9375rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scale__marker {
+    transition: none;
+  }
+}

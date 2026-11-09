@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "calculators-dev",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-lc", "export PATH=$HOME/.nvm/versions/node/v22.23.3/bin:$PATH && npx ng serve --port 4200"],
+      "port": 4200
+    }
+  ]
+}

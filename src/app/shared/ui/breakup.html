@@ -1,0 +1,47 @@
+<section class="card res" aria-label="Results">
+  <p class="label" [id]="labelId">{{ heroLabel() }}</p>
+  <p class="hero-fig" [attr.aria-labelledby]="labelId">
+    <app-count [value]="heroValue()" [format]="heroFormat()" />
+  </p>
+  @if (heroNote()) {
+    <p class="res__note muted">{{ heroNote() }}</p>
+  }
+
+  <h3 class="res__h">{{ chartHeading() }}</h3>
+  <app-donut
+    [slices]="slices()"
+    [summary]="summary()"
+    [centreLabel]="shareLabel()"
+    [centreValue]="formatPercent(lastShare())"
+    [(active)]="active"
+  />
+
+  <div class="rows">
+    @for (r of rows(); track r.id; let i = $index) {
+      <div
+        class="row"
+        [class.is-dim]="active() !== null && active() !== r.id"
+        (pointerenter)="active.set(r.id)"
+        (pointerleave)="active.set(null)"
+      >
+        <p class="row__label">
+          <span class="dot" [style.--dot]="r.color" aria-hidden="true"></span>
+          {{ r.label }}
+          <span class="muted row__pct num">{{ formatPercent(percents()[i]) }}</span>
+        </p>
+        <p class="row__value num"><app-count [value]="r.value" /></p>
+      </div>
+    }
+    <div class="row row--total">
+      <p class="row__label">
+        {{ totalLabel() }}
+        @if (totalHint()) {
+          <span class="muted">{{ totalHint() }}</span>
+        }
+      </p>
+      <p class="row__value num"><app-count [value]="total()" /></p>
+    </div>
+  </div>
+
+  <ng-content />
+</section>

@@ -1,0 +1,23 @@
+<div class="wrap soon">
+  <a class="back" routerLink="/">
+    <mat-icon fontIcon="arrow_back" />
+    All calculators
+  </a>
+
+  <div class="card soon__card">
+    @if (info(); as c) {
+      <span class="soon__icon" aria-hidden="true"><mat-icon [fontIcon]="c.icon" /></span>
+      <h1 class="soon__title">{{ c.title }}</h1>
+      <p class="soon__lead">{{ c.summary }}</p>
+      <p class="muted">This one is not built yet. The home loan calculator is ready to use.</p>
+    } @else {
+      <span class="soon__icon" aria-hidden="true"><mat-icon fontIcon="search_off" /></span>
+      <h1 class="soon__title">That calculator isn't here</h1>
+      <p class="muted">Check the address, or pick one from the list.</p>
+    }
+    <div class="soon__actions">
+      <a mat-flat-button [routerLink]="homeLoanPath">Open the home loan calculator</a>
+      <a mat-stroked-button routerLink="/">See all calculators</a>
+    </div>
+  </div>
+</div>

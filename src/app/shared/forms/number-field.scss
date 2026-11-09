@@ -1,0 +1,42 @@
+:host {
+  display: block;
+}
+
+/* Anything projected (a unit toggle) sits beside the field */
+.nf__row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-3);
+}
+
+.nf__field {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.nf__affix {
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+input {
+  font-size: 1.125rem;
+  font-weight: 550;
+  letter-spacing: -0.01em;
+}
+
+/* mat-slider has a 48px touch box; pull it close to the field and let it span the field's edges */
+.nf__slider {
+  display: block;
+  width: auto;
+  margin: var(--s-1) 8px 0;
+}
+
+.nf__range {
+  display: flex;
+  justify-content: space-between;
+  margin-top: calc(-1 * var(--s-2));
+  padding-inline: var(--s-1);
+  font-size: 0.8125rem;
+  color: var(--muted);
+}

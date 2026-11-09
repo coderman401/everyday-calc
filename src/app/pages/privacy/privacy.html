@@ -1,0 +1,135 @@
+<app-doc-page
+  title="Privacy policy"
+  lead="Calculators runs in your browser. What you type stays there. With your permission we count visits and measure speed using Google Analytics."
+  [meta]="'Last updated ' + updated"
+>
+  <article class="card prose">
+    <section aria-labelledby="p-short">
+      <h2 id="p-short">The short version</h2>
+      <ul>
+        <li>There is no sign-in, no account and no server that stores your calculations.</li>
+        <li>Analytics cookies are off until you accept them, and you can change your mind at any time.</li>
+        <li>Nothing you type into a calculator is sent to us or to Google.</li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="p-local">
+      <h2 id="p-local">What stays on your device</h2>
+      <p>
+        Every calculation is worked out by your browser. The numbers you enter are not uploaded and are
+        forgotten when you close or refresh the page. Two small settings are remembered on your device: your
+        cookie choice and, if you pick one, light or dark theme.
+      </p>
+    </section>
+
+    <section aria-labelledby="p-collected">
+      <h2 id="p-collected">What analytics collects, if you accept</h2>
+      <p>
+        We use Google Analytics 4, run by Google, to learn which pages and calculators people use and whether
+        the site is fast. Only after you press <strong>Accept analytics</strong> does your browser load Google’s
+        script. It then reports:
+      </p>
+      <div class="rows">
+        @for (r of collected; track r.what) {
+          <div class="row">
+            <p class="row__label"><strong>{{ r.what }}</strong></p>
+            <p class="row__value">{{ r.detail }}</p>
+          </div>
+        }
+      </div>
+    </section>
+
+    <section aria-labelledby="p-never">
+      <h2 id="p-never">What is never sent</h2>
+      <ul>
+        @for (n of never; track n) {
+          <li>{{ n }}</li>
+        }
+      </ul>
+      <p>
+        The health and date calculators (BMI, age, menstrual cycle, pregnancy) are treated as sensitive. They
+        report only that the calculator was used, so we can see that it is useful, and nothing about the person.
+      </p>
+    </section>
+
+    <section aria-labelledby="p-cookies">
+      <h2 id="p-cookies">Cookies and storage</h2>
+      <div class="tbl" tabindex="0" role="region" aria-label="Cookies and storage">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">What it does</th>
+              <th scope="col">Lasts</th>
+              <th scope="col">Set by</th>
+              <th scope="col">When</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (c of cookies; track c.name) {
+              <tr>
+                <td>{{ c.name }}</td>
+                <td>{{ c.purpose }}</td>
+                <td>{{ c.lasts }}</td>
+                <td>{{ c.by }}</td>
+                <td>{{ c.needs }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section aria-labelledby="p-choices">
+      <h2 id="p-choices">Your choices</h2>
+      <p>
+        You decide on the banner, and Accept and Decline carry the same weight. The site works the same
+        either way. You can change your mind whenever you like:
+      </p>
+      <p>
+        <button type="button" class="linklike" (click)="consent.reopen()">Open cookie settings</button>
+        @if (consent.choice(); as c) {
+          <span class="muted"> Your current choice: {{ c === 'granted' ? 'analytics accepted' : 'analytics declined' }}.</span>
+        }
+      </p>
+      <p>
+        Declining, or withdrawing later, stops all reporting and removes the Google Analytics cookies from
+        this browser. You can also clear cookies in your browser’s settings.
+      </p>
+    </section>
+
+    <section aria-labelledby="p-google">
+      <h2 id="p-google">Google and where data goes</h2>
+      <p>
+        Google processes analytics data on our behalf, on servers that may be outside India and your country of
+        residence. Event data is kept for the period set in our Google Analytics account, up to 14 months, and
+        is then deleted. Google’s own terms are at
+        <a href="https://policies.google.com/technologies/partner-sites" rel="noopener" target="_blank">policies.google.com</a>.
+      </p>
+    </section>
+
+    <section aria-labelledby="p-rights">
+      <h2 id="p-rights">Why we may do this, and your rights</h2>
+      <p>
+        Our basis is your consent, which you can withdraw at any time without giving a reason. Depending on
+        where you live, you may also have the right to ask what data is held about you, to have it corrected or
+        deleted, and to complain to a data protection authority. Because analytics data is not tied to your
+        name, we may need the identifier in your browser’s Google cookie to find it. Write to
+        <a [href]="'mailto:' + contact">{{ contact }}</a>.
+      </p>
+    </section>
+
+    <section aria-labelledby="p-kids">
+      <h2 id="p-kids">Children</h2>
+      <p>This site is for adults and is not aimed at children under 13. We do not knowingly collect their data.</p>
+    </section>
+
+    <section aria-labelledby="p-changes">
+      <h2 id="p-changes">Changes to this page</h2>
+      <p>
+        If what we collect changes, this page changes first and the cookie banner asks again. The date at the top
+        shows the latest version.
+      </p>
+    </section>
+  </article>
+</app-doc-page>

@@ -1,0 +1,27 @@
+<app-doc-page
+  title="Frequently asked questions"
+  lead="How the calculators work, what they leave out, and what happens to your data."
+>
+  <nav class="jump" aria-label="Question topics">
+    @for (g of groups; track g.id) {
+      <a class="chip" [routerLink]="[]" [fragment]="g.id">{{ g.title }}</a>
+    }
+  </nav>
+
+  @for (g of groups; track g.id) {
+    <section class="card group" [id]="g.id" [attr.aria-labelledby]="g.id + '-h'">
+      <h2 [id]="g.id + '-h'">{{ g.title }}</h2>
+      <div class="faq">
+        @for (f of g.items; track f.q) {
+          <div>
+            <p class="faq__q">{{ f.q }}</p>
+            <p class="faq__a">{{ f.a }}</p>
+            @if (f.link) {
+              <a class="faq__link" [routerLink]="f.link.path">{{ f.link.text }}</a>
+            }
+          </div>
+        }
+      </div>
+    </section>
+  }
+</app-doc-page>

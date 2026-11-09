@@ -1,0 +1,90 @@
+<section class="card expl" aria-labelledby="expl-h">
+  <h2 id="expl-h">{{ content().heading ?? 'How it’s calculated' }}</h2>
+
+  <div class="expl__grid">
+    @for (b of content().blocks; track b.heading) {
+      <div class="blk" [class.blk--wide]="b.type === 'table' || b.type === 'faq' || b.type === 'steps'">
+        <h3>{{ b.heading }}</h3>
+
+        @if (b.type === 'text') {
+          @for (p of b.body; track p) {
+            <p>{{ p }}</p>
+          }
+        } @else if (b.type === 'formula') {
+          @if (b.intro) {
+            <p>{{ b.intro }}</p>
+          }
+          <div class="formula num" role="group" [attr.aria-label]="b.heading">
+            @for (l of b.lines; track l) {
+              <div>{{ l }}</div>
+            }
+          </div>
+          @if (b.where?.length) {
+            <div class="where">
+              @for (w of b.where!; track w.sym) {
+                <div>
+                  <p class="where__sym num">{{ w.sym }}</p>
+                  <p class="where__meaning">{{ w.meaning }}</p>
+                </div>
+              }
+            </div>
+          }
+        } @else if (b.type === 'steps') {
+          @if (b.intro) {
+            <p>{{ b.intro }}</p>
+          }
+          <ol class="steps">
+            @for (s of b.steps; track s.label) {
+              <li>
+                <span class="steps__label">{{ s.label }}</span>
+                <span class="steps__value num">{{ s.value }}</span>
+              </li>
+            }
+          </ol>
+        } @else if (b.type === 'list') {
+          @if (b.intro) {
+            <p>{{ b.intro }}</p>
+          }
+          <ul class="bullets">
+            @for (i of b.items; track i) {
+              <li>{{ i }}</li>
+            }
+          </ul>
+        } @else if (b.type === 'table') {
+          @if (b.intro) {
+            <p>{{ b.intro }}</p>
+          }
+          <div class="tbl" tabindex="0" role="region" [attr.aria-label]="b.heading">
+            <table class="num">
+              <thead>
+                <tr>
+                  @for (c of b.columns; track c) {
+                    <th scope="col">{{ c }}</th>
+                  }
+                </tr>
+              </thead>
+              <tbody>
+                @for (r of b.rows; track r[0]) {
+                  <tr>
+                    @for (c of r; track $index) {
+                      <td>{{ c }}</td>
+                    }
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        } @else if (b.type === 'faq') {
+          <div class="faq">
+            @for (f of b.items; track f.q) {
+              <div>
+                <p class="faq__q">{{ f.q }}</p>
+                <p class="faq__a">{{ f.a }}</p>
+              </div>
+            }
+          </div>
+        }
+      </div>
+    }
+  </div>
+</section>

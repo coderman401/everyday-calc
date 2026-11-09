@@ -1,0 +1,25 @@
+:host {
+  display: block;
+}
+
+.save {
+  margin-top: var(--s-2);
+  animation: enter 260ms var(--ease-out) both;
+}
+
+@keyframes enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+.save__h {
+  margin-bottom: var(--s-2);
+  font-size: 1rem;
+  letter-spacing: -0.01em;
+}
+
+.save__good {
+  color: var(--accent);
+}

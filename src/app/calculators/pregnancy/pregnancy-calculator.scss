@@ -1,0 +1,20 @@
+:host {
+  display: block;
+}
+
+/* Baby this week: its fruit, then the size */
+.baby {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  margin-top: var(--s-3);
+  padding: var(--s-3) var(--s-4);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: var(--fill);
+}
+
+.baby__title {
+  font-weight: 600;
+  line-height: 1.3;
+}

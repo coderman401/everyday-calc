@@ -1,0 +1,70 @@
+:host {
+  display: block;
+  width: 100%;
+  max-width: 280px;
+  margin-inline: auto;
+}
+
+.donut {
+  position: relative;
+  aspect-ratio: 1;
+}
+
+svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+circle {
+  fill: none;
+}
+
+.donut__track {
+  stroke: var(--fill);
+  stroke-width: 16;
+}
+
+.donut__arc {
+  stroke-width: 16;
+  cursor: default;
+  transition:
+    stroke-dasharray 650ms var(--ease-out),
+    stroke-dashoffset 650ms var(--ease-out),
+    stroke-width 160ms var(--ease-out),
+    opacity 160ms var(--ease-out);
+
+  &.is-active {
+    stroke-width: 19;
+  }
+  &.is-dim {
+    opacity: 0.45;
+  }
+}
+
+.donut__centre {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  text-align: center;
+  pointer-events: none;
+  padding: 24%;
+}
+
+.donut__label {
+  font-size: 0.8125rem;
+  font-weight: 550;
+  color: var(--muted);
+}
+
+.donut__value {
+  font-size: clamp(1.125rem, 4.2vw, 1.5rem);
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}

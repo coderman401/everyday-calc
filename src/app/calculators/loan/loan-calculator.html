@@ -1,0 +1,109 @@
+<app-calc-shell
+  [title]="config().title"
+  [lead]="config().lead"
+  barLabel="Monthly EMI"
+  [barText]="emiText()"
+>
+  <form slot="inputs" class="card" aria-labelledby="inputs-h" (submit)="$event.preventDefault()">
+    <h2 id="inputs-h" class="inputs__h">Your loan</h2>
+
+    <div class="fields">
+      <app-number-field
+        [label]="config().amountLabel"
+        prefix="₹"
+        [(value)]="amount"
+        [min]="config().amount.min"
+        [max]="config().amount.max"
+        [step]="config().amount.step"
+        [hint]="amountWords()"
+        [minLabel]="amountMinLabel()"
+        [maxLabel]="amountMaxLabel()"
+      />
+
+      <app-number-field
+        label="Interest rate (per year)"
+        suffix="%"
+        inputmode="decimal"
+        [(value)]="rate"
+        [min]="config().rate.min"
+        [max]="config().rate.max"
+        [step]="config().rate.step"
+        [decimals]="2"
+        [minLabel]="rateMinLabel()"
+        [maxLabel]="rateMaxLabel()"
+      />
+
+      <app-tenure-field label="Loan tenure" [maxYears]="config().maxYears" [(value)]="tenure" [(unit)]="unit" />
+    </div>
+
+    <section class="opts" aria-labelledby="opts-h">
+      <h3 id="opts-h" class="opts__h">Pay it off faster</h3>
+      <p class="muted opts__lead">Switch one on and the results update.</p>
+
+      <app-option
+        title="Prepayment"
+        description="One lump sum toward principal, in the month you pick."
+        [(on)]="prepayOn"
+      >
+        <app-number-field
+          label="Prepayment amount"
+          prefix="₹"
+          [slider]="false"
+          [(value)]="prepayAmount"
+          [min]="1000"
+          [max]="amount()"
+        />
+        <app-number-field
+          label="Pay in month"
+          [slider]="false"
+          [(value)]="prepayMonth"
+          [min]="1"
+          [max]="config().maxYears * 12"
+          [hint]="prepayMonthHint()"
+        />
+      </app-option>
+
+      <app-option
+        title="Extra EMI every year"
+        description="Extra instalments paid at the end of each loan year."
+        [(on)]="extraOn"
+      >
+        <app-number-field
+          label="Extra EMIs per year"
+          suffix="EMIs"
+          [slider]="false"
+          [(value)]="extraPerYear"
+          [min]="1"
+          [max]="12"
+        />
+      </app-option>
+
+      <app-option
+        title="Increase EMI every year"
+        description="Raise the EMI by a set percentage from the second year."
+        [(on)]="stepOn"
+      >
+        <app-number-field
+          label="Yearly increase"
+          suffix="%"
+          inputmode="decimal"
+          [slider]="false"
+          [(value)]="stepPercent"
+          [min]="1"
+          [max]="25"
+          [decimals]="1"
+        />
+      </app-option>
+    </section>
+
+    <button mat-button type="button" class="reset" (click)="reset()">
+      <mat-icon fontIcon="restart_alt" />
+      Reset to defaults
+    </button>
+  </form>
+
+  <app-loan-results slot="results" [result]="result()" [stepUpPercent]="stepUpPercent()" />
+
+  <app-loan-schedule [years]="result().years" />
+  <app-explainer [content]="explainer()" />
+</app-calc-shell>

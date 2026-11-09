@@ -1,0 +1,117 @@
+:host {
+  display: block;
+}
+
+.wg__lead {
+  margin-top: var(--s-2);
+}
+
+.wg__detail {
+  display: flex;
+  gap: var(--s-6);
+  align-items: center;
+  margin-top: var(--s-6);
+  padding: var(--s-5) var(--s-6);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: var(--fill);
+}
+
+.wg__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  min-width: 0;
+}
+
+.wg__facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2) var(--s-6);
+
+  p {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    font-weight: 600;
+  }
+}
+
+.wg__note {
+  max-width: var(--measure);
+}
+
+.wg__back {
+  align-self: flex-start;
+  margin-left: calc(-1 * var(--s-3));
+}
+
+.wg__measure {
+  margin-top: var(--s-3);
+}
+
+.wg__group {
+  margin-top: var(--s-6);
+
+  h3 {
+    margin-bottom: var(--s-3);
+  }
+}
+
+.wg__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(64px, 1fr));
+  gap: var(--s-2);
+}
+
+/* A week tile: a real button, 56px tall. Pressing it picks the week. */
+.wk {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  min-height: 64px;
+  padding: var(--s-2) 0;
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  background: var(--card);
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    transform 160ms var(--ease-out),
+    border-color 160ms var(--ease-out),
+    background-color 160ms var(--ease-out);
+
+  &:active {
+    transform: scale(0.95);
+    transition-duration: var(--t-press);
+  }
+
+  &.is-current {
+    border-color: var(--accent);
+  }
+
+  &.is-picked {
+    border-color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 14%, var(--card));
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .wk:hover:not(:active) {
+    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--ink) 30%, transparent);
+  }
+}
+
+@media (max-width: 599px) {
+  .wg__detail {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: var(--s-5);
+  }
+}

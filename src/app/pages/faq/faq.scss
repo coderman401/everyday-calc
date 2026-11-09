@@ -1,0 +1,30 @@
+:host {
+  display: block;
+}
+
+.jump {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  margin-bottom: var(--s-5);
+}
+
+.group {
+  scroll-margin-top: calc(var(--nav-h) + var(--s-4));
+
+  & + & {
+    margin-top: var(--s-5);
+  }
+
+  h2 {
+    margin-bottom: var(--s-5);
+  }
+}
+
+.faq__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-top: var(--s-1);
+  font-weight: 550;
+}

@@ -1,0 +1,55 @@
+:host {
+  display: block;
+}
+
+.sched__lead {
+  margin-top: var(--s-2);
+}
+
+.sched__scroll {
+  margin-top: var(--s-5);
+  max-height: 520px;
+  overflow: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+}
+
+table {
+  width: 100%;
+  min-width: 560px;
+  background: transparent;
+}
+
+th.mat-mdc-header-cell,
+td.mat-mdc-cell {
+  text-align: right;
+  white-space: nowrap;
+  font-size: 0.9375rem;
+  border-bottom-color: var(--line);
+}
+
+th.mat-mdc-header-cell {
+  background: var(--card);
+  color: var(--muted);
+  font-weight: 550;
+  font-size: 0.8125rem;
+}
+
+th:first-child,
+td:first-child {
+  text-align: left;
+  padding-left: var(--s-5);
+}
+
+th:last-child,
+td:last-child {
+  padding-right: var(--s-5);
+}
+
+tr.mat-mdc-row:last-child td {
+  border-bottom: 0;
+}
+
+tr.mat-mdc-row:hover td {
+  background: var(--fill);
+}

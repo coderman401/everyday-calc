@@ -1,0 +1,33 @@
+<div class="scale">
+  <div class="scale__chart" role="img" [attr.aria-label]="summary()">
+    <div class="scale__marker" [style.--at]="markerAt()">
+      <span class="scale__bubble num">{{ markerText() }}</span>
+      <span class="scale__pin"></span>
+    </div>
+    <div class="scale__bar">
+      @for (s of segments(); track s.id; let i = $index) {
+        <span
+          class="scale__seg"
+          [class.is-active]="activeId() === s.id"
+          [style.flex-basis.%]="widths()[i]"
+          [style.--seg]="s.color"
+        ></span>
+      }
+    </div>
+    <div class="scale__ticks" aria-hidden="true">
+      @for (t of ticks(); track t.at) {
+        <span class="num" [style.left.%]="t.at">{{ t.text }}</span>
+      }
+    </div>
+  </div>
+
+  <ul class="scale__legend">
+    @for (s of segments(); track s.id) {
+      <li [class.is-active]="activeId() === s.id">
+        <span class="dot" [style.--dot]="s.color" aria-hidden="true"></span>
+        <span class="scale__name">{{ s.label }}</span>
+        <span class="muted num">{{ s.range }}</span>
+      </li>
+    }
+  </ul>
+</div>

@@ -1,0 +1,91 @@
+<app-calc-shell
+  title="SIP Calculator"
+  lead="What a monthly SIP could be worth after a number of years at the return you expect, and how much of that is your own money."
+  barLabel="Total value"
+  [barText]="valueText()"
+>
+  <form slot="inputs" class="card" aria-labelledby="inputs-h" (submit)="$event.preventDefault()">
+    <h2 id="inputs-h" class="inputs__h">Your investment</h2>
+
+    <div class="fields">
+      <app-number-field
+        label="Monthly investment"
+        prefix="₹"
+        [(value)]="monthly"
+        [min]="500"
+        [max]="100000"
+        [step]="500"
+        [hint]="monthlyWords()"
+        minLabel="₹500"
+        maxLabel="₹1 lakh"
+      />
+      <app-number-field
+        label="Expected return (per year)"
+        suffix="%"
+        inputmode="decimal"
+        [(value)]="rate"
+        [min]="1"
+        [max]="30"
+        [step]="0.1"
+        [decimals]="1"
+        minLabel="1%"
+        maxLabel="30%"
+      />
+      <app-number-field
+        label="Time period"
+        suffix="yrs"
+        [(value)]="years"
+        [min]="1"
+        [max]="40"
+        minLabel="1 yr"
+        maxLabel="40 yrs"
+      />
+    </div>
+
+    <section class="opts" aria-labelledby="opts-h">
+      <h3 id="opts-h" class="opts__h">Grow it faster</h3>
+      <p class="muted opts__lead">Switch it on and the results update.</p>
+      <app-option
+        title="Increase SIP every year"
+        description="Raise the monthly instalment by a set percentage from the second year."
+        [(on)]="stepOn"
+      >
+        <app-number-field
+          label="Yearly increase"
+          suffix="%"
+          inputmode="decimal"
+          [slider]="false"
+          [(value)]="stepPercent"
+          [min]="1"
+          [max]="25"
+          [decimals]="1"
+        />
+      </app-option>
+    </section>
+
+    <button mat-button type="button" class="reset" (click)="reset()">
+      <mat-icon fontIcon="restart_alt" />
+      Reset to defaults
+    </button>
+  </form>
+
+  <app-breakup
+    slot="results"
+    heroLabel="Total value"
+    [heroValue]="result().value"
+    [heroNote]="note()"
+    chartHeading="Break-up of total value"
+    [rows]="rows()"
+    totalLabel="Total value"
+    totalHint="(invested + returns)"
+    shareLabel="Returns share"
+  />
+
+  <app-data-table
+    heading="Year-by-year growth"
+    lead="What you have put in, what it has earned and what it is worth at the end of each year."
+    [columns]="['Year', 'Monthly SIP', 'Invested', 'Returns', 'Value']"
+    [rows]="tableRows()"
+  />
+  <app-explainer [content]="explainer()" />
+</app-calc-shell>

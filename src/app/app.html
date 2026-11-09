@@ -1,0 +1,91 @@
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="nav">
+  <div class="wrap nav__in">
+    <a class="brand" routerLink="/" aria-label="Calculators, home">
+      <app-logo />
+      <span class="brand__name">Calculators</span>
+    </a>
+
+    <nav class="nav__links" aria-label="Calculators">
+      @for (g of groups; track g.category.id) {
+        <button
+          mat-button
+          type="button"
+          class="nav__item"
+          [class.is-active]="activeCategory() === g.category.id"
+          [matMenuTriggerFor]="menu"
+        >
+          {{ g.category.short }}
+          <mat-icon iconPositionEnd fontIcon="expand_more" />
+        </button>
+        <mat-menu #menu="matMenu" class="calc-menu" xPosition="after">
+          <div class="calc-menu__group" role="group" [attr.aria-label]="g.category.label">
+            @for (c of g.items; track c.slug) {
+              <a mat-menu-item [routerLink]="path(c)">
+                <mat-icon [fontIcon]="c.icon" />
+                <span>{{ c.short }}</span>
+              </a>
+            }
+          </div>
+        </mat-menu>
+      }
+      <a mat-button class="nav__item" routerLink="/faq" routerLinkActive="is-active">FAQ</a>
+    </nav>
+
+    <div class="nav__tools">
+      <button
+        mat-icon-button
+        type="button"
+        class="nav__menu"
+        aria-label="All calculators"
+        [matMenuTriggerFor]="all"
+      >
+        <mat-icon fontIcon="menu" />
+      </button>
+      <button
+        mat-icon-button
+        type="button"
+        class="nav__theme"
+        [attr.aria-label]="theme.current() === 'dark' ? 'Switch to the light theme' : 'Switch to the dark theme'"
+        [matTooltip]="theme.current() === 'dark' ? 'Light theme' : 'Dark theme'"
+        (click)="theme.toggle()"
+      >
+        <mat-icon [fontIcon]="theme.current() === 'dark' ? 'light_mode' : 'dark_mode'" />
+      </button>
+    </div>
+  </div>
+</header>
+
+<mat-menu #all="matMenu" class="calc-menu">
+  @for (group of groups; track group.category.id) {
+    <div class="calc-menu__group" role="group" [attr.aria-label]="group.category.label">
+      <p class="label calc-menu__heading">{{ group.category.label }}</p>
+      @for (c of group.items; track c.slug) {
+        <a mat-menu-item [routerLink]="path(c)">
+          <mat-icon [fontIcon]="c.icon" />
+          <span>{{ c.short }}</span>
+        </a>
+      }
+    </div>
+  }
+  <a mat-menu-item routerLink="/faq"><mat-icon fontIcon="help" /><span>FAQ</span></a>
+</mat-menu>
+
+<main id="main">
+  <router-outlet />
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__in">
+    <p>© {{ year }} Calculators</p>
+    <p class="muted">Results are estimates for planning, not financial or medical advice.</p>
+    <nav class="foot__links" aria-label="Legal">
+      <a routerLink="/privacy">Privacy policy</a>
+      <a routerLink="/faq">FAQ</a>
+      <!-- <button type="button" class="linklike" (click)="consent.reopen()">Cookie settings</button> -->
+    </nav>
+  </div>
+</footer>
+
+<app-cookie-banner />

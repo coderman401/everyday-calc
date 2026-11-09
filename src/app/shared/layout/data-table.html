@@ -1,0 +1,26 @@
+<section class="card dt" [attr.aria-label]="heading()">
+  <h2>{{ heading() }}</h2>
+  @if (lead()) {
+    <p class="muted dt__lead">{{ lead() }}</p>
+  }
+  <div class="dt__scroll" tabindex="0" role="region" [attr.aria-label]="heading()">
+    <table class="num">
+      <thead>
+        <tr>
+          @for (c of columns(); track c) {
+            <th scope="col">{{ c }}</th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for (r of rows(); track $index) {
+          <tr>
+            @for (c of r; track $index) {
+              <td>{{ c }}</td>
+            }
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</section>

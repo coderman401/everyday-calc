@@ -1,0 +1,16 @@
+@if (consent.showBanner()) {
+  <section class="banner card" role="dialog" aria-labelledby="cookie-h" aria-describedby="cookie-p">
+    <div class="banner__text">
+      <h2 id="cookie-h">Analytics cookies</h2>
+      <p id="cookie-p">
+        With your permission, Google Analytics counts visits, notes which calculators are used and measures
+        how fast pages load. It sets cookies in your browser. It never receives what you type into a
+        calculator. Read the <a routerLink="/privacy">privacy policy</a> for the detail.
+      </p>
+    </div>
+    <div class="banner__actions">
+      <button mat-stroked-button type="button" (click)="consent.deny()">Decline</button>
+      <button mat-stroked-button type="button" (click)="consent.grant()">Accept analytics</button>
+    </div>
+  </section>
+}

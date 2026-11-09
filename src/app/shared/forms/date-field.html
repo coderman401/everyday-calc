@@ -1,0 +1,24 @@
+<mat-form-field appearance="outline" subscriptSizing="dynamic" class="df">
+  <mat-label>{{ label() }}</mat-label>
+  <input
+    matInput
+    class="num"
+    autocomplete="off"
+    placeholder="dd/mm/yyyy"
+    [formControl]="control"
+    [matDatepicker]="picker"
+    [min]="min()"
+    [max]="max()"
+  />
+  <mat-datepicker-toggle matIconSuffix [for]="picker" aria-label="Open calendar" />
+  <mat-datepicker #picker [startView]="startView()" />
+  @if (control.hasError('matDatepickerParse') || control.hasError('required')) {
+    <mat-error>Enter a real date as dd/mm/yyyy</mat-error>
+  } @else if (control.hasError('matDatepickerMin') && min()) {
+    <mat-error>Pick {{ format(min()!) }} or later</mat-error>
+  } @else if (control.hasError('matDatepickerMax') && max()) {
+    <mat-error>Pick {{ format(max()!) }} or earlier</mat-error>
+  } @else {
+    <mat-hint>{{ hint() }}</mat-hint>
+  }
+</mat-form-field>

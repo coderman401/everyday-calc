@@ -1,0 +1,25 @@
+:host {
+  display: block;
+}
+
+.res .rows {
+  margin-top: var(--s-4);
+}
+
+/* The date field with a button for today beside it, aligned to the field's box */
+.with-action {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-3);
+
+  app-date-field {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+}
+
+.today {
+  flex: none;
+  margin-top: 4px;
+  min-width: 88px;
+}

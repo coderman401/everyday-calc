@@ -1,0 +1,34 @@
+<app-breakup
+  heroLabel="Monthly EMI"
+  [heroValue]="result().emi"
+  [heroNote]="stepNote()"
+  [rows]="rows()"
+  totalLabel="Total payment"
+  totalHint="(principal + interest)"
+  shareLabel="Interest share"
+>
+  @if (result().hasExtras) {
+    <div class="save">
+      <h3 class="save__h">What your extras change</h3>
+      @if (result().monthsSaved > 0 || result().interestSaved >= 1) {
+        <div class="rows">
+          <div class="row">
+            <p class="row__label">Loan ends in</p>
+            <p class="row__value num">
+              {{ formatDuration(result().months) }}
+              <span class="muted">was {{ formatDuration(result().plain.months) }}</span>
+            </p>
+          </div>
+          <div class="row">
+            <p class="row__label">Interest saved</p>
+            <p class="row__value num save__good"><app-count [value]="result().interestSaved" /></p>
+          </div>
+        </div>
+      } @else {
+        <p class="note">
+          These extras don't shorten the loan yet. Check that the prepayment month falls inside the tenure.
+        </p>
+      }
+    </div>
+  }
+</app-breakup>

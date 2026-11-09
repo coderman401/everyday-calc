@@ -1,0 +1,18 @@
+<div class="opt">
+  <div class="opt__row">
+    <div class="opt__text" (click)="on.set(!on())">
+      <span class="opt__title" [id]="titleId">{{ title() }}</span>
+      @if (description()) {
+        <span class="muted">{{ description() }}</span>
+      }
+    </div>
+    <mat-slide-toggle [aria-labelledby]="titleId" [checked]="on()" (change)="on.set($event.checked)" />
+  </div>
+  <div class="opt__body" [class.is-open]="on()" [attr.inert]="on() ? null : ''">
+    <div class="opt__inner">
+      <div class="opt__fields">
+        <ng-content />
+      </div>
+    </div>
+  </div>
+</div>

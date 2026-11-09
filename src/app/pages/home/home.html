@@ -1,0 +1,112 @@
+<section class="hero">
+  <div class="wrap hero__in">
+    <div class="hero__text">
+      <h1 class="rise" style="--i: 0">Calculators for loans, savings and health</h1>
+      <p class="hero__lead rise" style="--i: 1">
+        Work out an EMI, a SIP, a BMI or a due date. Each calculator shows the formula and the working
+        behind the answer, using the numbers you entered.
+      </p>
+      <div class="hero__actions rise" style="--i: 2">
+        <a mat-flat-button [routerLink]="homeLoanPath">Open the home loan calculator</a>
+        <a mat-button href="#all">See all calculators</a>
+      </div>
+      <nav class="quick rise" style="--i: 3" aria-label="Other calculators">
+        <span class="quick__label">Or start with</span>
+        @for (c of quick; track c.slug) {
+          <a class="chip" [routerLink]="path(c)"><mat-icon aria-hidden="true" [fontIcon]="c.icon" />{{ c.short }}</a>
+        }
+      </nav>
+    </div>
+
+    <section class="card sample rise" style="--i: 2" aria-labelledby="sample-h">
+      <div class="sample__top">
+        <h2 id="sample-h" class="label">Try a home loan: monthly EMI</h2>
+        <span class="live"><i aria-hidden="true"></i>Live</span>
+      </div>
+      <p class="hero-fig">
+        <app-count [value]="sample().emi" /><span class="sample__per"> a month</span>
+      </p>
+      <p class="note num">{{ amountWords() }} at {{ rate }}% for {{ years() }} years</p>
+
+      <mat-slider class="sample__slider" min="500000" max="20000000" step="100000">
+        <input
+          matSliderThumb
+          aria-label="Loan amount"
+          [value]="amount()"
+          (valueChange)="amount.set($event)"
+        />
+      </mat-slider>
+
+      <mat-button-toggle-group
+        class="seg"
+        hideSingleSelectionIndicator
+        aria-label="Loan tenure in years"
+        [value]="years()"
+        (change)="years.set($event.value)"
+      >
+        @for (t of tenures; track t) {
+          <mat-button-toggle [value]="t">{{ t }} yrs</mat-button-toggle>
+        }
+      </mat-button-toggle-group>
+
+      <div class="sample__chart">
+        <app-donut
+          [slices]="slices()"
+          [summary]="summary()"
+          centreLabel="Interest share"
+          [centreValue]="interestShare()"
+        />
+      </div>
+
+      <div class="rows">
+        <div class="row">
+          <p class="row__label"><span class="dot" style="--dot: var(--c-principal)" aria-hidden="true"></span>Principal</p>
+          <p class="row__value num">{{ formatInr(sample().principal) }}</p>
+        </div>
+        <div class="row">
+          <p class="row__label"><span class="dot" style="--dot: var(--c-interest)" aria-hidden="true"></span>Interest</p>
+          <p class="row__value num">{{ formatInr(sample().totalInterest) }}</p>
+        </div>
+      </div>
+
+      <a
+        mat-stroked-button
+        [routerLink]="homeLoanPath"
+        [queryParams]="{ amount: amount(), rate: rate, years: years() }"
+      >
+        Open with these numbers
+      </a>
+    </section>
+  </div>
+</section>
+
+<section class="all" id="all" aria-labelledby="all-h">
+  <div class="wrap">
+    <h2 id="all-h">All calculators</h2>
+    @for (group of groups; track group.category.id) {
+      <div class="group">
+        <h3 class="label group__h">{{ group.category.label }}</h3>
+        <ul class="grid">
+          @for (c of group.items; track c.slug) {
+            <li>
+              <a class="tile card lift" [routerLink]="path(c)">
+                <span class="tile__head">
+                  <span class="tile__title">{{ c.title }}</span>
+                  <mat-icon aria-hidden="true" fontIcon="arrow_forward" />
+                </span>
+                <span class="muted">{{ c.summary }}</span>
+                <span class="tile__example">
+                  <span class="tile__text">
+                    <span class="tile__figure num">{{ example[c.slug].figure }}</span>
+                    <span class="tile__caption muted">{{ example[c.slug].caption }}</span>
+                  </span>
+                  <app-tile-visual [spec]="example[c.slug].visual" />
+                </span>
+              </a>
+            </li>
+          }
+        </ul>
+      </div>
+    }
+  </div>
+</section>

@@ -1,0 +1,96 @@
+:host {
+  display: block;
+}
+
+.prose {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-7);
+
+  section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-3);
+    max-width: 72ch;
+  }
+
+  h2 {
+    font-size: 1.375rem;
+  }
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-2);
+    margin: 0;
+    padding-left: 1.25rem;
+
+    li::marker {
+      color: var(--muted);
+    }
+  }
+
+  /* The list of what is collected: a label over its detail, with a rule between */
+  .rows .row {
+    display: block;
+  }
+
+  .rows .row__value {
+    margin-top: var(--s-1);
+    text-align: left;
+    font-weight: 400;
+    color: var(--muted);
+  }
+
+  .tbl {
+    overflow-x: auto;
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    max-width: none;
+  }
+
+  table {
+    width: 100%;
+    min-width: 640px;
+    border-collapse: collapse;
+  }
+
+  th,
+  td {
+    padding: var(--s-3) var(--s-4);
+    text-align: left;
+    font-size: 0.9375rem;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+
+  th {
+    color: var(--muted);
+    font-weight: 550;
+    font-size: 0.8125rem;
+  }
+
+  tr:last-child td {
+    border-bottom: 0;
+  }
+}
+
+/* The prose card is wider than its text, so the table can use the card */
+.prose section:has(.tbl) {
+  max-width: none;
+}
+
+.linklike {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font: inherit;
+  font-weight: 550;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}

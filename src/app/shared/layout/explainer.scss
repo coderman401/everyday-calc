@@ -1,0 +1,179 @@
+:host {
+  display: block;
+}
+
+.expl__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s-7) var(--s-8);
+  margin-top: var(--s-6);
+}
+
+@media (min-width: 960px) {
+  .expl__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .blk--wide {
+    grid-column: 1 / -1;
+  }
+}
+
+.blk {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  min-width: 0;
+
+  h3 {
+    font-size: 1.25rem;
+  }
+
+  p {
+    color: var(--ink);
+  }
+}
+
+/* The formula: set apart, live text, scrolls sideways rather than wrapping mid-expression */
+.formula {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  padding: var(--s-4) var(--s-5);
+  border-radius: var(--r-md);
+  background: var(--fill);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  line-height: 1.5;
+  overflow-x: auto;
+
+  div {
+    white-space: nowrap;
+  }
+}
+
+/* On a phone let a formula wrap at its spaces rather than hide the end of it */
+@media (max-width: 599px) {
+  .formula div {
+    white-space: normal;
+  }
+}
+
+.where {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  margin: 0;
+
+  > div {
+    display: flex;
+    gap: var(--s-3);
+  }
+
+  .where__sym {
+    margin: 0;
+    font-weight: 650;
+  }
+
+  .where__meaning {
+    margin: 0;
+    color: var(--muted);
+  }
+}
+
+/* A worked example: numbered, label left, result right */
+.steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  counter-reset: step;
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+
+  li {
+    counter-increment: step;
+    display: grid;
+    grid-template-columns: 2rem minmax(0, 1fr) auto;
+    align-items: baseline;
+    gap: var(--s-3);
+    padding: var(--s-3) var(--s-5);
+
+    & + li {
+      border-top: 1px solid var(--line);
+    }
+
+    &::before {
+      content: counter(step);
+      color: var(--muted);
+      font-size: 0.875rem;
+      font-variant-numeric: tabular-nums;
+    }
+
+    &:last-child {
+      background: var(--fill);
+      border-radius: 0 0 calc(var(--r-md) - 1px) calc(var(--r-md) - 1px);
+      font-weight: 650;
+    }
+  }
+}
+
+.steps__value {
+  font-weight: 600;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 599px) {
+  .steps li {
+    grid-template-columns: 1.5rem minmax(0, 1fr);
+    padding-inline: var(--s-4);
+  }
+  .steps__value {
+    grid-column: 2;
+    text-align: left;
+  }
+}
+
+.bullets {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  margin: 0;
+  padding-left: 1.25rem;
+  max-width: var(--measure);
+
+  li::marker {
+    color: var(--muted);
+  }
+}
+
+.tbl {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 480px;
+}
+
+th,
+td {
+  padding: var(--s-3) var(--s-5);
+  text-align: left;
+  font-size: 0.9375rem;
+  border-bottom: 1px solid var(--line);
+}
+
+th {
+  color: var(--muted);
+  font-weight: 550;
+  font-size: 0.8125rem;
+}
+
+tr:last-child td {
+  border-bottom: 0;
+}
+

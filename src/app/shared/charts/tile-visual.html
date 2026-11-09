@@ -1,0 +1,25 @@
+@if (type() === 'donut') {
+  <svg class="v v--donut" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+    <g transform="rotate(-90 50 50)" fill="none" stroke-width="15">
+      @for (a of arcs(); track $index) {
+        <circle cx="50" cy="50" r="38" pathLength="100" [attr.stroke]="a.color" [style.stroke-dasharray]="a.dash" [style.stroke-dashoffset]="a.offset" />
+      }
+    </g>
+  </svg>
+} @else if (type() === 'line') {
+  <svg class="v v--line" [attr.viewBox]="'0 0 120 44'" aria-hidden="true" focusable="false">
+    <path class="area" [attr.d]="line().area" />
+    <path class="stroke" [attr.d]="line().stroke" pathLength="1" />
+  </svg>
+} @else {
+  <div class="v v--bar" aria-hidden="true">
+    <div class="bar">
+      @for (b of bars(); track $index) {
+        <span [style.flex-basis.%]="b.w" [style.background]="b.color"></span>
+      }
+    </div>
+    @if (marker() !== null) {
+      <i class="pin" [style.left.%]="marker()"></i>
+    }
+  </div>
+}

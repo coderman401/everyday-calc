@@ -1,0 +1,129 @@
+<app-calc-shell
+  title="Menstrual Cycle Calculator"
+  lead="The next period, the likely ovulation date and the fertile window, worked from the first day of your last period and your usual cycle length."
+  barLabel="Next period"
+  [barText]="barText()"
+>
+  <form slot="inputs" class="card" aria-labelledby="inputs-h" (submit)="$event.preventDefault()">
+    <h2 id="inputs-h" class="inputs__h">Your cycle</h2>
+
+    <div class="fields">
+      <app-date-field
+        label="First day of your last period"
+        hint="Day / month / year. Up to a year back."
+        [(value)]="lastPeriod"
+        [min]="minLast"
+        [max]="maxLast"
+      />
+      <app-number-field
+        label="Cycle length"
+        suffix="days"
+        [(value)]="cycleLength"
+        [min]="21"
+        [max]="45"
+        hint="From the first day of one period to the day before the next. 28 is the usual guess."
+        minLabel="21 days"
+        maxLabel="45 days"
+      />
+      <app-number-field
+        label="Period length"
+        suffix="days"
+        [(value)]="periodLength"
+        [min]="2"
+        [max]="10"
+        minLabel="2 days"
+        maxLabel="10 days"
+      />
+    </div>
+
+    <button mat-button type="button" class="reset" (click)="reset()">
+      <mat-icon fontIcon="restart_alt" />
+      Reset to defaults
+    </button>
+  </form>
+
+  <section slot="results" class="card res" aria-label="Results">
+    <p class="label" id="next-label">Next period</p>
+    <p class="hero-fig" aria-labelledby="next-label">{{ nextDay() }}</p>
+    <p class="note">{{ nextNote() }}</p>
+
+    <h3 class="res__h">Where you are in your cycle</h3>
+    <div class="chart">
+      <app-donut
+        [slices]="slices()"
+        [summary]="summary()"
+        [centreLabel]="centreLabel()"
+        [centreValue]="centreValue()"
+        [(active)]="activePhase"
+      />
+    </div>
+
+    <div class="rows">
+      @for (p of phases(); track p.id) {
+        <div class="row">
+          <p class="row__label">
+            <span class="dot" [style.--dot]="colorOf(p.id)" aria-hidden="true"></span>
+            {{ p.label }}
+          </p>
+          <p class="row__value num">{{ p.fromDay === p.toDay ? 'Day ' + p.fromDay : 'Days ' + p.fromDay + ' to ' + p.toDay }}</p>
+        </div>
+      }
+    </div>
+
+    <div class="rows">
+      <div class="row">
+        <p class="row__label">Ovulation (estimated)</p>
+        <p class="row__value num">{{ ovulationText().date }}<span class="muted">{{ ovulationText().when }}</span></p>
+      </div>
+      <div class="row row--total">
+        <p class="row__label">Fertile window</p>
+        <p class="row__value num">{{ fertileText().range }}<span class="muted">{{ fertileText().when }}</span></p>
+      </div>
+    </div>
+    <p class="note safe">Estimates only. This is not a method of contraception.</p>
+  </section>
+
+  <app-data-table
+    heading="Your next cycles"
+    lead="The estimated dates for the cycle you are in and the ones after it."
+    [columns]="['Period starts', 'Period ends', 'Ovulation', 'Fertile window']"
+    [rows]="tableRows()"
+  />
+  <section class="card pg" aria-labelledby="pg-h">
+    <h2 id="pg-h">What happens in each phase</h2>
+    <p class="muted pg__lead">
+      Four stretches, in the order they come. The dates are for the cycle that holds your next fertile window.
+    </p>
+    <div class="pg__grid">
+      @for (g of guide(); track g.phase.id) {
+        <article
+          class="pg__item"
+          [class.is-dim]="activePhase() !== null && activePhase() !== g.phase.id"
+          (pointerenter)="activePhase.set(g.phase.id)"
+          (pointerleave)="activePhase.set(null)"
+        >
+          <p class="pg__top">
+            <span class="dot" [style.--dot]="colorOf(g.phase.id)" aria-hidden="true"></span>
+            <span class="label">{{ g.info.clinical }}</span>
+            @if (currentPhase() === g.phase.id) {
+              <span class="here">You are here</span>
+            }
+          </p>
+          <h3>{{ g.phase.label }}</h3>
+          <p class="pg__when num">{{ g.range }} · {{ g.dates }}</p>
+          <p class="pg__head">{{ g.info.headline }}</p>
+          <p class="muted">{{ g.info.hormones }}</p>
+          <h4>What you may notice</h4>
+          <ul>
+            @for (n of g.info.notice; track n) {
+              <li>{{ n }}</li>
+            }
+          </ul>
+          <p class="pg__tip">{{ g.info.tip }}</p>
+        </article>
+      }
+    </div>
+  </section>
+
+  <app-explainer [content]="explainer()" />
+</app-calc-shell>

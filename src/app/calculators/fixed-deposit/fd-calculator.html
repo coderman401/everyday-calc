@@ -1,0 +1,74 @@
+<app-calc-shell
+  title="Fixed Deposit Calculator"
+  lead="The maturity value of a fixed deposit and the interest it earns, for the compounding your bank uses."
+  barLabel="Maturity value"
+  [barText]="maturityText()"
+>
+  <form slot="inputs" class="card" aria-labelledby="inputs-h" (submit)="$event.preventDefault()">
+    <h2 id="inputs-h" class="inputs__h">Your deposit</h2>
+
+    <div class="fields">
+      <app-number-field
+        label="Deposit amount"
+        prefix="₹"
+        [(value)]="amount"
+        [min]="10000"
+        [max]="100000000"
+        [step]="10000"
+        [hint]="amountWords()"
+        minLabel="₹10,000"
+        maxLabel="₹10 crore"
+      />
+
+      <app-number-field
+        label="Interest rate (per year)"
+        suffix="%"
+        inputmode="decimal"
+        [(value)]="rate"
+        [min]="1"
+        [max]="15"
+        [step]="0.05"
+        [decimals]="2"
+        minLabel="1%"
+        maxLabel="15%"
+      />
+
+      <app-tenure-field label="Tenure" [maxYears]="10" [(value)]="tenure" [(unit)]="unit" />
+
+      <mat-form-field appearance="outline" subscriptSizing="dynamic" class="select">
+        <mat-label>Interest is added</mat-label>
+        <mat-select [value]="compounding()" (selectionChange)="compounding.set($event.value)">
+          @for (o of options; track o.value) {
+            <mat-option [value]="o.value">{{ o.label }}</mat-option>
+          }
+        </mat-select>
+        <mat-hint>Most banks add interest quarterly</mat-hint>
+      </mat-form-field>
+    </div>
+
+    <button mat-button type="button" class="reset" (click)="reset()">
+      <mat-icon fontIcon="restart_alt" />
+      Reset to defaults
+    </button>
+  </form>
+
+  <app-breakup
+    slot="results"
+    heroLabel="Maturity value"
+    [heroValue]="result().maturity"
+    [heroNote]="note()"
+    chartHeading="Break-up of maturity value"
+    [rows]="rows()"
+    totalLabel="Maturity value"
+    totalHint="(deposit + interest)"
+    shareLabel="Interest share"
+  />
+
+  <app-data-table
+    heading="Year-by-year growth"
+    lead="The interest your deposit earns each year and its balance at the year's end."
+    [columns]="['Year', 'Interest earned', 'Balance']"
+    [rows]="tableRows()"
+  />
+  <app-explainer [content]="explainer()" />
+</app-calc-shell>

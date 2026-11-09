@@ -1,0 +1,58 @@
+:host {
+  display: block;
+  border-bottom: 1px solid var(--line);
+}
+
+.opt__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+  padding-block: var(--s-4);
+}
+
+.opt__text {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.opt__title {
+  font-weight: 600;
+  font-size: 1.0625rem;
+}
+
+/* Height animates by grid row; the contents are inert while closed */
+.opt__body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--t-settle) var(--ease-out);
+
+  &.is-open {
+    grid-template-rows: 1fr;
+  }
+}
+
+.opt__inner {
+  min-height: 0;
+  overflow: hidden;
+  /* room for the focus ring and the outlined field's notch */
+  margin: 0 calc(-1 * var(--s-1));
+  padding: 0 var(--s-1);
+}
+
+.opt__fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--s-4);
+  padding: var(--s-1) 0 var(--s-5);
+}
+
+@media (max-width: 479px) {
+  .opt__fields {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
