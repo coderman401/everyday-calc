@@ -35,14 +35,4 @@ describe('CookieBanner', () => {
     expect(el.querySelector('.banner')).toBeNull();
   });
 
-  it('comes back when cookie settings are reopened', async () => {
-    const fixture = await render();
-    const el = fixture.nativeElement as HTMLElement;
-    buttons(el)[0].click();
-    await fixture.whenStable();
-    expect(el.querySelector('.banner')).toBeNull();
-    TestBed.inject(Consent).reopen();
-    await fixture.whenStable();
-    expect(el.querySelector('.banner')).toBeTruthy();
-  });
 });

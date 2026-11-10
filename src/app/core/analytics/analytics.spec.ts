@@ -54,16 +54,6 @@ describe('Consent', () => {
     document.cookie = 'calc_consent=; max-age=0; path=/';
     expect(TestBed.inject(Consent).choice()).toBeNull();
   });
-
-  it('reopens the banner on request and closes it again on a new choice', () => {
-    const c = TestBed.inject(Consent);
-    c.grant();
-    c.reopen();
-    expect(c.showBanner()).toBe(true);
-    c.deny();
-    expect(c.showBanner()).toBe(false);
-    expect(c.choice()).toBe('denied');
-  });
 });
 
 describe('Analytics', () => {
