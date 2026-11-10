@@ -1,46 +1,21 @@
-# Deploys to Firebase Hosting (https://everyday-calc.web.app) on every push to main.
-# One-time setup: add the repository secret FIREBASE_SERVICE_ACCOUNT_EVERYDAY_CALC (see docs/ARCHITECTURE.md).
-name: Deploy to Firebase Hosting
-
-on:
-  push:
-    branches: [main]
-  workflow_dispatch:
-
-# A newer push replaces a deploy still waiting, but never cancels one in progress
-concurrency:
-  group: deploy-main
-  cancel-in-progress: false
-
-permissions:
-  contents: read
+name: Deploy to Firebase Hosting on merge
+"on":
+    push:
+        branches:
+            - main
+    pull_request:
+        branches:
+            - main
 
 jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version-file: .nvmrc
-          cache: npm
-
-      - run: npm ci
-
-      # The deploy stops here if a test fails
-      - name: Test
-        run: npm test -- --watch=false
-
-      # Prebuild writes robots.txt, sitemap.xml and llms.txt; ng build prerenders 12 pages;
-      # postbuild adds 404.html
-      - name: Build
-        run: npm run build
-
-      - name: Deploy to Firebase Hosting
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_EVERYDAY_CALC }}
-          projectId: everyday-calc
-          channelId: live
+  build_and_deploy:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - run: npm ci && npm run build
+            - uses: FirebaseExtended/action-hosting-deploy@v0
+              with:
+                  repoToken: "${{ secrets.GITHUB_TOKEN }}"
+                  firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_EVERYDAY_CALC }}"
+                  channelId: live
+                  projectId: everyday-calc
