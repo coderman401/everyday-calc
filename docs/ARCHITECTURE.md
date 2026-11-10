@@ -102,10 +102,29 @@ Dependencies point one way: `calculators` and `pages` use `shared` and `core`; `
 | Consent kept in localStorage and a cookie | Survives either being cleared | Two places to keep in step (one `save()`) |
 | `web-vitals` in a lazy chunk | No first-load cost | Metrics start a moment after boot |
 
-## 6. Set-up checklist
+## 6. Hosting and deployment
+
+```
+ npm run build
+   prebuild   scripts/seo-files.mjs   robots.txt, sitemap.xml, llms.txt  (address from core/seo/site.json)
+   ng build   prerender 12 pages to static HTML   ->  dist/calculators/browser
+   postbuild  scripts/post-build.mjs  index.csr.html -> 404.html
+ npm run deploy  ->  firebase deploy --only hosting  ->  https://everyday-calc.web.app
+```
+
+- **Firebase Hosting** (project `everyday-calc`, `.firebaserc`; rules in `firebase.json`): static files on a CDN with HTTPS, no server to run.
+- **Caching:** hashed `js`/`css` are immutable for a year; HTML is `no-cache` so a deploy shows at once; icons a day; robots/sitemap/llms an hour.
+- **404:** unknown addresses get `404.html` with a real 404 status (the app shell, which shows its "not here" page), so search engines do not index junk URLs as pages.
+- **Headers:** `nosniff`, `X-Frame-Options: DENY`, strict referrer policy, a locked-down permissions policy. HSTS is added by Firebase.
+- **Automatic deploys:** `.github/workflows/deploy.yml` runs on every push to `main`: install, test, build, then publish to the live site. A failing test stops the deploy. It can also be run by hand from the Actions tab.
+  - One-time setup: in the Firebase console open *Project settings → Service accounts → Generate new private key* (or run `firebase init hosting:github` in the repo, which does this for you), then add the file's contents as the GitHub repository secret `FIREBASE_SERVICE_ACCOUNT_EVERYDAY_CALC` (*Settings → Secrets and variables → Actions*). Never commit the key.
+- **Preview:** `npm run preview:hosting` deploys to a temporary preview URL that expires in 7 days.
+- **Not done yet:** a Content-Security-Policy. It needs a hash for the inline theme script and allowances for Google Tag and Google Fonts; add it once the tag set is stable, and test it on a preview channel first.
+
+## 7. Set-up checklist
 
 1. Create a GA4 property and a web data stream; copy the ID (`G-…`).
-2. In `app.config.ts`: `provideAnalytics({ measurementId: 'G-…' })`. Until then analytics is off.
+2. In `app.config.ts`: `provideAnalytics({ measurementId: 'G-…' })` (done: `G-5XX2M5182G`). A `GTM-…` Tag Manager ID does not work here: this app talks to GA4 directly.
 3. In GA4, register custom dimensions for event parameters you want in reports: `calculator`, `amount_band`, `rate`, `years`, `months`, `compounding`, `prepayment`, `extra_emi`, `step_up`, `units`, `standard`, `method`, `metric_name`, `metric_rating`. Custom metric for `metric_value`.
 4. Set data retention to 14 months (Admin → Data settings → Data retention); the privacy page says "up to 14 months".
 5. Replace the stand-in contact `privacy@calculators.example` in `pages/privacy/privacy.ts`.

@@ -39,7 +39,7 @@ const sections = CATEGORIES.map((k) => {
 });
 writeFileSync(
   'public/llms.txt',
-  `# Calculators
+  `# ${site.name}
 
 > Free online calculators for loans (home, car and personal loan EMI), savings (SIP and fixed deposit) and health and dates (BMI, age, menstrual cycle and ovulation, pregnancy due date). Each page shows the formula it uses and works the visitor's own numbers through it step by step. Everything runs in the browser and nothing typed into a calculator is uploaded.
 

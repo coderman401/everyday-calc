@@ -26,8 +26,8 @@ engine or AI assistant recommend the site.
 
 ## Before you publish
 
-1. Put your public address in `src/app/core/seo/site.json` (`"url": "https://your-domain"`). This switches on canonical links, `og:url`, the URLs in structured data, and the addresses in sitemap.xml, robots.txt and llms.txt. Until then those use `https://calculators.example`, and the build warns.
-2. Build with `npm run build` (it regenerates the three files first), and deploy the contents of `dist/calculators/browser`. Serve each page's own `index.html` (`/calculators/sip` → `calculators/sip/index.html`).
+1. Your public address is set in `src/app/core/seo/site.json` (`https://everyday-calc.web.app`). Change it there if you add a custom domain. This switches on canonical links, `og:url`, the URLs in structured data, and the addresses in sitemap.xml, robots.txt and llms.txt. With no address, those fall back to `https://calculators.example` and the build warns.
+2. `npm run deploy` builds (it regenerates the three files first) and publishes `dist/calculators/browser` to Firebase Hosting, which serves each page's own `index.html` (`/calculators/sip` → `calculators/sip/index.html`).
 3. Add a 1200×630 share image and set `og:image` if you want a preview picture (not done: no image asset exists yet).
 
 ## After you publish (off-site: this is where most visibility comes from)

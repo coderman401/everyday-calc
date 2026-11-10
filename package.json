@@ -7,9 +7,11 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:calculators": "node dist/calculators/server/server.mjs",
     "seo": "node --no-warnings scripts/seo-files.mjs",
-    "prebuild": "npm run seo"
+    "prebuild": "npm run seo",
+    "postbuild": "node scripts/post-build.mjs",
+    "deploy": "npm run build && npx --yes firebase-tools deploy --only hosting",
+    "preview:hosting": "npm run build && npx --yes firebase-tools hosting:channel:deploy preview --expires 7d"
   },
   "private": true,
   "packageManager": "npm@12.2.0",

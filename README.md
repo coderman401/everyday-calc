@@ -1,4 +1,4 @@
-# Calculators
+# Everyday Calculator
 
 Angular 22 + Angular Material 3. Standalone components, signals, zoneless, lazy routes.
 
@@ -45,6 +45,17 @@ docs/ARCHITECTURE.md   analytics design, what is collected, trade-offs, set-up c
 
 Each calculator keeps its maths in a pure `*.engine.ts` with a spec, so the numbers are tested apart from
 the UI. Each explainer is a function of the live inputs, so the worked example always matches the result.
+
+## Deploy
+
+Hosted on Firebase Hosting, project `everyday-calc`: https://everyday-calc.web.app
+
+```bash
+npm run deploy             # build, then publish to everyday-calc
+npm run preview:hosting    # build, then publish to a temporary preview URL (7 days)
+```
+
+Every push to `main` deploys automatically (`.github/workflows/deploy.yml`; needs the `FIREBASE_SERVICE_ACCOUNT_EVERYDAY_CALC` secret, see `docs/ARCHITECTURE.md`). By hand, you need the Firebase CLI signed in with access to the project (`firebase login`). Details in `docs/ARCHITECTURE.md`.
 
 ## SEO
 

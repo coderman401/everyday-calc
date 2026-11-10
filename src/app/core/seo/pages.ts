@@ -46,7 +46,7 @@ function calculatorPage(c: CalculatorInfo): PageSeo {
         offers: { '@type': 'Offer', price: 0, priceCurrency: 'INR' },
       }),
       breadcrumb(site, [
-        { name: 'Calculators', path: '/' },
+        { name: site.name, path: '/' },
         { name: CATEGORIES.find((k) => k.id === c.category)!.label, path: '/#all' },
         { name: c.title, path },
       ]),
@@ -55,7 +55,7 @@ function calculatorPage(c: CalculatorInfo): PageSeo {
 }
 
 const HOME: PageSeo = {
-  title: 'Free Calculators: EMI, SIP, FD, BMI, Age, Due Date',
+  title: 'Everyday Calculator: EMI, SIP, FD, BMI, Age, Due Date',
   description:
     'Free calculators for loan EMI, SIP, fixed deposit, BMI, age, ovulation and pregnancy due date. Each shows the formula and works your own numbers through it.',
   jsonLd: (site) => [
@@ -63,7 +63,7 @@ const HOME: PageSeo = {
     clean({ '@type': 'Organization', name: site.name, url: abs(site, '/'), logo: abs(site, '/logo.svg') }),
     {
       '@type': 'ItemList',
-      name: 'Calculators',
+      name: `${site.name} calculators`,
       itemListElement: CALCULATORS.map((c, i) => clean({ '@type': 'ListItem', position: i + 1, name: c.title, url: abs(site, `/calculators/${c.slug}`) })),
     },
   ],
@@ -82,22 +82,22 @@ const FAQ: PageSeo = {
         acceptedAnswer: { '@type': 'Answer', text: f.a },
       })),
     },
-    breadcrumb(site, [{ name: 'Calculators', path: '/' }, { name: 'FAQ', path: '/faq' }]),
+    breadcrumb(site, [{ name: site.name, path: '/' }, { name: 'FAQ', path: '/faq' }]),
   ],
 };
 
 const PRIVACY: PageSeo = {
   title: 'Privacy Policy: What Is Collected and Your Choices',
   description:
-    'What Calculators collects if you accept analytics cookies, what is never sent, the cookies set, and how to change your choice at any time.',
+    'What Everyday Calculator collects if you accept analytics cookies, what is never sent, the cookies set, and how to change your choice at any time.',
   jsonLd: (site) => [
     { '@type': 'WebPage', name: 'Privacy policy', url: abs(site, '/privacy') },
-    breadcrumb(site, [{ name: 'Calculators', path: '/' }, { name: 'Privacy policy', path: '/privacy' }]),
+    breadcrumb(site, [{ name: site.name, path: '/' }, { name: 'Privacy policy', path: '/privacy' }]),
   ],
 };
 
 const NOT_FOUND: PageSeo = {
-  title: 'Page not found | Calculators',
+  title: 'Page not found | Everyday Calculator',
   description: 'This calculator is not here. Pick one from the list.',
   noindex: true,
   jsonLd: () => [],

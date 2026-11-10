@@ -13,8 +13,8 @@ import { provideClientHydration } from '@angular/platform-browser';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    // Set your GA4 ID here, e.g. provideAnalytics({ measurementId: 'G-ABC123XYZ9' })
-    provideAnalytics(),
+    // The GA4 measurement ID (Google Analytics > Admin > Data streams). Analytics stays off until a real one is here.
+    provideAnalytics({ measurementId: 'G-5XX2M5182G' }),
     // Your public address lives in core/seo/site.json (canonical links, sitemap and llms.txt read it)
     provideSeo(),
     provideRouter(
