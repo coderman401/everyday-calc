@@ -1,0 +1,202 @@
+:host {
+  display: inline-block;
+  flex: none;
+  line-height: 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+/* ---- Flat colour: palette only, no gradients, no shadows ---- */
+.ground {
+  fill: var(--ground);
+}
+.body {
+  fill: var(--ecto);
+}
+.lip,
+.leg,
+.antenna line {
+  fill: var(--ecto-lip);
+}
+.antenna line,
+.arm line {
+  stroke: var(--ecto-lip);
+  stroke-width: 11;
+  stroke-linecap: round;
+}
+.antenna line {
+  stroke-width: 5;
+}
+.antenna circle,
+.hand {
+  fill: var(--sun);
+}
+.shoe {
+  fill: var(--eel-blue);
+}
+.screen {
+  fill: var(--midnight);
+}
+.eye {
+  fill: var(--lime);
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: blink 5.6s infinite;
+}
+.eye:nth-of-type(2) {
+  animation-delay: 0.02s;
+}
+.glint {
+  fill: #ffffff;
+}
+.cheek {
+  fill: var(--pink);
+}
+.mouth {
+  stroke: var(--lime);
+  stroke-width: 4.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+}
+.mouth--open {
+  fill: var(--lime);
+  stroke-width: 2;
+  opacity: 0;
+}
+.key {
+  fill: #ffffff;
+}
+.key--blue {
+  fill: var(--macaw);
+}
+.key--pink {
+  fill: var(--pink);
+}
+.key--sun {
+  fill: var(--sun);
+}
+.sign {
+  fill: var(--midnight);
+}
+
+/* ---- Movement ---- */
+.bob {
+  animation: bob 3.6s ease-in-out infinite;
+}
+
+.antenna {
+  transform-origin: 100px 34px;
+  animation: sway 2.8s ease-in-out infinite;
+}
+
+.eyes {
+  transform: translate(calc(var(--ex, 0) * 1px), calc(var(--ey, 0) * 1px));
+  transition: transform 140ms var(--ease-out);
+}
+
+.arm {
+  transition: transform 260ms var(--ease-pop);
+}
+.arm--l {
+  transform-origin: 42px 104px;
+}
+.arm--r {
+  transform-origin: 158px 104px;
+}
+
+/* Waves once, a moment after load, then rests */
+:host(.is-wave) .arm--r {
+  animation: wave 2.9s ease-in-out 900ms 1 both;
+}
+
+/* Cheer: both arms up, a hop, an open smile */
+:host(.is-cheer) {
+  .arm--l {
+    transform: rotate(150deg);
+  }
+  .arm--r {
+    transform: rotate(-150deg);
+  }
+  .bob {
+    animation: hop 0.52s var(--ease-out) 2;
+  }
+  .mouth--smile {
+    opacity: 0;
+  }
+  .mouth--open {
+    opacity: 1;
+  }
+}
+
+@keyframes blink {
+  0%,
+  93%,
+  100% {
+    transform: scaleY(1);
+  }
+  96% {
+    transform: scaleY(0.08);
+  }
+}
+
+@keyframes bob {
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes sway {
+  50% {
+    transform: rotate(9deg);
+  }
+  0%,
+  100% {
+    transform: rotate(-9deg);
+  }
+}
+
+@keyframes hop {
+  40% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes wave {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  12%,
+  34%,
+  58%,
+  80% {
+    transform: rotate(-142deg);
+  }
+  22%,
+  46%,
+  70% {
+    transform: rotate(-168deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bob,
+  .antenna,
+  .eye,
+  :host(.is-wave) .arm--r {
+    animation: none !important;
+  }
+  .eyes,
+  .arm {
+    transition: none;
+  }
+}

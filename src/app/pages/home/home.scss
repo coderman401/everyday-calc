@@ -2,52 +2,82 @@
   display: block;
 }
 
-/* The hero is alone on the first screen and enters once on load: opacity and a short rise,
-   staggered by --i. Transform and opacity only. */
-.rise {
-  animation: rise 520ms var(--ease-out) both;
-  animation-delay: calc(var(--i, 0) * 70ms);
-}
-
+/* ---- Hero: one orchestrated entrance ---------------------------------------------------
+   Headline words spring up one after another, the lead and buttons follow, the card pops in,
+   and Tally drops onto the card's edge and waves. Transform and opacity only. */
 @keyframes rise {
   from {
     opacity: 0;
-    transform: translateY(14px);
+    transform: translateY(18px);
   }
 }
 
+@keyframes word {
+  from {
+    opacity: 0;
+    transform: translateY(0.5em) rotate(3deg);
+  }
+}
+
+@keyframes land {
+  from {
+    opacity: 0;
+    transform: translateY(-120px);
+  }
+  60% {
+    opacity: 1;
+  }
+}
+
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.96);
+  }
+}
+
+@keyframes beat {
+  50% {
+    transform: scale(1.5);
+    opacity: 0.45;
+  }
+}
+
+.rise {
+  animation: rise 560ms var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 80ms);
+}
+
+.w {
+  display: inline-block;
+  animation: word 640ms var(--ease-pop) both;
+  animation-delay: calc(var(--w, 0) * 70ms + 60ms);
+}
+
 .hero {
-  position: relative;
   min-height: calc(100svh - var(--nav-h));
   display: flex;
   align-items: center;
-  padding-block: var(--s-7);
-  isolation: isolate;
+  padding-block: var(--s-7) var(--s-8);
 }
 
-/* A dotted ground that fades out from behind the sample card. Static, so it costs nothing per frame. */
-.hero::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background-image: radial-gradient(color-mix(in srgb, var(--ink) 18%, transparent) 1px, transparent 1.5px);
-  background-size: 24px 24px;
-  -webkit-mask-image: radial-gradient(ellipse 60% 70% at 78% 45%, #000, transparent 75%);
-  mask-image: radial-gradient(ellipse 60% 70% at 78% 45%, #000, transparent 75%);
+@media (min-width: 960px) {
+  .hero {
+    /* room above the card for Tally to stand on its edge */
+    padding-block: calc(var(--s-9) + var(--s-7)) var(--s-8);
+  }
 }
 
 .hero__in {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: var(--s-7);
+  gap: var(--s-9) var(--s-8);
   align-items: center;
 }
 
 @media (min-width: 960px) {
   .hero__in {
     grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-    gap: var(--s-8);
   }
 }
 
@@ -57,27 +87,25 @@
   gap: var(--s-5);
 }
 
-.hero__lead {
-  font-size: clamp(1.125rem, 1rem + 0.5vw, 1.375rem);
+.hero__h {
+  color: var(--display-green);
+}
+
+.hero__lead,
+.features p {
+  font-size: 1.1875rem;
   line-height: 1.5;
-  color: var(--muted);
-  max-width: 34em;
+  max-width: 28em;
 }
 
-.hero__actions {
+/* The conversion pair: filled on top, outlined below */
+.cta {
   display: flex;
-  flex-wrap: wrap;
-  gap: var(--s-3);
-  margin-top: var(--s-2);
+  flex-direction: column;
+  gap: var(--s-4);
+  width: min(100%, 360px);
 }
 
-@media (max-width: 479px) {
-  .hero__actions a {
-    width: 100%;
-  }
-}
-
-/* Quick links: a pill each, 44px tall */
 .quick {
   display: flex;
   flex-wrap: wrap;
@@ -91,11 +119,26 @@
   color: var(--muted);
 }
 
-/* The live sample */
+/* ---- Live sample ------------------------------------------------------------------------ */
+.stage {
+  position: relative;
+  /* Scrolling away, the stage drifts up a little slower than the page */
+  view-timeline: --stage block;
+}
+
+.stage__mascot {
+  position: absolute;
+  z-index: 1;
+  right: var(--s-6);
+  bottom: calc(100% - 6px);
+  animation: land 900ms var(--ease-out) 700ms both;
+}
+
 .sample {
   display: flex;
   flex-direction: column;
   gap: var(--s-2);
+  animation: pop 640ms var(--ease-pop) 380ms both;
 }
 
 .sample__top {
@@ -110,16 +153,18 @@
   align-items: center;
   gap: 6px;
   padding: 2px 10px;
-  border-radius: 999px;
-  background: var(--fill);
+  border-radius: var(--r-sm);
+  background: var(--eel-light);
+  color: var(--eel-blue);
   font-size: 0.8125rem;
-  font-weight: 550;
+  font-weight: 800;
 
   i {
-    width: 7px;
-    height: 7px;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
-    background: var(--c-gain);
+    background: var(--ecto);
+    animation: beat 1.8s ease-in-out infinite;
   }
 }
 
@@ -128,37 +173,61 @@
 }
 
 .sample__per {
+  font-family: var(--font-ui);
   font-size: 1rem;
-  font-weight: 400;
-  letter-spacing: 0;
+  font-weight: 500;
+  letter-spacing: 0.053em;
   color: var(--muted);
 }
 
 .sample__slider {
   display: block;
   width: auto;
-  margin: var(--s-2) 8px 0;
+  margin: var(--s-2) 14px 0;
 }
 
 .sample__chart {
   align-self: center;
   width: 100%;
-  max-width: 190px;
-  margin-block: var(--s-3);
+  max-width: 168px;
+  margin-block: var(--s-2);
 }
 
-.sample .rows {
-  margin-bottom: var(--s-3);
+@supports (animation-timeline: view()) {
+  .stage {
+    animation: drift linear both;
+    animation-timeline: view();
+    animation-range: exit 0% exit 100%;
+  }
 }
 
-/* ---- Catalogue ------------------------------------------------------------- */
+/* Stacked (narrow) layout: leave room above the card for Tally */
+@media (max-width: 959px) {
+  .stage {
+    margin-top: var(--s-8);
+  }
+}
+
+@keyframes drift {
+  to {
+    transform: translateY(-56px);
+  }
+}
+
+/* ---- Feature sections (layout lives in app-feature; this styles their projected text) ---- */
+.features {
+  padding-block: var(--s-8) 0;
+}
+
+/* ---- Catalogue --------------------------------------------------------------------------- */
 .all {
-  padding-block: var(--s-9);
-  border-top: 1px solid var(--line);
+  padding-block: var(--section-gap);
 }
 
-.all h2 {
+.all__h {
   margin-bottom: var(--s-7);
+  font-size: clamp(2rem, 1.4rem + 2.4vw, 3rem);
+  color: var(--display-green);
 }
 
 .group + .group {
@@ -204,9 +273,10 @@
 }
 
 .tile__title {
-  font-weight: 600;
-  font-size: 1.0625rem;
-  letter-spacing: -0.01em;
+  font-weight: 800;
+  font-size: 1.1875rem;
+  line-height: 1.33;
+  color: var(--heading);
 }
 
 /* The worked example sits at the foot of every card, so the figures line up across a row */
@@ -217,7 +287,7 @@
   gap: var(--s-4);
   margin-top: auto;
   padding-top: var(--s-4);
-  border-top: 1px solid var(--line);
+  border-top: var(--edge) solid var(--line);
 }
 
 .tile__text {
@@ -227,18 +297,26 @@
 }
 
 .tile__figure {
-  font-size: 1.375rem;
-  font-weight: 650;
-  letter-spacing: -0.03em;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--heading);
 }
 
 .tile__caption {
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .tile:hover .tile__head .mat-icon {
-    color: var(--accent);
-    transform: translateX(3px);
+    color: var(--accent-text);
+    transform: translateX(4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage {
+    animation: none !important;
   }
 }

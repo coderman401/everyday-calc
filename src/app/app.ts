@@ -9,12 +9,13 @@ import { filter, map } from 'rxjs';
 import { CALCULATORS, CATEGORIES, calculatorPath, type CalculatorInfo } from './core/registry/calculators';
 import { Theme } from './core/theme/theme';
 import { Logo } from './shared/ui/logo';
+import { Mascot } from './shared/ui/mascot';
 import { Consent } from './core/analytics';
 import { CookieBanner } from './shared/layout/cookie-banner/cookie-banner';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, MatButtonModule, MatIconModule, MatMenuModule, MatTooltipModule, Logo, CookieBanner],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, MatButtonModule, MatIconModule, MatMenuModule, MatTooltipModule, Logo, Mascot, CookieBanner],
   templateUrl: './app.html',
   styleUrl: './app.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -13,6 +13,7 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
+import { Mascot } from '../ui/mascot';
 import { RelatedCalculators } from './related-calculators';
 
 /**
@@ -25,7 +26,7 @@ import { RelatedCalculators } from './related-calculators';
  */
 @Component({
   selector: 'app-calc-shell',
-  imports: [RouterLink, MatButtonModule, MatIconModule, RelatedCalculators],
+  imports: [RouterLink, MatButtonModule, MatIconModule, Mascot, RelatedCalculators],
   templateUrl: './calc-shell.html',
   styleUrl: './calc-shell.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -7,6 +7,7 @@
 }
 
 .page__head {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -19,8 +20,23 @@
 }
 
 .page__lead {
-  font-size: 1.125rem;
+  font-size: 1.1875rem;
   color: var(--muted);
+}
+
+/* Tally stands on the results card's top edge, beside the title (wide screens only) */
+.page__mascot {
+  display: none;
+}
+
+@media (min-width: 960px) {
+  .page__mascot {
+    display: block;
+    position: absolute;
+    z-index: 1;
+    right: var(--s-6);
+    bottom: calc(6px - var(--s-7));
+  }
 }
 
 /* Inputs left, results right */
@@ -63,7 +79,7 @@
   gap: var(--s-4);
   padding: var(--s-3) var(--gut) calc(var(--s-3) + env(safe-area-inset-bottom));
   background: var(--card);
-  border-top: 1px solid var(--line);
+  border-top: var(--edge) solid var(--line);
   transform: translateY(110%);
   transition: transform var(--t-settle) var(--ease-out);
 
@@ -85,9 +101,10 @@
 }
 
 .bar__value {
-  font-size: 1.25rem;
-  font-weight: 650;
-  letter-spacing: -0.03em;
+  font-family: var(--font-display);
+  font-size: 1.375rem;
+  font-weight: 600;
+  color: var(--heading);
 }
 
 @media (min-width: 960px) {

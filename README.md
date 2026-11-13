@@ -20,6 +20,19 @@ The home page has a live sample (a slider and four tenures, worked by the real l
 light/dark switch that remembers the choice; the logo is `public/logo.svg` (also the favicon) and the
 `app-logo` component draws the same mark in the theme's colours.
 
+## Look and motion
+
+The look follows the Duolingo-style reference: flat solid colour, 2px outlines with a 4px "lip" under
+buttons and cards (depth is a border, never a shadow), one 12px radius, no gradients. Tokens are in
+`src/styles.scss` and `src/material.scss`; Fredoka stands in for the display face and Nunito for the UI.
+
+- **Tally**, the mascot, is an SVG component (`shared/ui/mascot`). It blinks, follows the pointer with its
+  eyes, waves once on load and cheers when the home sample changes or when clicked. `app-logo` is its face.
+- **Scroll-driven motion** is plain CSS (`animation-timeline`): the progress line under the header, the
+  home page's feature scenes (`shared/ui/feature-scene`), the hero drift, the catalogue cards and the
+  mascot rising over the footer. It is progressive enhancement: where scroll timelines are not supported
+  the page is simply at rest, and `prefers-reduced-motion` switches all of it off.
+
 ## Run
 
 Angular 22 needs Node `^22.22.3`, `^24.15` or `>=26` (see `.nvmrc`).

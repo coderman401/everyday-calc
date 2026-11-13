@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, computed, inject, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatIconModule } from '@angular/material/icon';
@@ -21,6 +21,8 @@ import {
 import { startOfDay } from '../../core/dates/dates';
 import { formatInr, formatPercent, formatWords } from '../../core/formatting/format';
 import { Count } from '../../shared/ui/count';
+import { Feature } from '../../shared/ui/feature';
+import { Mascot, type MascotMood } from '../../shared/ui/mascot';
 import { Donut, type Slice } from '../../shared/charts/donut-chart';
 import { TileVisual, type TileVisualSpec } from '../../shared/charts/tile-visual';
 
@@ -129,6 +131,8 @@ function examples(): Record<string, Example> {
     MatIconModule,
     MatSliderModule,
     Count,
+    Feature,
+    Mascot,
     Donut,
     TileVisual,
   ],
@@ -144,12 +148,37 @@ export class Home {
     .map((slug) => CALCULATORS.find((c) => c.slug === slug)!)
     .filter(Boolean);
   protected readonly example = examples();
+  protected readonly headline = 'Calculators for loans, savings and health'.split(' ');
 
   // The live sample in the hero: a slider and four tenures, run by the real loan engine.
   protected readonly rate = 8.5;
   protected readonly tenures = [10, 15, 20, 30];
   protected readonly amount = signal(5_000_000);
   protected readonly years = signal(20);
+
+  /** Tally waves hello on load, then cheers for a moment whenever the visitor changes the sample. */
+  protected readonly mood = signal<MascotMood>('wave');
+  private cheerTimer: ReturnType<typeof setTimeout> | undefined;
+
+  constructor() {
+    inject(DestroyRef).onDestroy(() => clearTimeout(this.cheerTimer));
+  }
+
+  protected setAmount(value: number): void {
+    this.amount.set(value);
+    this.cheer();
+  }
+
+  protected setYears(value: number): void {
+    this.years.set(value);
+    this.cheer();
+  }
+
+  private cheer(): void {
+    clearTimeout(this.cheerTimer);
+    this.mood.set('cheer');
+    this.cheerTimer = setTimeout(() => this.mood.set('idle'), 1100);
+  }
 
   protected readonly sample = computed(() =>
     calculateLoan({ principal: this.amount(), annualRate: this.rate, months: this.years() * 12 }),

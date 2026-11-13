@@ -1,16 +1,20 @@
 <section class="hero">
   <div class="wrap hero__in">
     <div class="hero__text">
-      <h1 class="rise" style="--i: 0">Calculators for loans, savings and health</h1>
-      <p class="hero__lead rise" style="--i: 1">
+      <h1 class="hero__h">
+        @for (w of headline; track $index) {
+          <span class="w" [style.--w]="$index">{{ w }}</span>{{ ' ' }}
+        }
+      </h1>
+      <p class="hero__lead rise" style="--i: 5">
         Work out an EMI, a SIP, a BMI or a due date. Each calculator shows the formula and the working
         behind the answer, using the numbers you entered.
       </p>
-      <div class="hero__actions rise" style="--i: 2">
+      <div class="cta rise" style="--i: 6">
         <a mat-flat-button [routerLink]="homeLoanPath">Open the home loan calculator</a>
-        <a mat-button href="#all">See all calculators</a>
+        <a mat-stroked-button href="#all">See all calculators</a>
       </div>
-      <nav class="quick rise" style="--i: 3" aria-label="Other calculators">
+      <nav class="quick rise" style="--i: 7" aria-label="Other calculators">
         <span class="quick__label">Or start with</span>
         @for (c of quick; track c.slug) {
           <a class="chip" [routerLink]="path(c)"><mat-icon aria-hidden="true" [fontIcon]="c.icon" />{{ c.short }}</a>
@@ -18,77 +22,106 @@
       </nav>
     </div>
 
-    <section class="card sample rise" style="--i: 2" aria-labelledby="sample-h">
-      <div class="sample__top">
-        <h2 id="sample-h" class="label">Try a home loan: monthly EMI</h2>
-        <span class="live"><i aria-hidden="true"></i>Live</span>
-      </div>
-      <p class="hero-fig">
-        <app-count [value]="sample().emi" /><span class="sample__per"> a month</span>
+    <div class="stage">
+      <app-mascot class="stage__mascot" [size]="136" [mood]="mood()" />
+      <section class="card sample" aria-labelledby="sample-h">
+        <div class="sample__top">
+          <h2 id="sample-h" class="label">Try a home loan: monthly EMI</h2>
+          <span class="live"><i aria-hidden="true"></i>Live</span>
+        </div>
+        <p class="hero-fig">
+          <app-count [value]="sample().emi" /><span class="sample__per"> a month</span>
+        </p>
+        <p class="note num">{{ amountWords() }} at {{ rate }}% for {{ years() }} years</p>
+
+        <mat-slider class="sample__slider" min="500000" max="20000000" step="100000">
+          <input
+            matSliderThumb
+            aria-label="Loan amount"
+            [value]="amount()"
+            (valueChange)="setAmount($event)"
+          />
+        </mat-slider>
+
+        <mat-button-toggle-group
+          class="seg"
+          hideSingleSelectionIndicator
+          aria-label="Loan tenure in years"
+          [value]="years()"
+          (change)="setYears($event.value)"
+        >
+          @for (t of tenures; track t) {
+            <mat-button-toggle [value]="t">{{ t }} yrs</mat-button-toggle>
+          }
+        </mat-button-toggle-group>
+
+        <div class="sample__chart">
+          <app-donut
+            [slices]="slices()"
+            [summary]="summary()"
+            centreLabel="Interest share"
+            [centreValue]="interestShare()"
+          />
+        </div>
+
+        <div class="rows">
+          <div class="row">
+            <p class="row__label"><span class="dot" style="--dot: var(--c-principal)" aria-hidden="true"></span>Principal</p>
+            <p class="row__value num">{{ formatInr(sample().principal) }}</p>
+          </div>
+          <div class="row">
+            <p class="row__label"><span class="dot" style="--dot: var(--c-interest)" aria-hidden="true"></span>Interest</p>
+            <p class="row__value num">{{ formatInr(sample().totalInterest) }}</p>
+          </div>
+        </div>
+
+        <a
+          mat-stroked-button
+          [routerLink]="homeLoanPath"
+          [queryParams]="{ amount: amount(), rate: rate, years: years() }"
+        >
+          Open with these numbers
+        </a>
+      </section>
+    </div>
+  </div>
+</section>
+
+<section class="features" aria-label="What every calculator does">
+  <div class="wrap">
+    <app-feature scene="formula" heading="See the working, not just the answer">
+      <p>
+        Every calculator shows its formula and a worked example built from the numbers you typed, so
+        you can check the result yourself.
       </p>
-      <p class="note num">{{ amountWords() }} at {{ rate }}% for {{ years() }} years</p>
+      <a mat-stroked-button [routerLink]="homeLoanPath">See a worked example</a>
+    </app-feature>
 
-      <mat-slider class="sample__slider" min="500000" max="20000000" step="100000">
-        <input
-          matSliderThumb
-          aria-label="Loan amount"
-          [value]="amount()"
-          (valueChange)="amount.set($event)"
-        />
-      </mat-slider>
+    <app-feature scene="live" heading="Change a number and watch it move">
+      <p>
+        Drag the amount or pick another tenure. The EMI, the interest and the chart update as you go,
+        and prepayments show how much sooner you finish.
+      </p>
+    </app-feature>
 
-      <mat-button-toggle-group
-        class="seg"
-        hideSingleSelectionIndicator
-        aria-label="Loan tenure in years"
-        [value]="years()"
-        (change)="years.set($event.value)"
-      >
-        @for (t of tenures; track t) {
-          <mat-button-toggle [value]="t">{{ t }} yrs</mat-button-toggle>
-        }
-      </mat-button-toggle-group>
-
-      <div class="sample__chart">
-        <app-donut
-          [slices]="slices()"
-          [summary]="summary()"
-          centreLabel="Interest share"
-          [centreValue]="interestShare()"
-        />
-      </div>
-
-      <div class="rows">
-        <div class="row">
-          <p class="row__label"><span class="dot" style="--dot: var(--c-principal)" aria-hidden="true"></span>Principal</p>
-          <p class="row__value num">{{ formatInr(sample().principal) }}</p>
-        </div>
-        <div class="row">
-          <p class="row__label"><span class="dot" style="--dot: var(--c-interest)" aria-hidden="true"></span>Interest</p>
-          <p class="row__value num">{{ formatInr(sample().totalInterest) }}</p>
-        </div>
-      </div>
-
-      <a
-        mat-stroked-button
-        [routerLink]="homeLoanPath"
-        [queryParams]="{ amount: amount(), rate: rate, years: years() }"
-      >
-        Open with these numbers
-      </a>
-    </section>
+    <app-feature scene="private" heading="What you type stays on your device">
+      <p>
+        The sums run in your browser. Analytics never receives the amounts, dates or measurements you
+        enter. <a routerLink="/privacy">Read the privacy policy</a>.
+      </p>
+    </app-feature>
   </div>
 </section>
 
 <section class="all" id="all" aria-labelledby="all-h">
   <div class="wrap">
-    <h2 id="all-h">All calculators</h2>
+    <h2 id="all-h" class="all__h">All calculators</h2>
     @for (group of groups; track group.category.id) {
       <div class="group">
-        <h3 class="label group__h">{{ group.category.label }}</h3>
+        <h3 class="group__h">{{ group.category.label }}</h3>
         <ul class="grid">
           @for (c of group.items; track c.slug) {
-            <li>
+            <li class="sd-pop" [style.--n]="$index % 3">
               <a class="tile card lift" [routerLink]="path(c)">
                 <span class="tile__head">
                   <span class="tile__title">{{ c.title }}</span>

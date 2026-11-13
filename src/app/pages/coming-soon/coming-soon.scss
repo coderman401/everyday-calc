@@ -15,21 +15,6 @@
   padding: var(--s-7) var(--s-6);
 }
 
-.soon__icon {
-  display: grid;
-  place-items: center;
-  width: 56px;
-  height: 56px;
-  border-radius: var(--r-md);
-  background: var(--fill);
-
-  .mat-icon {
-    font-size: 28px;
-    width: 28px;
-    height: 28px;
-  }
-}
-
 .soon__title {
   font-size: clamp(2rem, 1.4rem + 2vw, 2.75rem);
 }
