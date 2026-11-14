@@ -1,0 +1,45 @@
+<section class="wrap walk" aria-labelledby="walk-h">
+  <header class="walk__head">
+    <h2 id="walk-h" class="h">Everyday Calc, start to finish</h2>
+    <p>Follow one home loan from the first number you type to the last line of working.</p>
+  </header>
+
+  <ol class="walk__list">
+    <li class="step" style="--n: 1">
+      <div class="step__text">
+        <span class="step__badge" aria-hidden="true">1</span>
+        <h3>Enter your loan</h3>
+        <p>
+          Type or drag the amount, rate and tenure. {{ loan }} comes to {{ emi }} a month, and the
+          chart splits what you pay into principal and interest.
+        </p>
+      </div>
+      <app-loan-screen class="screen card" aria-hidden="true" />
+    </li>
+
+    <li class="step" style="--n: 2">
+      <div class="step__text">
+        <span class="step__badge" aria-hidden="true">2</span>
+        <h3>Read it year by year</h3>
+        <p>
+          A schedule shows what each year pays toward principal and interest, and what you still owe
+          at its end. In year 1, {{ firstPrincipal }} is principal and {{ firstInterest }} is
+          interest.
+        </p>
+      </div>
+      <app-schedule-screen class="screen card" aria-hidden="true" />
+    </li>
+
+    <li class="step" style="--n: 3">
+      <div class="step__text">
+        <span class="step__badge" aria-hidden="true">3</span>
+        <h3>Check the working</h3>
+        <p>
+          The formula, then your own numbers worked through it line by line, so you can check the
+          result yourself.
+        </p>
+      </div>
+      <app-working-screen class="screen card" aria-hidden="true" />
+    </li>
+  </ol>
+</section>

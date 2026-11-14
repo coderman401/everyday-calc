@@ -1,0 +1,63 @@
+<section class="wrap eng" aria-labelledby="eng-h">
+  <div class="eng__text">
+    <h2 id="eng-h" class="h">One engine behind every number</h2>
+    <p>
+      Each calculator keeps its maths in one plain function that is tested on its own. The figure,
+      the chart, the yearly schedule and the worked example all read from it, so they always agree.
+    </p>
+  </div>
+
+  <figure class="flow">
+    <figcaption class="flow__cap">
+      <mat-icon aria-hidden="true" fontIcon="lock" />
+      Runs in your browser. Nothing you type is uploaded.
+    </figcaption>
+
+    <div class="map">
+      <div class="node node--in">
+        <p class="label">You enter</p>
+        <p class="fig num">{{ amount }}</p>
+        <p class="muted">{{ terms }}</p>
+      </div>
+
+      <div class="link link--a" aria-hidden="true">
+        <span class="link__t label">typed or dragged</span>
+        <span class="link__line"></span>
+      </div>
+
+      <div class="node node--engine">
+        <p class="label">The engine</p>
+        <h3>Home loan maths</h3>
+        <p class="muted">
+          Same numbers in, same answer out, every time. {{ count }} calculators, one engine each.
+        </p>
+      </div>
+
+      <app-engine-fan aria-hidden="true" />
+
+      <ul class="outs">
+        <li class="node out">
+          <h3>Figure and chart</h3>
+          <p class="out__row">
+            <span class="fig num">{{ emi }}<small> a month</small></span>
+            <app-tile-visual [spec]="split" />
+          </p>
+          <p class="muted">Reads the EMI and the split between principal and interest.</p>
+        </li>
+        <li class="node out">
+          <h3>Year-by-year schedule</h3>
+          <p class="out__row">
+            <span class="fig num">{{ rows }} rows<small> one a year</small></span>
+            <app-tile-visual [spec]="owed" />
+          </p>
+          <p class="muted">Reads what each year pays and what you still owe.</p>
+        </li>
+        <li class="node out">
+          <h3>Worked example</h3>
+          <p class="formula num">{{ formula }}</p>
+          <p class="muted">Reads the same numbers into the formula, line by line.</p>
+        </li>
+      </ul>
+    </div>
+  </figure>
+</section>

@@ -1,11 +1,23 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, computed, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  computed,
+  inject,
+  signal,
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSliderModule } from '@angular/material/slider';
 import { RouterLink } from '@angular/router';
 import { calculateAge } from '../../calculators/age/age.engine';
-import { CATEGORIES as BMI_CATEGORIES, SCALE_MAX, SCALE_MIN, calculateBmi } from '../../calculators/bmi/bmi.engine';
+import {
+  CATEGORIES as BMI_CATEGORIES,
+  SCALE_MAX,
+  SCALE_MIN,
+  calculateBmi,
+} from '../../calculators/bmi/bmi.engine';
 import { phasesOf } from '../../calculators/menstrual-cycle/cycle.engine';
 import { calculateFd } from '../../calculators/fixed-deposit/fd.engine';
 import { calculateLoan } from '../../calculators/loan/loan.engine';
@@ -21,8 +33,10 @@ import {
 import { startOfDay } from '../../core/dates/dates';
 import { formatInr, formatPercent, formatWords } from '../../core/formatting/format';
 import { Count } from '../../shared/ui/count';
+import { EngineDiagram } from '../../shared/ui/engine-diagram';
 import { Feature } from '../../shared/ui/feature';
 import { Mascot, type MascotMood } from '../../shared/ui/mascot';
+import { Walkthrough } from '../../shared/ui/walkthrough';
 import { Donut, type Slice } from '../../shared/charts/donut-chart';
 import { TileVisual, type TileVisualSpec } from '../../shared/charts/tile-visual';
 
@@ -80,7 +94,12 @@ function examples(): Record<string, Example> {
       figure: formatInr(fd.maturity),
       caption: '₹5 lakh at 7% for 5 years, added quarterly',
       // drawn from just under the deposit, so a gentle climb still shows as a curve
-      visual: { type: 'line', points: [fd.principal, ...fd.years.map((y) => y.balance)].map((v) => v - fd.principal * 0.9) },
+      visual: {
+        type: 'line',
+        points: [fd.principal, ...fd.years.map((y) => y.balance)].map(
+          (v) => v - fd.principal * 0.9,
+        ),
+      },
     },
     bmi: {
       figure: bmi.bmi.toFixed(1),
@@ -105,7 +124,10 @@ function examples(): Record<string, Example> {
     'menstrual-cycle': {
       figure: `Days ${fertile.fromDay} to ${fertile.toDay}`,
       caption: 'Fertile window in a 28-day cycle',
-      visual: { type: 'donut', parts: phases.map((p) => ({ value: p.days, color: CYCLE_COLORS[p.id] })) },
+      visual: {
+        type: 'donut',
+        parts: phases.map((p) => ({ value: p.days, color: CYCLE_COLORS[p.id] })),
+      },
     },
     pregnancy: {
       figure: `${PREGNANCY_DAYS / 7} weeks`,
@@ -131,8 +153,10 @@ function examples(): Record<string, Example> {
     MatIconModule,
     MatSliderModule,
     Count,
+    EngineDiagram,
     Feature,
     Mascot,
+    Walkthrough,
     Donut,
     TileVisual,
   ],
@@ -187,8 +211,18 @@ export class Home {
   protected readonly amountWords = computed(() => formatWords(this.amount()));
 
   protected readonly slices = computed<Slice[]>(() => [
-    { id: 'principal', label: 'Principal', value: this.sample().principal, color: 'var(--c-principal)' },
-    { id: 'interest', label: 'Interest', value: this.sample().totalInterest, color: 'var(--c-interest)' },
+    {
+      id: 'principal',
+      label: 'Principal',
+      value: this.sample().principal,
+      color: 'var(--c-principal)',
+    },
+    {
+      id: 'interest',
+      label: 'Interest',
+      value: this.sample().totalInterest,
+      color: 'var(--c-interest)',
+    },
   ]);
 
   protected readonly interestShare = computed(() =>

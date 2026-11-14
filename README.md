@@ -32,6 +32,15 @@ buttons and cards (depth is a border, never a shadow), one 12px radius, no gradi
   home page's feature scenes (`shared/ui/feature-scene`), the hero drift, the catalogue cards and the
   mascot rising over the footer. It is progressive enhancement: where scroll timelines are not supported
   the page is simply at rest, and `prefers-reduced-motion` switches all of it off.
+- **Two home page sections follow one loan through the app.** "Everyday Calc, start to finish"
+  (`shared/ui/walkthrough`, with its three screens in `walk-screens`) pins its screens while the steps scroll
+  past and hands over from one to the next; each step owns a named view timeline declared on its text and read
+  by its sibling screen (`timeline-scope`). "One engine behind every number" (`shared/ui/engine-diagram`) is the
+  flow from what you type, through the maths, to the three things that read its result, drawn in HTML and CSS so
+  it reflows to a column on phones. Both are worked from the home loan calculator's defaults through
+  `shared/ui/sample-loan`, which calls the real engine and explainer, so they agree with the calculator and
+  with the hero sample. Where scroll timelines or `timeline-scope` are missing, below 900px wide, or with reduced
+  motion, the walkthrough is a plain list of steps with a screen each and the diagram is simply complete.
 
 ## Run
 
