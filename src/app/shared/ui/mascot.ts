@@ -13,7 +13,7 @@ import {
 export type MascotMood = 'idle' | 'wave' | 'cheer';
 
 /**
- * Tally, the mascot: a pocket calculator with a face, drawn as flat shapes in the brand palette
+ * Tally, the mascot: a pocket calculator with a friendly face, drawn as flat shapes in the brand palette
  * (no gradients, no shadows; the darker "lip" under the body is the same pressable edge the
  * buttons use). Decorative only, so it is hidden from assistive technology.
  *
@@ -51,17 +51,23 @@ export type MascotMood = 'idle' | 'wave' | 'cheer';
         <rect class="lip" x="38" y="40" width="124" height="138" rx="26" />
         <rect class="body" x="38" y="30" width="124" height="140" rx="26" />
 
-        <rect class="screen" x="52" y="44" width="96" height="58" rx="14" />
+        <rect class="screen" x="52" y="44" width="96" height="60" rx="20" />
         <g class="eyes">
-          <ellipse class="eye" cx="79" cy="68" rx="7.5" ry="10.5" />
-          <ellipse class="eye" cx="121" cy="68" rx="7.5" ry="10.5" />
-          <circle class="glint" cx="81.5" cy="63.5" r="2.4" />
-          <circle class="glint" cx="123.5" cy="63.5" r="2.4" />
+          <g class="eye">
+            <ellipse class="pupil" cx="79" cy="70" rx="9" ry="11" />
+            <circle class="glint" cx="82.5" cy="65" r="3.6" />
+            <circle class="glint glint--s" cx="76" cy="75" r="1.5" />
+          </g>
+          <g class="eye">
+            <ellipse class="pupil" cx="121" cy="70" rx="9" ry="11" />
+            <circle class="glint" cx="124.5" cy="65" r="3.6" />
+            <circle class="glint glint--s" cx="118" cy="75" r="1.5" />
+          </g>
         </g>
-        <circle class="cheek" cx="63" cy="85" r="6" />
-        <circle class="cheek" cx="137" cy="85" r="6" />
-        <path class="mouth mouth--smile" d="M90 83 Q100 93 110 83" />
-        <path class="mouth mouth--open" d="M89 81 Q100 99 111 81 Z" />
+        <circle class="cheek" cx="62" cy="88" r="7" />
+        <circle class="cheek" cx="138" cy="88" r="7" />
+        <path class="mouth mouth--smile" d="M91 84 Q100 95 109 84" />
+        <path class="mouth mouth--open" d="M90 82 Q100 101 110 82 Z" />
 
         <rect class="key key--blue" x="52" y="111" width="19.5" height="22" rx="6" />
         <rect class="key" x="77.5" y="111" width="19.5" height="22" rx="6" />

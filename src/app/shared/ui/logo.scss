@@ -19,17 +19,25 @@ svg {
   fill: var(--ecto);
 }
 .screen {
-  fill: var(--midnight);
+  fill: #ffffff;
+}
+.pupil {
+  fill: var(--eel-blue);
+}
+.glint {
+  fill: #ffffff;
+}
+.cheek {
+  fill: var(--pink);
 }
 .eye {
-  fill: var(--lime);
   transform-box: fill-box;
   transform-origin: center;
   animation: open 520ms var(--ease-pop) 160ms both;
 }
 .smile {
   fill: none;
-  stroke: var(--lime);
+  stroke: var(--eel-blue);
   stroke-width: 1.7;
   stroke-linecap: round;
   transition: transform 200ms var(--ease-pop);

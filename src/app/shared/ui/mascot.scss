@@ -43,10 +43,12 @@ svg {
   fill: var(--eel-blue);
 }
 .screen {
-  fill: var(--midnight);
+  fill: #ffffff;
+}
+.pupil {
+  fill: var(--eel-blue);
 }
 .eye {
-  fill: var(--lime);
   transform-box: fill-box;
   transform-origin: center;
   animation: blink 5.6s infinite;
@@ -61,14 +63,14 @@ svg {
   fill: var(--pink);
 }
 .mouth {
-  stroke: var(--lime);
+  stroke: var(--eel-blue);
   stroke-width: 4.5;
   stroke-linecap: round;
   stroke-linejoin: round;
   fill: none;
 }
 .mouth--open {
-  fill: var(--lime);
+  fill: var(--eel-blue);
   stroke-width: 2;
   opacity: 0;
 }
