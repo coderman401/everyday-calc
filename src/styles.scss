@@ -34,14 +34,19 @@ html[data-theme='dark'] {
   --pink: #ff86d0;
 
   /* Ground and text. Paper is the only surface; cards are outlines, not fills. */
-  --bg: light-dark(#ffffff, #000437);
-  --card: light-dark(#ffffff, #070b4a);
-  --fill: light-dark(#f7f7f7, #0d1359);
-  --ink: light-dark(#3c3c3c, #eef0ff);
+  /* Dark is a calm deep slate, not saturated navy: the greens, blue and orange stay the loudest
+     things on the page. Cards are one step lighter than the ground and outlined, as in light. */
+  --bg: light-dark(#ffffff, #131f24);
+  --card: light-dark(#ffffff, #18262c);
+  --fill: light-dark(#f7f7f7, #202f36);
+  --ink: light-dark(#3c3c3c, #e6edf0);
   --heading: light-dark(#042c60, #ffffff);
-  --muted: light-dark(#6e6e6e, #a9b0e8);
-  --line: light-dark(#e5e5e5, #1e2784);
-  --line-strong: light-dark(#cfcfcf, #3a45b0);
+  --muted: light-dark(#6e6e6e, #9fb1b9);
+  --line: light-dark(#e5e5e5, #2f414a);
+  --line-strong: light-dark(#cfcfcf, #4c6069);
+  /* Selected and highlighted states: pale green on white; a soft green tint with lime text on dark */
+  --selected-bg: light-dark(#d7ffb8, color-mix(in srgb, #58cc02 22%, #131f24));
+  --selected-text: light-dark(#042c60, #a5ed6e);
   /* Green and blue that read as text or icons on each ground (the bright fills are for fills) */
   --accent: var(--ecto);
   --accent-text: light-dark(#3f8a00, #a5ed6e);
@@ -49,7 +54,7 @@ html[data-theme='dark'] {
   --blue: var(--macaw);
   --blue-text: light-dark(#0a7bb8, #6cd0ff);
   --on-accent: var(--midnight);
-  --ground: light-dark(#e5e5e5, #1e2784);
+  --ground: light-dark(#e5e5e5, #2f414a);
 
   /* Material parts take the same grounds */
   --mat-app-background-color: var(--bg);
@@ -288,7 +293,7 @@ a:hover {
   border-bottom-color: var(--lime);
 
   &:hover {
-    background: color-mix(in srgb, var(--eel-light) 38%, transparent);
+    background: color-mix(in srgb, var(--selected-bg) 45%, transparent);
   }
 }
 
@@ -694,8 +699,8 @@ a:hover {
   align-self: flex-start;
   padding: var(--s-1) var(--s-3);
   border-radius: var(--r-sm);
-  background: var(--eel-light);
-  color: var(--eel-blue);
+  background: var(--selected-bg);
+  color: var(--selected-text);
   font-size: 0.9375rem;
   font-weight: 800;
 }

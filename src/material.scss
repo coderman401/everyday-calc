@@ -179,8 +179,8 @@ html {
       divider-color: var(--line),
       background-color: var(--card),
       text-color: var(--ink),
-      selected-state-background-color: var(--eel-light),
-      selected-state-text-color: var(--eel-blue),
+      selected-state-background-color: var(--selected-bg),
+      selected-state-text-color: var(--selected-text),
       disabled-state-text-color: var(--muted),
       state-layer-color: var(--ecto),
     )
