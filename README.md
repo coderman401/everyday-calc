@@ -70,6 +70,27 @@ npm run preview:hosting    # build, then publish to a temporary preview URL (7 d
 
 Every push to `main` deploys automatically (`.github/workflows/deploy.yml`; needs the `FIREBASE_SERVICE_ACCOUNT_EVERYDAY_CALC` secret, see `docs/ARCHITECTURE.md`). By hand, you need the Firebase CLI signed in with access to the project (`firebase login`). Details in `docs/ARCHITECTURE.md`.
 
+### GitHub Pages
+
+`.github/workflows/pages.yml` also publishes the site to GitHub Pages, at
+https://coderman401.github.io/everyday-calc/ (Firebase stays as it is). Every push to `main` runs the
+tests, builds with the right base path and deploys; it can also be run by hand from the Actions tab.
+
+One-time set-up: repository **Settings > Pages > Build and deployment > Source: GitHub Actions**.
+
+The workflow takes the base path and public address from GitHub, so a custom domain later needs no
+change here. For that build only, it points `site.json` at the Pages address so canonical URLs, the
+sitemap and `robots.txt` agree (nothing is committed). Pages cannot set response headers, so the
+caching and security headers in `firebase.json` apply to Firebase only.
+
+To try the Pages build locally:
+
+```bash
+SITE_URL=https://coderman401.github.io/everyday-calc npm run seo
+npx ng build --base-href /everyday-calc/ && node scripts/post-build.mjs
+git checkout -- public src/app/core/seo/site.json   # undo the SEO files
+```
+
 ## SEO
 
 Every page is prerendered to static HTML (text is readable without JavaScript), with its own title,
