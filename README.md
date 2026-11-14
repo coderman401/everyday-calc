@@ -68,7 +68,7 @@ npm run deploy             # build, then publish to everyday-calc
 npm run preview:hosting    # build, then publish to a temporary preview URL (7 days)
 ```
 
-Every push to `main` deploys automatically (`.github/workflows/deploy.yml`; needs the `FIREBASE_SERVICE_ACCOUNT_EVERYDAY_CALC` secret, see `docs/ARCHITECTURE.md`). By hand, you need the Firebase CLI signed in with access to the project (`firebase login`). Details in `docs/ARCHITECTURE.md`.
+Firebase is deployed by hand for now: you need the Firebase CLI signed in with access to the project (`firebase login`). There is no automatic Firebase workflow at the moment (the earlier one failed at the deploy step because the `FIREBASE_SERVICE_ACCOUNT_EVERYDAY_CALC` secret was not valid JSON; re-save the whole service-account key file as that secret before restoring it). GitHub Pages deploys automatically, below. Details in `docs/ARCHITECTURE.md`.
 
 ### GitHub Pages
 
