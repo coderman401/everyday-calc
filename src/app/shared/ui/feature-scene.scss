@@ -1,0 +1,287 @@
+:host {
+  display: block;
+}
+
+.scene {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  margin-inline: auto;
+  /* One timeline for the whole picture; its parts read from it */
+  view-timeline: --scene block;
+}
+
+svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+/* ---- Flat colour ---- */
+.lip {
+  fill: var(--line);
+}
+.face {
+  fill: var(--card);
+  stroke: var(--line);
+  stroke-width: 2;
+}
+.tint {
+  fill: var(--fill);
+}
+.field {
+  fill: none;
+  stroke: var(--line);
+  stroke-width: 2;
+}
+.rule {
+  stroke: var(--heading);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+}
+.rule--soft {
+  stroke: var(--line);
+  stroke-width: 2;
+}
+.t,
+.td {
+  fill: var(--heading);
+  letter-spacing: 0;
+}
+.t {
+  font-family: var(--font-ui);
+  font-weight: 800;
+}
+.td {
+  font-family: var(--font-display);
+  font-weight: 600;
+}
+.t.muted {
+  fill: var(--muted);
+}
+.bar {
+  fill: var(--line);
+}
+.bar--v {
+  fill: var(--eel-light);
+}
+.tick {
+  fill: var(--ecto);
+}
+.check {
+  fill: none;
+  stroke: #ffffff;
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.hi {
+  fill: var(--eel-light);
+}
+.answer .t,
+.answer .td {
+  fill: var(--eel-blue);
+}
+.track {
+  fill: var(--line);
+}
+.fillbar {
+  fill: var(--ecto);
+  transform-box: fill-box;
+  transform-origin: left;
+  transform: scaleX(0.42);
+}
+.thumb {
+  fill: var(--ecto);
+  stroke: var(--card);
+  stroke-width: 4;
+  transform: translateX(119px);
+}
+.share {
+  stroke-dasharray: 52 48;
+}
+.bar--grow {
+  fill: var(--c-interest);
+  transform-box: fill-box;
+  transform-origin: left;
+  transform: scaleX(0.52);
+}
+.shield__lip {
+  fill: var(--ecto-lip);
+}
+.shield__face {
+  fill: var(--ecto);
+}
+.shield__check {
+  fill: none;
+  stroke: #ffffff;
+  stroke-width: 9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 60;
+}
+
+/* The mascot stands beside the picture, in front of its corner */
+.buddy {
+  position: absolute;
+  right: -6%;
+  bottom: -8%;
+}
+.buddy--left {
+  right: auto;
+  left: -7%;
+}
+
+/* ---- Assembly on scroll ----------------------------------------------------------
+   Each part keeps its finished pose as its normal style and only plays *toward* it, so without
+   scroll timelines (or with reduced motion) the picture is complete. */
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(-18px);
+  }
+}
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+@keyframes stamp {
+  from {
+    opacity: 0;
+    transform: scale(0.4) translateY(10px);
+  }
+}
+@keyframes stroke-in {
+  from {
+    stroke-dashoffset: 60;
+  }
+}
+@keyframes sweep {
+  from {
+    transform: scaleX(0);
+  }
+}
+@keyframes drag {
+  from {
+    transform: translateX(0);
+  }
+}
+@keyframes fill-to {
+  from {
+    transform: scaleX(0.05);
+  }
+}
+@keyframes share-to {
+  from {
+    stroke-dasharray: 26 74;
+  }
+}
+@keyframes grow-to {
+  from {
+    transform: scaleX(0.28);
+  }
+}
+
+@supports (animation-timeline: view()) {
+  .formula,
+  .row,
+  .answer,
+  .buddy,
+  .legend,
+  .field,
+  .shield {
+    animation-timeline: --scene;
+    animation-fill-mode: backwards;
+    animation-timing-function: var(--ease-out);
+  }
+
+  /* Formula: the card, then the formula, then three worked rows tick in, then the answer */
+  .formula {
+    animation-name: rise-in;
+    animation-range: entry 14% entry 52%;
+  }
+  .row {
+    animation-name: slide-in;
+    animation-range: entry calc(26% + var(--k) * 9%) entry calc(58% + var(--k) * 9%);
+  }
+  .row .check {
+    animation: stroke-in linear backwards;
+    animation-timeline: --scene;
+    animation-range: entry calc(40% + var(--k) * 9%) entry calc(74% + var(--k) * 9%);
+    stroke-dasharray: 60;
+  }
+  .answer {
+    animation-name: rise-in;
+    animation-range: entry 62% entry 100%;
+  }
+  .hi {
+    transform-box: fill-box;
+    transform-origin: left;
+    animation: sweep linear backwards;
+    animation-timeline: --scene;
+    animation-range: entry 70% cover 30%;
+  }
+  .buddy {
+    animation-name: stamp;
+    animation-timing-function: var(--ease-pop);
+    animation-range: entry 40% entry 100%;
+  }
+
+  /* Live: the thumb is dragged along the track as the picture crosses the screen, the bar and
+     the interest slice follow it */
+  .scene[data-kind='live'] {
+    .thumb {
+      animation: drag linear backwards;
+      animation-timeline: --scene;
+      animation-range: entry 20% cover 55%;
+    }
+    .fillbar {
+      animation: fill-to linear backwards;
+      animation-timeline: --scene;
+      animation-range: entry 20% cover 55%;
+    }
+    .share {
+      animation: share-to linear backwards;
+      animation-timeline: --scene;
+      animation-range: entry 20% cover 55%;
+    }
+    .bar--grow {
+      animation: grow-to linear backwards;
+      animation-timeline: --scene;
+      animation-range: entry 20% cover 55%;
+    }
+    .legend {
+      animation-name: rise-in;
+      animation-range: entry 30% entry 90%;
+    }
+  }
+
+  /* Private: the fields fill in, then the shield stamps down and its check is drawn */
+  .scene[data-kind='private'] {
+    .field {
+      animation-name: slide-in;
+      animation-range: entry 20% entry 60%;
+    }
+    .shield {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation-name: stamp;
+      animation-timing-function: var(--ease-pop);
+      animation-range: entry 45% entry 100%;
+    }
+    .shield__check {
+      animation: stroke-in linear backwards;
+      animation-timeline: --scene;
+      animation-range: entry 75% cover 20%;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scene * {
+    animation: none !important;
+  }
+}

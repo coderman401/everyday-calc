@@ -6,12 +6,12 @@
 
   <div class="card soon__card">
     @if (info(); as c) {
-      <span class="soon__icon" aria-hidden="true"><mat-icon [fontIcon]="c.icon" /></span>
+      <app-mascot [size]="104" mood="wave" />
       <h1 class="soon__title">{{ c.title }}</h1>
       <p class="soon__lead">{{ c.summary }}</p>
       <p class="muted">This one is not built yet. The home loan calculator is ready to use.</p>
     } @else {
-      <span class="soon__icon" aria-hidden="true"><mat-icon fontIcon="search_off" /></span>
+      <app-mascot [size]="104" mood="wave" />
       <h1 class="soon__title">That calculator isn't here</h1>
       <p class="muted">Check the address, or pick one from the list.</p>
     }

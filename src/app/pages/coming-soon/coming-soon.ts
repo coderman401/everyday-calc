@@ -4,6 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { Title } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 import { HOME_LOAN, calculatorPath, findCalculator } from '../../core/registry/calculators';
+import { Mascot } from '../../shared/ui/mascot';
 
 /**
  * The placeholder every unbuilt calculator routes to. Reads its entry from the registry,
@@ -11,7 +12,7 @@ import { HOME_LOAN, calculatorPath, findCalculator } from '../../core/registry/c
  */
 @Component({
   selector: 'app-coming-soon',
-  imports: [RouterLink, MatButtonModule, MatIconModule],
+  imports: [RouterLink, MatButtonModule, MatIconModule, Mascot],
   templateUrl: './coming-soon.html',
   styleUrl: './coming-soon.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

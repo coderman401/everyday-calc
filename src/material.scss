@@ -4,20 +4,20 @@
 $_palettes: (
   primary: (
     0: #000000,
-    10: #23005c,
-    20: #3c0091,
-    25: #4900ad,
-    30: #5602c9,
-    35: #6221d4,
-    40: #6f34e1,
-    50: #8853fb,
-    60: #a078ff,
-    70: #b89bff,
-    80: #d0bcff,
-    90: #e9ddff,
-    95: #f6edff,
-    98: #fef7ff,
-    99: #fffbff,
+    10: #0b2000,
+    20: #173700,
+    25: #1f4500,
+    30: #275300,
+    35: #2f6200,
+    40: #3f8a00,
+    50: #4cae02,
+    60: #58cc02,
+    70: #7fdc2e,
+    80: #a5ed6e,
+    90: #d7ffb8,
+    95: #ebffd9,
+    98: #f6ffee,
+    99: #fbfff6,
     100: #ffffff,
   ),
   tertiary: mat.$yellow-palette,
@@ -95,36 +95,111 @@ html {
         theme-type: color-scheme,
       ),
       typography: (
-        plain-family: 'Inter, system-ui, -apple-system, Segoe UI, sans-serif',
-        brand-family: 'Inter, system-ui, -apple-system, Segoe UI, sans-serif',
-        bold-weight: 650,
-        medium-weight: 550,
-        regular-weight: 400,
+        plain-family: 'Nunito, ui-rounded, system-ui, -apple-system, Segoe UI, sans-serif',
+        brand-family: 'Fredoka, Nunito, ui-rounded, system-ui, sans-serif',
+        bold-weight: 800,
+        medium-weight: 700,
+        regular-weight: 500,
       ),
       density: -1,
     )
   );
 
+  /* Buttons: filled green with a darker lip, outlined with a lime edge. The lip itself is drawn
+     in styles.scss (a border, never a shadow). */
   @include mat.button-overrides(
     (
-      filled-container-height: 48px,
-      outlined-container-height: 48px,
-      text-container-height: 44px,
-    )
-  );
-  @include mat.form-field-overrides(
-    (
+      filled-container-height: 52px,
+      filled-container-shape: 12px,
+      filled-container-color: var(--ecto),
+      filled-label-text-color: var(--midnight),
+      filled-label-text-weight: 800,
+      filled-horizontal-padding: 24px,
+      outlined-container-height: 52px,
       outlined-container-shape: 12px,
+      outlined-outline-width: 2px,
+      outlined-outline-color: var(--lime),
+      outlined-label-text-color: var(--heading),
+      outlined-label-text-weight: 800,
+      outlined-horizontal-padding: 24px,
+      text-container-height: 44px,
+      text-container-shape: 12px,
+      text-label-text-color: var(--heading),
+      text-label-text-weight: 700,
+      text-state-layer-color: var(--ecto),
+      text-hover-state-layer-opacity: 0.12,
     )
   );
   @include mat.icon-button-overrides(
     (
       state-layer-size: 44px,
+      state-layer-color: var(--ecto),
+    )
+  );
+  /* Fields: a 2px grey outline that turns blue when you are in it, 12px corners */
+  @include mat.form-field-overrides(
+    (
+      outlined-container-shape: 12px,
+      outlined-outline-width: 2px,
+      outlined-focus-outline-width: 2px,
+      outlined-outline-color: var(--line),
+      outlined-hover-outline-color: var(--line-strong),
+      outlined-focus-outline-color: var(--blue),
+      outlined-focus-label-text-color: var(--blue-text),
+      outlined-label-text-color: var(--muted),
+      outlined-hover-label-text-color: var(--muted),
+      outlined-input-text-color: var(--heading),
+    )
+  );
+  /* Sliders: a fat rounded green track, 12px high */
+  @include mat.slider-overrides(
+    (
+      active-track-height: 12px,
+      inactive-track-height: 12px,
+      active-track-shape: 12px,
+      inactive-track-shape: 12px,
+      active-track-color: var(--ecto),
+      inactive-track-color: var(--line),
+      handle-color: var(--ecto),
+      hover-handle-color: var(--ecto),
+      focus-handle-color: var(--ecto),
+      handle-height: 28px,
+      handle-width: 28px,
+      ripple-color: var(--ecto),
+      hover-state-layer-color: var(--ecto),
+      focus-state-layer-color: var(--ecto),
+      label-container-color: var(--heading),
+      label-label-text-color: var(--bg),
     )
   );
   @include mat.button-toggle-overrides(
     (
       height: 44px,
+      shape: 12px,
+      divider-color: var(--line),
+      background-color: var(--card),
+      text-color: var(--ink),
+      selected-state-background-color: var(--eel-light),
+      selected-state-text-color: var(--eel-blue),
+      disabled-state-text-color: var(--muted),
+      state-layer-color: var(--ecto),
+    )
+  );
+  @include mat.menu-overrides(
+    (
+      container-shape: 12px,
+      container-color: var(--card),
+      container-elevation-shadow: none,
+      item-label-text-color: var(--ink),
+      item-label-text-weight: 700,
+    )
+  );
+  @include mat.tooltip-overrides(
+    (
+      container-shape: 12px,
+      container-color: var(--heading),
+      supporting-text-color: var(--bg),
+      supporting-text-weight: 700,
     )
   );
 }

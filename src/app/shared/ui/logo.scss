@@ -1,7 +1,7 @@
 :host {
   display: inline-block;
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
   flex: none;
 }
 
@@ -12,51 +12,59 @@ svg {
   overflow: visible;
 }
 
-.tile {
-  fill: var(--accent);
+.lip {
+  fill: var(--ecto-lip);
+}
+.face {
+  fill: var(--ecto);
+}
+.screen {
+  fill: #ffffff;
+}
+.pupil {
+  fill: var(--eel-blue);
+}
+.glint {
+  fill: #ffffff;
+}
+.cheek {
+  fill: var(--pink);
+}
+.eye {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: open 520ms var(--ease-pop) 160ms both;
+}
+.smile {
+  fill: none;
+  stroke: var(--eel-blue);
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  transition: transform 200ms var(--ease-pop);
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.key--b {
+  fill: var(--macaw);
+}
+.key--w {
+  fill: #ffffff;
+}
+.key--y {
+  fill: var(--sun);
 }
 
-.bar {
-  fill: var(--on-accent);
-}
-
-/* The ring starts at 12 o'clock and turns about its own centre */
-.ring {
-  transform-origin: 20px 20px;
-  transform: rotate(-90deg);
-  transition: transform 520ms var(--ease-out);
-}
-
-.arc {
-  stroke: var(--on-accent);
-}
-
-.arc--a {
-  stroke-dasharray: 66 34;
-  animation: draw 760ms var(--ease-out) 120ms both;
-}
-
-.arc--b {
-  stroke-dasharray: 25 75;
-  stroke-dashoffset: -70;
-  opacity: 0.62;
-  animation: fade 320ms var(--ease-out) 620ms both;
-}
-
-@keyframes draw {
+@keyframes open {
   from {
-    stroke-dasharray: 0 100;
-  }
-}
-
-@keyframes fade {
-  from {
-    opacity: 0;
+    transform: scaleY(0.05);
   }
 }
 
 @media (hover: hover) and (pointer: fine) {
-  :host-context(.brand:hover) .ring {
-    transform: rotate(0deg);
+  :host-context(.brand:hover) .smile {
+    transform: scaleY(1.5);
+  }
+  :host-context(.brand:hover) .eye {
+    animation: open 360ms var(--ease-pop) both;
   }
 }
