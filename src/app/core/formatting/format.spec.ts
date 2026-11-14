@@ -1,4 +1,11 @@
-import { formatDuration, formatInr, formatPlain, formatWords, parseNumber } from './format';
+import {
+  formatCompactInr,
+  formatDuration,
+  formatInr,
+  formatPlain,
+  formatWords,
+  parseNumber,
+} from './format';
 
 describe('format', () => {
   it('groups rupees the Indian way', () => {
@@ -12,6 +19,14 @@ describe('format', () => {
     expect(formatWords(5_000_000)).toBe('₹50 lakh');
     expect(formatWords(12_000_000)).toBe('₹1.2 crore');
     expect(formatWords(75_000)).toBe('₹75,000');
+  });
+
+  it('shortens amounts for chart axes', () => {
+    expect(formatCompactInr(0)).toBe('₹0');
+    expect(formatCompactInr(50_000)).toBe('₹50K');
+    expect(formatCompactInr(200_000)).toBe('₹2L');
+    expect(formatCompactInr(150_000)).toBe('₹1.5L');
+    expect(formatCompactInr(15_000_000)).toBe('₹1.5Cr');
   });
 
   it('words durations', () => {

@@ -33,16 +33,16 @@ describe('Home', () => {
     expect(el.querySelector('.sample .hero-fig')?.textContent).toContain('₹38,4');
   });
 
-  it('walks through a loan and shows how the engine feeds every figure', async () => {
+  it('asks everyday questions and shows how one engine feeds every number', async () => {
     const el = (await render()).nativeElement as HTMLElement;
-    expect(el.querySelector('app-walkthrough h2')?.textContent).toContain(
+    expect(el.querySelector('app-walkthrough h2')?.getAttribute('aria-label')).toBe(
       'Everyday Calc, start to finish',
     );
-    expect(el.querySelector('app-engine-diagram h2')?.textContent).toContain(
+    expect(el.querySelector('app-engine-diagram h2')?.getAttribute('aria-label')).toBe(
       'One engine behind every number',
     );
-    // both are worked from the calculator's own defaults, so they agree with the hero sample
-    expect(el.querySelector('app-walkthrough app-loan-screen .hero-fig')?.textContent).toContain(
+    // the loan question is worked from the calculator's own defaults, so it agrees with the hero sample
+    expect(el.querySelector('app-walkthrough app-answer-card .fig')?.textContent).toContain(
       '₹43,391',
     );
   });

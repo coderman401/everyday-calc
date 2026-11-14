@@ -33,7 +33,12 @@
         [maxLabel]="rateMaxLabel()"
       />
 
-      <app-tenure-field label="Loan tenure" [maxYears]="config().maxYears" [(value)]="tenure" [(unit)]="unit" />
+      <app-tenure-field
+        label="Loan tenure"
+        [maxYears]="config().maxYears"
+        [(value)]="tenure"
+        [(unit)]="unit"
+      />
     </div>
 
     <section class="opts" aria-labelledby="opts-h">
@@ -104,6 +109,17 @@
 
   <app-loan-results slot="results" [result]="result()" [stepUpPercent]="stepUpPercent()" />
 
+  <app-stacked-bars
+    heading="Interest against principal, year by year"
+    [lead]="barLead()"
+    [series]="barSeries"
+    [rows]="barRows()"
+    rowName="Year"
+    totalLabel="paid in the year"
+    [summary]="barSummary()"
+    [tickFormat]="compact"
+    [valueFormat]="money"
+  />
   <app-loan-schedule [years]="result().years" />
   <app-explainer [content]="explainer()" />
 </app-calc-shell>

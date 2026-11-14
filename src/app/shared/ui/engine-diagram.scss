@@ -24,9 +24,13 @@
   color: var(--display-green);
 }
 
+.w {
+  display: inline-block;
+}
+
 /* ---- The frame: everything inside runs in the browser ---------------------------------------- */
 .flow {
-  --g: var(--s-4);
+  --g: var(--s-3);
   --in: var(--s-4);
   --wire: 2px;
   position: relative;
@@ -91,31 +95,19 @@
   }
 }
 
-.fig {
-  font: 600 1.5rem/1.2 var(--font-display);
-  letter-spacing: -0.01em;
-  color: var(--heading);
-
-  small {
-    font: 500 0.875rem/1 var(--font-ui);
-    color: var(--muted);
-  }
-}
-
 .link {
   display: flex;
   align-items: center;
   gap: var(--s-3);
-  margin-left: var(--in);
-}
+  margin: var(--s-1) 0 var(--s-1) var(--in);
 
-.link__line {
-  position: relative;
-  width: var(--wire);
-  height: var(--s-7);
-  background: var(--heading);
-
-  &::after {
+  i {
+    position: relative;
+    width: var(--wire);
+    height: var(--s-6);
+    background: var(--heading);
+  }
+  i::after {
     content: '';
     position: absolute;
     left: 50%;
@@ -156,7 +148,25 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: var(--s-4);
+  gap: var(--s-3);
+}
+
+.rows {
+  display: grid;
+  gap: 6px;
+  width: 88px;
+
+  i {
+    height: 8px;
+    border-radius: 4px;
+    background: var(--line-strong);
+  }
+  i:nth-child(2) {
+    width: 70%;
+  }
+  i:nth-child(3) {
+    width: 85%;
+  }
 }
 
 .formula {
@@ -168,7 +178,7 @@
   overflow-wrap: anywhere;
 }
 
-/* ---- Wide: a row, left to right ------------------------------------------------------------- */
+/* ---- Wide: a row, nine calculators into one engine out to three readers ---------------------- */
 @media (min-width: 900px) {
   .flow {
     padding: var(--s-8) var(--s-6) var(--s-6);
@@ -176,44 +186,16 @@
 
   .map {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1.4fr);
+    grid-template-columns: minmax(0, 1.2fr) auto minmax(0, 0.8fr) auto minmax(0, 1.1fr);
     align-items: stretch;
   }
 
-  .node--in,
+  .link {
+    display: none;
+  }
+
   .node--engine {
     align-self: center;
-  }
-
-  .link {
-    flex-direction: column;
-    justify-content: center;
-    gap: var(--s-1);
-    width: 96px;
-    margin: 0;
-    padding-inline: var(--s-2);
-  }
-
-  .link__t {
-    max-width: 8ch;
-    text-align: center;
-    font-size: 0.75rem;
-  }
-
-  .link__line {
-    width: 100%;
-    height: var(--wire);
-
-    &::after {
-      left: auto;
-      right: -1px;
-      bottom: auto;
-      top: 50%;
-      translate: 0 -50%;
-      border: 6px solid transparent;
-      border-left: 8px solid var(--heading);
-      border-right: 0;
-    }
   }
 
   .outs {
@@ -233,17 +215,17 @@
   }
 }
 
-/* ---- Motion: assembles in the order the data flows ------------------------------------------- */
+/* ---- Motion: nine calculators arrive, then the engine, then the readers --------------------- */
 @keyframes stamp {
   from {
     opacity: 0;
-    transform: scale(0.92) translateY(12px);
+    transform: scale(0.9) translateY(14px);
   }
 }
-@keyframes rise-in {
+@keyframes rise {
   from {
     opacity: 0;
-    transform: translateY(16px);
+    transform: translateY(18px);
   }
 }
 @keyframes draw {
@@ -258,36 +240,47 @@
       view-timeline: --eng block;
     }
     .node,
-    .link__line {
+    .link i {
       animation-timeline: --eng;
       animation-fill-mode: backwards;
       animation-timing-function: var(--ease-out);
     }
-
-    .node--in {
-      animation-name: stamp;
-      animation-range: entry 0% entry 32%;
-    }
-    .link--a .link__line {
-      animation-name: draw;
-      transform-origin: 0 0;
-      animation-range: entry 22% entry 44%;
-    }
     .node--engine {
       animation-name: stamp;
-      animation-range: entry 34% entry 64%;
+      animation-timing-function: var(--ease-pop);
+      animation-range: entry 50% entry 74%;
+    }
+    .link i {
+      transform-origin: 0 0;
+      animation-name: draw;
+      animation-range: entry 40% entry 54%;
+    }
+    .node--engine + .link i {
+      animation-range: entry 66% entry 80%;
     }
     .out {
-      animation-name: rise-in;
+      animation-name: rise;
     }
     .out:nth-child(1) {
-      animation-range: entry 66% entry 90%;
+      animation-range: entry 72% entry 92%;
     }
     .out:nth-child(2) {
-      animation-range: entry 74% entry 96%;
+      animation-range: entry 78% entry 96%;
     }
     .out:nth-child(3) {
-      animation-range: entry 82% entry 100%;
+      animation-range: entry 84% entry 100%;
     }
+    .w {
+      animation: word linear both;
+      animation-timeline: view();
+      animation-range: entry calc(var(--w) * 4%) entry calc(36% + var(--w) * 4%);
+    }
+  }
+}
+
+@keyframes word {
+  from {
+    opacity: 0;
+    transform: translateY(0.5em) rotate(3deg);
   }
 }

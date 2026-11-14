@@ -34,6 +34,15 @@ export function formatWords(value: number): string {
   return formatInr(value);
 }
 
+/** Short form for chart axes: ₹0, ₹50K, ₹2L, ₹1.5Cr. */
+export function formatCompactInr(value: number): string {
+  const trim = (n: number) => String(Number(n.toFixed(2)));
+  if (value >= 1e7) return `₹${trim(value / 1e7)}Cr`;
+  if (value >= 1e5) return `₹${trim(value / 1e5)}L`;
+  if (value >= 1e3) return `₹${trim(value / 1e3)}K`;
+  return `₹${Math.round(value)}`;
+}
+
 /** 1 yr, 17 yrs 4 mos, 8 mos */
 export function formatDuration(months: number): string {
   const m = Math.max(0, Math.round(months));

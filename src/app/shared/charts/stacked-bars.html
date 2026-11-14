@@ -1,0 +1,81 @@
+<section class="card sb" [attr.aria-label]="heading()">
+  <div class="sb__head">
+    <h2>{{ heading() }}</h2>
+    <ul class="legend">
+      @for (s of series(); track s.id) {
+        <li><i [style.--c]="s.color"></i>{{ s.label }}</li>
+      }
+    </ul>
+  </div>
+  @if (lead()) {
+    <p class="muted sb__lead">{{ lead() }}</p>
+  }
+
+  <div class="chart">
+    <div class="axis" aria-hidden="true">
+      @for (t of ticks(); track t.at) {
+        <span class="tick" [style.--at]="t.at">{{ t.label }}</span>
+      }
+    </div>
+
+    <div
+      class="plot"
+      [class.has-active]="cur() !== null"
+      tabindex="0"
+      role="img"
+      [attr.aria-label]="summary()"
+      (keydown)="onKey($event)"
+      (focus)="move(0)"
+      (blur)="active.set(null)"
+    >
+      @for (t of ticks(); track t.at) {
+        <span class="rule" aria-hidden="true" [style.--at]="t.at"></span>
+      }
+      @for (b of bars(); track b.label; let i = $index) {
+        <div
+          class="col"
+          [class.is-active]="cur() === i"
+          [style.--i]="i"
+          (pointerenter)="active.set(i)"
+          (pointerdown)="active.set(i)"
+          (pointerleave)="$event.pointerType === 'mouse' && active.set(null)"
+        >
+          <div class="bar" [style.--top]="b.top">
+            @for (s of b.segments; track $index) {
+              <span class="seg" [style.--v]="s.v" [style.--c]="s.color"></span>
+            }
+          </div>
+        </div>
+      }
+
+      @if (tip(); as t) {
+        <div
+          class="tip"
+          aria-hidden="true"
+          [attr.data-side]="bars()[cur()!].side"
+          [style.--x]="(cur()! + 0.5) / bars().length"
+        >
+          <p class="tip__t">{{ t.title }}</p>
+          @for (l of t.lines; track l.label) {
+            <p class="tip__l">
+              <i [style.--c]="l.color"></i><b class="num">{{ l.value }}</b
+              ><span>{{ l.label }}</span>
+            </p>
+          }
+          <p class="tip__sum">
+            <b class="num">{{ t.total }}</b
+            ><span>{{ totalLabel() }}</span>
+          </p>
+        </div>
+      }
+    </div>
+
+    <div class="xs" aria-hidden="true">
+      @for (b of bars(); track b.label) {
+        <span [class.minor]="!b.major" [class.off]="!b.showLabel">{{ b.label }}</span>
+      }
+    </div>
+  </div>
+
+  <p class="sr" aria-live="polite">{{ spoken() }}</p>
+</section>

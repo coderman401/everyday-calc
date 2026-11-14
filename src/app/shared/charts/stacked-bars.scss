@@ -1,0 +1,241 @@
+:host {
+  display: block;
+  container-type: inline-size;
+}
+
+.sb__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-2) var(--s-5);
+}
+
+.legend {
+  display: flex;
+  gap: var(--s-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--ink);
+
+  li {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-2);
+  }
+
+  i {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    background: var(--c);
+  }
+}
+
+.sb__lead {
+  margin-top: var(--s-2);
+}
+
+/* ---- Plot: axis, plot area, x labels ------------------------------------------------------- */
+.chart {
+  --h: clamp(180px, 26cqw, 240px);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-rows: var(--h) auto;
+  column-gap: var(--s-3);
+  margin-top: var(--s-6);
+}
+
+.axis {
+  position: relative;
+}
+
+.tick {
+  position: absolute;
+  right: 0;
+  bottom: calc(var(--at) * 100%);
+  translate: 0 50%;
+  font-size: 0.75rem;
+  line-height: 1;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.plot {
+  position: relative;
+  display: flex;
+  border-bottom: 1px solid var(--line-strong);
+  border-radius: 2px;
+}
+
+/* Gridlines: hairline, solid, one step off the surface */
+.rule {
+  position: absolute;
+  inset: auto 0 auto 0;
+  bottom: calc(var(--at) * 100%);
+  height: 1px;
+  background: var(--line);
+}
+
+/* The chart is one stop for the keyboard: arrows move along the years */
+.col {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+/* A bar is at most 24px thick, with room between neighbours; the whole column is the hit area */
+.bar {
+  width: calc(100% - 2px);
+  max-width: 24px;
+  height: calc(var(--top) * 100%);
+  display: flex;
+  flex-direction: column;
+  transform-origin: bottom;
+  transition:
+    height 300ms var(--ease-out),
+    opacity 160ms var(--ease-out);
+}
+
+/* Segments share the bar by their values; a 2px gap in the surface colour separates them, and
+   only the top one is rounded, so the base stays square on the baseline */
+.seg {
+  flex: var(--v) 0 0;
+  min-height: 0;
+  background: var(--c);
+  transition: flex-grow 300ms var(--ease-out);
+}
+.seg + .seg {
+  border-top: 2px solid var(--card);
+}
+.seg:first-child {
+  border-radius: 4px 4px 0 0;
+}
+
+.has-active .col:not(.is-active) .bar {
+  opacity: 0.5;
+}
+
+/* ---- Tooltip: values lead, names follow, line keys ------------------------------------------ */
+.tip {
+  position: absolute;
+  z-index: 3;
+  top: var(--s-2);
+  left: calc(var(--x) * 100% + 20px);
+  min-width: 11rem;
+  padding: var(--s-3) var(--s-4);
+  border: var(--edge) solid var(--line);
+  border-bottom-width: var(--lip);
+  border-radius: var(--r-md);
+  background: var(--card);
+  pointer-events: none;
+
+  &[data-side='left'] {
+    left: auto;
+    right: calc((1 - var(--x)) * 100% + 20px);
+  }
+
+  p {
+    display: flex;
+    align-items: center;
+    gap: var(--s-2);
+    margin: 0;
+    font-size: 0.8125rem;
+    color: var(--muted);
+  }
+  b {
+    font-size: 0.9375rem;
+    font-weight: 800;
+    color: var(--heading);
+  }
+  i {
+    width: 14px;
+    height: 3px;
+    border-radius: 2px;
+    background: var(--c);
+  }
+}
+
+.tip__t {
+  margin-bottom: var(--s-1) !important;
+  font-weight: 800;
+  color: var(--heading) !important;
+}
+
+.tip__sum {
+  margin-top: var(--s-1) !important;
+  padding-top: var(--s-1);
+  border-top: 1px solid var(--line);
+}
+
+/* ---- X labels ------------------------------------------------------------------------------ */
+.xs {
+  grid-column: 2;
+  display: flex;
+  margin-top: var(--s-2);
+
+  span {
+    flex: 1 1 0;
+    min-width: 0;
+    text-align: center;
+    font-size: 0.75rem;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .off {
+    visibility: hidden;
+  }
+}
+
+/* On a phone only the 5th, 10th... years are named */
+@container (max-width: 520px) {
+  .xs span {
+    visibility: hidden;
+  }
+  .xs .major {
+    visibility: visible;
+  }
+  .tick {
+    font-size: 0.6875rem;
+  }
+}
+
+.sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ---- Motion: bars grow from the baseline as the chart arrives, left to right ------------------ */
+@keyframes grow {
+  from {
+    transform: scaleY(0);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .bar {
+      animation: grow linear backwards;
+      animation-timeline: view();
+      animation-range: entry calc(var(--i) * 1%) entry calc(46% + var(--i) * 1%);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bar,
+  .seg {
+    transition: none;
+  }
+}

@@ -1,0 +1,36 @@
+<div class="top" [style.--cat]="sum().color">
+  <div class="enter">
+    <p class="who">
+      <span class="ico"><mat-icon [fontIcon]="sum().info.icon" aria-hidden="true" /></span>
+      {{ sum().info.short }}
+    </p>
+    <p class="label">You enter</p>
+    @for (f of sum().enter; track f.label) {
+      <p class="fld" [style.--i]="$index">
+        <span class="l">{{ f.label }}</span
+        ><span class="v num">{{ f.value }}</span>
+      </p>
+    }
+  </div>
+
+  <div class="get">
+    <p class="label">{{ sum().result.label }}</p>
+    <p class="fig num">{{ sum().result.figure }}</p>
+    <p class="note">{{ sum().result.note }}</p>
+    <app-tile-visual class="vis" [spec]="sum().visual" />
+  </div>
+</div>
+
+<p class="label">Check the working</p>
+<ol class="work">
+  @for (s of sum().working; track s.label) {
+    <li [style.--i]="$index">
+      <svg viewBox="0 0 20 20" focusable="false">
+        <circle cx="10" cy="10" r="10" />
+        <path d="M5.5 10.5 8.5 13.5 14.5 7" />
+      </svg>
+      <span>{{ s.label }}</span>
+      <b class="num">{{ s.value }}</b>
+    </li>
+  }
+</ol>
