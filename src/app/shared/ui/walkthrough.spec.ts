@@ -1,44 +1,67 @@
 import { TestBed } from '@angular/core/testing';
-import { calculateLoan } from '../../calculators/loan/loan.engine';
-import { formatInr } from '../../core/formatting/format';
-import { SAMPLE, SAMPLE_INPUT, SAMPLE_STEPS } from './sample-loan';
+import { provideRouter } from '@angular/router';
+import { EVERYDAY } from './everyday';
 import { Walkthrough } from './walkthrough';
 
 describe('Walkthrough', () => {
   async function render() {
-    await TestBed.configureTestingModule({ imports: [Walkthrough] }).compileComponents();
+    await TestBed.configureTestingModule({
+      imports: [Walkthrough],
+      providers: [provideRouter([])],
+    }).compileComponents();
     const fixture = TestBed.createComponent(Walkthrough);
     await fixture.whenStable();
     return fixture.nativeElement as HTMLElement;
   }
 
-  it('follows the three steps in order, each with a screen', async () => {
+  it('asks each everyday question with its own card', async () => {
     const el = await render();
     const steps = Array.from(el.querySelectorAll('.step'));
-    expect(steps.map((s) => s.querySelector('h3')?.textContent?.trim())).toEqual([
-      'Enter your loan',
-      'Read it year by year',
-      'Check the working',
-    ]);
+    expect(steps).toHaveLength(EVERYDAY.length);
+    expect(
+      steps.map((s) => s.querySelector('.q')?.textContent?.replace(/\s+/g, ' ').trim()),
+    ).toEqual(EVERYDAY.map((e) => e.question));
     for (const s of steps)
-      expect(s.querySelector('.screen')?.getAttribute('aria-hidden')).toBe('true');
+      expect(s.querySelector('app-answer-card')?.getAttribute('aria-hidden')).toBe('true');
   });
 
-  it('shows the figures the loan engine itself gives for the calculator defaults', async () => {
+  it('says each answer in words, so the cards are not the only place it appears', async () => {
     const el = await render();
-    const expected = calculateLoan(SAMPLE_INPUT);
-    expect(SAMPLE.emi).toBeCloseTo(expected.emi, 6);
-    // the EMI is in the words, so it is not only in the picture
-    expect(el.querySelector('.step')?.textContent).toContain(formatInr(expected.emi));
-    expect(el.querySelector('app-loan-screen .hero-fig')?.textContent).toContain(
-      formatInr(expected.emi),
+    EVERYDAY.forEach((e, i) => {
+      const ans = el.querySelectorAll('.step')[i].querySelector('.ans')?.textContent ?? '';
+      expect(ans).toContain(e.result.label);
+      expect(ans).toContain(e.result.figure);
+    });
+  });
+
+  it('links each question to its calculator', async () => {
+    const el = await render();
+    const links = Array.from(el.querySelectorAll<HTMLAnchorElement>('.step a')).map((a) =>
+      a.getAttribute('href'),
     );
+    expect(links).toEqual([
+      '/calculators/home-loan-emi',
+      '/calculators/sip',
+      '/calculators/bmi',
+      '/calculators/age',
+      '/calculators/pregnancy',
+    ]);
   });
 
-  it("lists the first years of the schedule and the explainer's worked steps", async () => {
+  it('shows what you enter, the answer and the working on every card', async () => {
     const el = await render();
-    expect(el.querySelectorAll('app-schedule-screen .yr:not(.head)')).toHaveLength(6);
-    expect(el.querySelectorAll('app-working-screen .work li')).toHaveLength(SAMPLE_STEPS.length);
-    expect(el.querySelector('app-working-screen .formula')?.textContent).toContain('EMI = P × r');
+    el.querySelectorAll('app-answer-card').forEach((card, i) => {
+      expect(card.querySelectorAll('.fld')).toHaveLength(EVERYDAY[i].enter.length);
+      expect(card.querySelector('.fig')?.textContent?.trim()).toBe(EVERYDAY[i].result.figure);
+      expect(card.querySelectorAll('.work li')).toHaveLength(3);
+    });
+  });
+
+  it('names a timeline for each step so its card can follow it', async () => {
+    const el = await render();
+    const names = Array.from(el.querySelectorAll<HTMLElement>('.step')).map((s) =>
+      s.style.getPropertyValue('--tl'),
+    );
+    expect(names).toEqual(['--t1', '--t2', '--t3', '--t4', '--t5']);
   });
 });

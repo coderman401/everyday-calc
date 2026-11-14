@@ -1,14 +1,24 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 
 /**
- * The wires from the engine to the three things that read from it: one trunk and three branches
- * with arrowheads. Only drawn when the diagram is a row (wide screens); in the column layout the
- * outputs hang off a rail instead. The three rows share their height and gap with the output
- * cards beside them (`--g` comes from the diagram), so each branch meets the middle of its card.
+ * The wires between a column of boxes and the box they feed, or that feeds them: one trunk with a
+ * branch to the middle of each of `rows` boxes (the rows here and in the column beside it share
+ * their height and gap, `--g`, which the diagram sets). `flow="in"` gathers branches into the
+ * trunk and sends one wire on, `flow="out"` takes one wire in and fans out, with arrowheads on the
+ * ends. A short label rides the single wire. Only drawn when the diagram is a row.
  */
 @Component({
   selector: 'app-engine-fan',
-  template: '<i></i><i></i><i></i>',
+  host: { '[attr.data-flow]': 'flow()', '[style.--rows]': 'rows()' },
+  template: `
+    @for (r of range(); track r) {
+      <i></i>
+    }
+    <b></b>
+    @if (label()) {
+      <span class="t">{{ label() }}</span>
+    }
+  `,
   styles: `
     :host {
       display: none;
@@ -22,52 +32,93 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
       :host {
         position: relative;
         display: grid;
-        grid-template-rows: repeat(3, minmax(0, 1fr));
+        grid-template-rows: repeat(var(--rows), minmax(0, 1fr));
         row-gap: var(--g);
-        width: 96px;
+        width: 120px;
       }
+      /* The trunk, and the single wire between it and the box on the other side */
       :host::before,
-      :host::after {
+      :host::after,
+      i::before {
         content: '';
         position: absolute;
+        height: var(--wire);
         background: var(--heading);
       }
       :host::before {
         left: 50%;
         width: var(--wire);
-        top: calc((100% - 2 * var(--g)) / 6);
-        bottom: calc((100% - 2 * var(--g)) / 6);
+        height: auto;
+        top: calc((100% - (var(--rows) - 1) * var(--g)) / (2 * var(--rows)));
+        bottom: calc((100% - (var(--rows) - 1) * var(--g)) / (2 * var(--rows)));
         translate: -1px 0;
       }
       :host::after {
-        left: 0;
-        width: 50%;
         top: 50%;
-        height: var(--wire);
         translate: 0 -1px;
       }
       i {
         position: relative;
       }
       i::before {
-        content: '';
-        position: absolute;
-        left: 50%;
-        right: 0;
         top: 50%;
-        height: var(--wire);
         translate: 0 -1px;
-        background: var(--heading);
       }
+      b,
       i::after {
-        content: '';
         position: absolute;
-        right: 0;
         top: 50%;
+        right: 0;
         translate: 0 -50%;
         border: 6px solid transparent;
         border-left: 8px solid var(--heading);
         border-right: 0;
+      }
+      i::after {
+        content: '';
+      }
+      :host([data-flow='out']) {
+        &::after {
+          left: 0;
+          width: 50%;
+        }
+        i::before {
+          left: 50%;
+          right: 0;
+        }
+        b {
+          display: none;
+        }
+      }
+      :host([data-flow='in']) {
+        &::after {
+          left: 50%;
+          right: 0;
+        }
+        i::before {
+          left: 0;
+          right: 50%;
+        }
+        i::after {
+          display: none;
+        }
+      }
+      .t {
+        position: absolute;
+        top: calc(50% - 2.6em);
+        width: 50%;
+        padding-inline: 2px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        line-height: 1.25;
+        text-align: center;
+        color: var(--muted);
+      }
+      :host([data-flow='out']) .t {
+        left: 0;
+      }
+      :host([data-flow='in']) .t {
+        right: 0;
       }
       @media (prefers-reduced-motion: no-preference) {
         @supports (animation-timeline: view()) {
@@ -75,7 +126,12 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
             transform-origin: left;
             animation: draw backwards var(--ease-out);
             animation-timeline: --eng;
-            animation-range: entry 58% entry 76%;
+          }
+          :host([data-flow='in']) {
+            animation-range: entry 38% entry 54%;
+          }
+          :host([data-flow='out']) {
+            animation-range: entry 62% entry 78%;
           }
         }
       }
@@ -83,4 +139,9 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EngineFan {}
+export class EngineFan {
+  readonly rows = input(3);
+  readonly flow = input<'in' | 'out'>('out');
+  readonly label = input('');
+  protected readonly range = computed(() => Array.from({ length: this.rows() }, (_, i) => i));
+}

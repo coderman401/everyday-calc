@@ -1,29 +1,36 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { formatInr } from '../../core/formatting/format';
-import { SAMPLE, SAMPLE_INPUT, SAMPLE_YEARS } from './sample-loan';
-import { LoanScreen, ScheduleScreen, WorkingScreen } from './walk-screens';
+import { MatIconModule } from '@angular/material/icon';
+import { RouterLink } from '@angular/router';
+import { CATEGORIES, calculatorPath } from '../../core/registry/calculators';
+import { AnswerCard } from './answer-card';
+import { EVERYDAY } from './everyday';
+import { Mascot } from './mascot';
 
 /**
- * "Everyday Calc, start to finish": one home loan followed through the three things every
- * calculator does. Each step is a heading and a few lines, with a flat screen of what you would
- * see (see walk-screens). The figures come from the real engine and explainer through sample-loan,
- * so they are the calculator's own, and the text carries them in words for anyone who cannot see
- * the screens.
+ * "Everyday Calc, start to finish": five questions from an ordinary day, each taken from the
+ * question to an answer you can check, by a different calculator. A question and a few lines of
+ * what to type on one side, a card of what you would see on the other (see answer-card).
  *
- * Wide screens that support scroll timelines pin the screens in place while the steps scroll past,
- * and each screen takes over from the last (see the scss). Everywhere else the steps simply
- * stack, each beside or above its own screen, and nothing is hidden.
+ * Wide screens that support scroll timelines pin the cards while the questions scroll past. The
+ * card, the plate of colour behind it and Tally all follow the scroll: each question's words spring
+ * up as it arrives, the card swaps and its parts arrive in turn, the plate changes colour and
+ * Tally hops at every handover (see the scss). Everywhere else the questions stack, each beside or
+ * above its own card, and nothing is hidden.
  */
 @Component({
   selector: 'app-walkthrough',
-  imports: [LoanScreen, ScheduleScreen, WorkingScreen],
+  imports: [AnswerCard, MatIconModule, Mascot, RouterLink],
   templateUrl: './walkthrough.html',
   styleUrl: './walkthrough.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Walkthrough {
-  protected readonly emi = formatInr(SAMPLE.emi);
-  protected readonly loan = `${formatInr(SAMPLE_INPUT.principal)} at ${SAMPLE_INPUT.annualRate}% for ${SAMPLE_YEARS} years`;
-  protected readonly firstPrincipal = formatInr(SAMPLE.years[0].principal);
-  protected readonly firstInterest = formatInr(SAMPLE.years[0].interest);
+  protected readonly headWords = 'Everyday Calc, start to finish'.split(' ');
+
+  protected readonly items = EVERYDAY.map((sum) => ({
+    sum,
+    words: sum.question.split(' '),
+    group: CATEGORIES.find((c) => c.id === sum.info.category)!.label,
+    path: calculatorPath(sum.info),
+  }));
 }

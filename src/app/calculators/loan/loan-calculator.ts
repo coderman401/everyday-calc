@@ -1,8 +1,16 @@
-import { ChangeDetectionStrategy, Component, computed, input, linkedSignal, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  input,
+  linkedSignal,
+  signal,
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { formatInr, formatWords } from '../../core/formatting/format';
+import { formatCompactInr, formatInr, formatWords } from '../../core/formatting/format';
 import { amountBand, trackCalculation } from '../../core/analytics';
+import { StackedBars, type BarRow, type BarSeries } from '../../shared/charts/stacked-bars';
 import { CalcShell } from '../../shared/layout/calc-shell';
 import { Explainer } from '../../shared/layout/explainer';
 import { NumberField } from '../../shared/forms/number-field';
@@ -36,6 +44,7 @@ function fromParam(raw: string | undefined, min: number, max: number, fallback: 
     Option,
     LoanResults,
     LoanSchedule,
+    StackedBars,
   ],
   templateUrl: './loan-calculator.html',
   styleUrl: './loan-calculator.scss',
@@ -103,6 +112,37 @@ export class LoanCalculator {
   protected readonly result = computed<LoanResult>(() => calculateLoan(this.input()));
   protected readonly stepUpPercent = computed(() => (this.stepOn() ? this.stepPercent() : 0));
   protected readonly emiText = computed(() => formatInr(this.result().emi));
+
+  // --- The year-by-year chart: principal below, interest on top, in the colours of the donut ---
+  protected readonly barSeries: BarSeries[] = [
+    { id: 'principal', label: 'Principal', color: 'var(--c-principal)' },
+    { id: 'interest', label: 'Interest', color: 'var(--c-interest)' },
+  ];
+  /** Extra payments and a prepayment go straight to principal, so they stack with it. */
+  protected readonly barRows = computed<BarRow[]>(() =>
+    this.result().years.map((y) => ({
+      label: String(y.year),
+      values: [y.principal + y.extra, y.interest],
+    })),
+  );
+  protected readonly barLead = computed(
+    () =>
+      'Each bar is one year of payments. The blue part clears what you owe; the orange part is the interest charged on it.' +
+      (this.result().hasExtras ? ' Your extra payments count as principal.' : ''),
+  );
+  protected readonly barSummary = computed(() => {
+    const ys = this.result().years;
+    const first = ys[0];
+    const last = ys[ys.length - 1];
+    if (!first || !last) return '';
+    return (
+      `Principal and interest paid in each of ${ys.length} years. Interest is ${formatInr(first.interest)} in year 1 ` +
+      `and ${formatInr(last.interest)} in year ${last.year}; principal goes from ${formatInr(first.principal + first.extra)} to ` +
+      `${formatInr(last.principal + last.extra)}. The table below lists every year.`
+    );
+  });
+  protected readonly compact = formatCompactInr;
+  protected readonly money = formatInr;
 
   protected readonly explainer = computed(() =>
     buildLoanExplainer(

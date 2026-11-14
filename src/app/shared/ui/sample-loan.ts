@@ -5,8 +5,8 @@ import type { ExplainerBlock } from '../layout/explainer';
 
 /**
  * The home loan calculator's own defaults, worked once by the real engine and written up by the
- * real explainer. The home page's walkthrough and engine diagram both read from here, so what they
- * show is what the calculator itself answers, and the hero sample agrees with them.
+ * real explainer. The home page's first everyday question reads from here, so what it shows is
+ * what the calculator itself answers, and the hero sample agrees with it.
  */
 export const SAMPLE_INPUT = {
   principal: C.amount.default,
@@ -16,13 +16,6 @@ export const SAMPLE_INPUT = {
 
 export const SAMPLE_YEARS = C.defaultYears;
 export const SAMPLE = calculateLoan(SAMPLE_INPUT);
-
-/** Where each default sits on its slider, from 0 to 1. */
-export const SAMPLE_AT = {
-  amount: (C.amount.default - C.amount.min) / (C.amount.max - C.amount.min),
-  rate: (C.rate.default - C.rate.min) / (C.rate.max - C.rate.min),
-  years: (C.defaultYears - 1) / (C.maxYears - 1),
-};
 
 const explainer = buildLoanExplainer(
   C,
@@ -37,9 +30,6 @@ function pick<T extends ExplainerBlock['type']>(type: T): Block<T> {
   if (!block) throw new Error(`The home loan explainer has no ${type} block`);
   return block;
 }
-
-/** "EMI = P × r × (1 + r)ⁿ ÷ ((1 + r)ⁿ − 1)" */
-export const SAMPLE_FORMULA = pick('formula').lines[0];
 
 /** The worked example: a label and a result per line, with the numbers above. */
 export const SAMPLE_STEPS = pick('steps').steps;

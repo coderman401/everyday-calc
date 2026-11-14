@@ -1,45 +1,52 @@
 <section class="wrap walk" aria-labelledby="walk-h">
   <header class="walk__head">
-    <h2 id="walk-h" class="h">Everyday Calc, start to finish</h2>
-    <p>Follow one home loan from the first number you type to the last line of working.</p>
+    <h2 id="walk-h" class="h" aria-label="Everyday Calc, start to finish">
+      @for (w of headWords; track $index) {
+        <span class="w" aria-hidden="true" [style.--w]="$index">{{ w }}</span
+        >{{ ' ' }}
+      }
+    </h2>
+    <p>
+      One calculator for each of the things you work out in a day. Here are five, from the question
+      to an answer you can check.
+    </p>
   </header>
 
-  <ol class="walk__list">
-    <li class="step" style="--n: 1">
-      <div class="step__text">
-        <span class="step__badge" aria-hidden="true">1</span>
-        <h3>Enter your loan</h3>
-        <p>
-          Type or drag the amount, rate and tenure. {{ loan }} comes to {{ emi }} a month, and the
-          chart splits what you pay into principal and interest.
-        </p>
-      </div>
-      <app-loan-screen class="screen card" aria-hidden="true" />
-    </li>
+  <div class="walk__body">
+    <span class="rail" aria-hidden="true"><i></i></span>
+    <div class="plate" aria-hidden="true"></div>
 
-    <li class="step" style="--n: 2">
-      <div class="step__text">
-        <span class="step__badge" aria-hidden="true">2</span>
-        <h3>Read it year by year</h3>
-        <p>
-          A schedule shows what each year pays toward principal and interest, and what you still owe
-          at its end. In year 1, {{ firstPrincipal }} is principal and {{ firstInterest }} is
-          interest.
-        </p>
-      </div>
-      <app-schedule-screen class="screen card" aria-hidden="true" />
-    </li>
+    <ol class="walk__list" role="list">
+      @for (it of items; track it.sum.info.slug; let i = $index) {
+        <li
+          class="step"
+          [style.--n]="i + 1"
+          [style.--tl]="'--t' + (i + 1)"
+          [style.--cat]="it.sum.color"
+        >
+          <div class="step__text">
+            <span class="step__ico" aria-hidden="true"
+              ><mat-icon [fontIcon]="it.sum.info.icon"
+            /></span>
+            <p class="label">{{ it.group }}</p>
+            <h3 class="q">
+              @for (w of it.words; track $index) {
+                <span class="w" [style.--w]="$index">{{ w }}</span
+                >{{ ' ' }}
+              }
+            </h3>
+            <p>{{ it.sum.hint }}</p>
+            <p class="ans">
+              {{ it.sum.result.label }} <b class="num">{{ it.sum.result.figure }}</b>
+              {{ it.sum.result.note }}
+            </p>
+            <a [routerLink]="it.path">Open the {{ it.sum.info.short }} calculator</a>
+          </div>
+          <app-answer-card class="screen card" aria-hidden="true" [sum]="it.sum" />
+        </li>
+      }
+    </ol>
 
-    <li class="step" style="--n: 3">
-      <div class="step__text">
-        <span class="step__badge" aria-hidden="true">3</span>
-        <h3>Check the working</h3>
-        <p>
-          The formula, then your own numbers worked through it line by line, so you can check the
-          result yourself.
-        </p>
-      </div>
-      <app-working-screen class="screen card" aria-hidden="true" />
-    </li>
-  </ol>
+    <div class="buddy-wrap" aria-hidden="true"><app-mascot class="buddy" [size]="96" /></div>
+  </div>
 </section>

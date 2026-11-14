@@ -217,6 +217,8 @@
 /* ---- Feature sections (layout lives in app-feature; this styles their projected text) ---- */
 .features {
   padding-block: var(--s-8) 0;
+  /* Tally pops in past its resting size at the edge of the screen; that must not widen the page */
+  overflow-x: clip;
 }
 
 /* ---- Catalogue --------------------------------------------------------------------------- */
