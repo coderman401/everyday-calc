@@ -3,12 +3,13 @@
     <div class="hero__text">
       <h1 class="hero__h">
         @for (w of headline; track $index) {
-          <span class="w" [style.--w]="$index">{{ w }}</span>{{ ' ' }}
+          <span class="w" [style.--w]="$index">{{ w }}</span
+          >{{ ' ' }}
         }
       </h1>
       <p class="hero__lead rise" style="--i: 5">
-        Work out an EMI, a SIP, a BMI or a due date. Each calculator shows the formula and the working
-        behind the answer, using the numbers you entered.
+        Work out an EMI, a SIP, a BMI or a due date. Each calculator shows the formula and the
+        working behind the answer, using the numbers you entered.
       </p>
       <div class="cta rise" style="--i: 6">
         <a mat-flat-button [routerLink]="homeLoanPath">Open the home loan calculator</a>
@@ -17,7 +18,9 @@
       <nav class="quick rise" style="--i: 7" aria-label="Other calculators">
         <span class="quick__label">Or start with</span>
         @for (c of quick; track c.slug) {
-          <a class="chip" [routerLink]="path(c)"><mat-icon aria-hidden="true" [fontIcon]="c.icon" />{{ c.short }}</a>
+          <a class="chip" [routerLink]="path(c)"
+            ><mat-icon aria-hidden="true" [fontIcon]="c.icon" />{{ c.short }}</a
+          >
         }
       </nav>
     </div>
@@ -66,11 +69,16 @@
 
         <div class="rows">
           <div class="row">
-            <p class="row__label"><span class="dot" style="--dot: var(--c-principal)" aria-hidden="true"></span>Principal</p>
+            <p class="row__label">
+              <span class="dot" style="--dot: var(--c-principal)" aria-hidden="true"></span
+              >Principal
+            </p>
             <p class="row__value num">{{ formatInr(sample().principal) }}</p>
           </div>
           <div class="row">
-            <p class="row__label"><span class="dot" style="--dot: var(--c-interest)" aria-hidden="true"></span>Interest</p>
+            <p class="row__label">
+              <span class="dot" style="--dot: var(--c-interest)" aria-hidden="true"></span>Interest
+            </p>
             <p class="row__value num">{{ formatInr(sample().totalInterest) }}</p>
           </div>
         </div>
@@ -99,19 +107,23 @@
 
     <app-feature scene="live" heading="Change a number and watch it move">
       <p>
-        Drag the amount or pick another tenure. The EMI, the interest and the chart update as you go,
-        and prepayments show how much sooner you finish.
+        Drag the amount or pick another tenure. The EMI, the interest and the chart update as you
+        go, and prepayments show how much sooner you finish.
       </p>
     </app-feature>
 
     <app-feature scene="private" heading="What you type stays on your device">
       <p>
-        The sums run in your browser. Analytics never receives the amounts, dates or measurements you
-        enter. <a routerLink="/privacy">Read the privacy policy</a>.
+        The sums run in your browser. Analytics never receives the amounts, dates or measurements
+        you enter. <a routerLink="/privacy">Read the privacy policy</a>.
       </p>
     </app-feature>
   </div>
 </section>
+
+<app-walkthrough />
+
+<app-engine-diagram />
 
 <section class="all" id="all" aria-labelledby="all-h">
   <div class="wrap">

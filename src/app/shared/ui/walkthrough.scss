@@ -1,0 +1,232 @@
+:host {
+  display: block;
+}
+
+.walk {
+  padding-block: calc(var(--section-gap) / 2) 0;
+}
+
+.walk__head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  margin-bottom: var(--s-8);
+}
+
+.h {
+  font-size: clamp(2rem, 1.4rem + 2.4vw, 3rem);
+  color: var(--display-green);
+}
+
+.walk__head p,
+.step__text p {
+  font-size: 1.1875rem;
+  line-height: 1.5;
+  max-width: 28em;
+}
+
+/* ---- Plain layout: each step beside (wide) or above (narrow) its own screen ----------- */
+.walk__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--s-9);
+}
+
+.step {
+  display: grid;
+  gap: var(--s-6);
+  align-items: center;
+}
+
+@media (min-width: 900px) {
+  .step {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--s-9);
+  }
+  .step:nth-child(even) .step__text {
+    order: 2;
+  }
+}
+
+.step__text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s-3);
+}
+
+.step__text h3 {
+  font-size: 1.5rem;
+  line-height: 1.25;
+}
+
+/* The number is real: these three happen in this order */
+.step__badge {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: var(--edge) solid var(--line);
+  border-bottom-width: var(--lip);
+  border-radius: var(--r-sm);
+  background: var(--card);
+  font: 600 1.25rem/1 var(--font-display);
+  color: var(--heading);
+}
+
+/* ---- The screens: a card each (see walk-screens for what is inside) --------------------- */
+.screen {
+  position: relative;
+  min-width: 0;
+}
+
+/* Stacked, Tally needs room above the last card to stand on */
+@media (max-width: 899px) {
+  .step:last-child .screen {
+    margin-top: var(--s-7);
+  }
+}
+
+@media (max-width: 599px) {
+  .step__text h3 {
+    font-size: 1.3125rem;
+  }
+}
+
+/* ---- Motion: only where it can be done properly ---------------------------------------------
+   Every part keeps its finished pose as its normal style and only plays toward it. */
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+}
+@keyframes screen-in {
+  from {
+    opacity: 0;
+    transform: translateY(32px) scale(0.97);
+  }
+}
+@keyframes screen-out {
+  to {
+    opacity: 0;
+    transform: translateY(-24px) scale(0.97);
+  }
+}
+@keyframes focus {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  35%,
+  65% {
+    opacity: 1;
+  }
+}
+@keyframes badge-on {
+  0%,
+  100% {
+    background: var(--card);
+    color: var(--heading);
+    border-color: var(--line);
+  }
+  35%,
+  65% {
+    background: var(--ecto);
+    color: var(--on-accent);
+    border-color: var(--ecto-lip);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Narrow screens: each screen simply rises into place as it arrives */
+  @supports (animation-timeline: view()) {
+    .screen {
+      animation: rise-in linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 45%;
+    }
+  }
+
+  /* Wide screens: the screens stay put while the steps scroll past. Each step owns a named
+     timeline (declared on its text, read by its screen, which is a sibling), so a screen fades
+     in as its step arrives and out as the next one takes over. */
+  @media (min-width: 900px) {
+    @supports (animation-timeline: view()) and (timeline-scope: --a) {
+      .walk__list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: var(--s-9);
+        row-gap: 0;
+        timeline-scope: --t1, --t2, --t3;
+      }
+      .step {
+        display: contents;
+      }
+      .step:nth-child(1) {
+        --tl: --t1;
+      }
+      .step:nth-child(2) {
+        --tl: --t2;
+      }
+      .step:nth-child(3) {
+        --tl: --t3;
+      }
+
+      .step__text {
+        grid-column: 1;
+        grid-row: var(--n);
+        order: 0;
+        justify-content: center;
+        min-height: 78svh;
+        animation: focus linear both;
+        animation-timeline: view();
+        animation-range: cover 5% cover 95%;
+      }
+      .step:nth-child(1) .step__text {
+        view-timeline: --t1 block;
+      }
+      .step:nth-child(2) .step__text {
+        view-timeline: --t2 block;
+      }
+      .step:nth-child(3) .step__text {
+        view-timeline: --t3 block;
+      }
+      .step__badge {
+        animation: badge-on linear both;
+        animation-timeline: var(--tl);
+        animation-range: cover 5% cover 95%;
+      }
+
+      .screen {
+        grid-column: 2;
+        grid-row: 1 / span 3;
+        align-self: start;
+        position: sticky;
+        top: max(calc(var(--nav-h) + var(--s-5)), calc(50svh - 14.5rem));
+        height: 29rem;
+        animation-fill-mode: both;
+        animation-timing-function: var(--ease-out);
+        animation-range: normal;
+      }
+      .step:nth-child(1) .screen {
+        animation-name: screen-out;
+        animation-timeline: --t1;
+        animation-range: exit 28% exit 70%;
+      }
+      .step:nth-child(2) .screen {
+        animation-name: screen-in, screen-out;
+        animation-timeline: --t2, --t2;
+        animation-range:
+          entry 8% entry 50%,
+          exit 28% exit 70%;
+      }
+      .step:nth-child(3) .screen {
+        animation-name: screen-in;
+        animation-timeline: --t3;
+        animation-range: entry 8% entry 50%;
+      }
+    }
+  }
+}

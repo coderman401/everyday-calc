@@ -1,0 +1,293 @@
+:host {
+  display: block;
+}
+
+.eng {
+  padding-block: calc(var(--section-gap) / 2) 0;
+}
+
+.eng__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  margin-bottom: var(--s-8);
+
+  p {
+    font-size: 1.1875rem;
+    line-height: 1.5;
+    max-width: 28em;
+  }
+}
+
+.h {
+  font-size: clamp(2rem, 1.4rem + 2.4vw, 3rem);
+  color: var(--display-green);
+}
+
+/* ---- The frame: everything inside runs in the browser ---------------------------------------- */
+.flow {
+  --g: var(--s-4);
+  --in: var(--s-4);
+  --wire: 2px;
+  position: relative;
+  margin: 0;
+  padding: var(--s-7) var(--s-3) var(--s-4);
+  border: var(--edge) solid var(--line);
+  border-radius: var(--r-lg);
+}
+
+.flow__cap {
+  position: absolute;
+  top: 0;
+  left: var(--s-5);
+  translate: 0 -50%;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding-inline: var(--s-3);
+  background: var(--bg);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--muted);
+
+  .mat-icon {
+    width: 18px;
+    height: 18px;
+    font-size: 18px;
+    color: var(--accent-text);
+  }
+}
+
+/* ---- Narrow: a column, the wires run down the left ------------------------------------------ */
+.map {
+  display: flex;
+  flex-direction: column;
+}
+
+.node {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1);
+  margin: 0;
+  padding: var(--s-4) var(--s-5);
+  border: var(--edge) solid var(--line);
+  border-bottom-width: var(--lip);
+  border-radius: var(--r-lg);
+  background: var(--card);
+
+  p {
+    margin: 0;
+  }
+}
+
+/* The engine is the selected thing: Eel Light with a green edge, like a chosen option */
+.node--engine {
+  border-color: var(--ecto);
+  border-bottom-color: var(--ecto-lip);
+  background: var(--selected-bg);
+
+  h3 {
+    color: var(--selected-text);
+  }
+}
+
+.fig {
+  font: 600 1.5rem/1.2 var(--font-display);
+  letter-spacing: -0.01em;
+  color: var(--heading);
+
+  small {
+    font: 500 0.875rem/1 var(--font-ui);
+    color: var(--muted);
+  }
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  margin-left: var(--in);
+}
+
+.link__line {
+  position: relative;
+  width: var(--wire);
+  height: var(--s-7);
+  background: var(--heading);
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -1px;
+    translate: -50% 0;
+    border: 6px solid transparent;
+    border-top: 8px solid var(--heading);
+    border-bottom: 0;
+  }
+}
+
+.outs {
+  list-style: none;
+  margin: 0 0 0 var(--in);
+  padding: var(--g) 0 0 var(--in);
+  display: flex;
+  flex-direction: column;
+  gap: var(--g);
+  border-left: var(--wire) solid var(--heading);
+}
+
+.out {
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: calc(-1 * var(--in) - var(--wire));
+    width: var(--in);
+    height: var(--wire);
+    background: var(--heading);
+  }
+}
+
+.out__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+}
+
+.formula {
+  padding: var(--s-2) var(--s-3);
+  border-radius: var(--r-sm);
+  background: var(--fill);
+  font-size: 0.875rem;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+/* ---- Wide: a row, left to right ------------------------------------------------------------- */
+@media (min-width: 900px) {
+  .flow {
+    padding: var(--s-8) var(--s-6) var(--s-6);
+  }
+
+  .map {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1.4fr);
+    align-items: stretch;
+  }
+
+  .node--in,
+  .node--engine {
+    align-self: center;
+  }
+
+  .link {
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--s-1);
+    width: 96px;
+    margin: 0;
+    padding-inline: var(--s-2);
+  }
+
+  .link__t {
+    max-width: 8ch;
+    text-align: center;
+    font-size: 0.75rem;
+  }
+
+  .link__line {
+    width: 100%;
+    height: var(--wire);
+
+    &::after {
+      left: auto;
+      right: -1px;
+      bottom: auto;
+      top: 50%;
+      translate: 0 -50%;
+      border: 6px solid transparent;
+      border-left: 8px solid var(--heading);
+      border-right: 0;
+    }
+  }
+
+  .outs {
+    display: grid;
+    grid-template-rows: repeat(3, minmax(0, 1fr));
+    margin: 0;
+    padding: 0;
+    border-left: 0;
+  }
+
+  .out {
+    justify-content: center;
+
+    &::before {
+      display: none;
+    }
+  }
+}
+
+/* ---- Motion: assembles in the order the data flows ------------------------------------------- */
+@keyframes stamp {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(12px);
+  }
+}
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+@keyframes draw {
+  from {
+    transform: scale(0);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .flow {
+      view-timeline: --eng block;
+    }
+    .node,
+    .link__line {
+      animation-timeline: --eng;
+      animation-fill-mode: backwards;
+      animation-timing-function: var(--ease-out);
+    }
+
+    .node--in {
+      animation-name: stamp;
+      animation-range: entry 0% entry 32%;
+    }
+    .link--a .link__line {
+      animation-name: draw;
+      transform-origin: 0 0;
+      animation-range: entry 22% entry 44%;
+    }
+    .node--engine {
+      animation-name: stamp;
+      animation-range: entry 34% entry 64%;
+    }
+    .out {
+      animation-name: rise-in;
+    }
+    .out:nth-child(1) {
+      animation-range: entry 66% entry 90%;
+    }
+    .out:nth-child(2) {
+      animation-range: entry 74% entry 96%;
+    }
+    .out:nth-child(3) {
+      animation-range: entry 82% entry 100%;
+    }
+  }
+}

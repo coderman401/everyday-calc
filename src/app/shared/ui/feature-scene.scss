@@ -122,15 +122,16 @@ svg {
   stroke-dasharray: 60;
 }
 
-/* The mascot stands beside the picture, in front of its corner */
+/* The mascot stands beside the picture, in front of its corner. It may overhang the picture by
+   at most the page gutter, so on a phone it never pushes the page wider than the screen. */
 .buddy {
   position: absolute;
-  right: -6%;
+  right: calc(-1 * min(6%, var(--gut)));
   bottom: -8%;
 }
 .buddy--left {
   right: auto;
-  left: -7%;
+  left: calc(-1 * min(7%, var(--gut)));
 }
 
 /* ---- Assembly on scroll ----------------------------------------------------------

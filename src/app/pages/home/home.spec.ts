@@ -5,7 +5,10 @@ import { Home } from './home';
 
 describe('Home', () => {
   async function render() {
-    await TestBed.configureTestingModule({ imports: [Home], providers: [provideRouter([])] }).compileComponents();
+    await TestBed.configureTestingModule({
+      imports: [Home],
+      providers: [provideRouter([])],
+    }).compileComponents();
     const fixture = TestBed.createComponent(Home);
     await fixture.whenStable();
     return fixture;
@@ -28,6 +31,20 @@ describe('Home', () => {
     // ₹50 lakh at 8.5% over 30 years is about ₹38,446 a month
     expect(el.querySelector('.sample .note')?.textContent).toContain('30 years');
     expect(el.querySelector('.sample .hero-fig')?.textContent).toContain('₹38,4');
+  });
+
+  it('walks through a loan and shows how the engine feeds every figure', async () => {
+    const el = (await render()).nativeElement as HTMLElement;
+    expect(el.querySelector('app-walkthrough h2')?.textContent).toContain(
+      'Everyday Calc, start to finish',
+    );
+    expect(el.querySelector('app-engine-diagram h2')?.textContent).toContain(
+      'One engine behind every number',
+    );
+    // both are worked from the calculator's own defaults, so they agree with the hero sample
+    expect(el.querySelector('app-walkthrough app-loan-screen .hero-fig')?.textContent).toContain(
+      '₹43,391',
+    );
   });
 
   it('gives every calculator a card with its own worked example', async () => {
