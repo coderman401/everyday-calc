@@ -64,7 +64,7 @@ svg {
   fill: var(--line);
 }
 .bar--v {
-  fill: var(--eel-light);
+  fill: var(--selected-bg);
 }
 .tick {
   fill: var(--ecto);
@@ -77,11 +77,11 @@ svg {
   stroke-linejoin: round;
 }
 .hi {
-  fill: var(--eel-light);
+  fill: var(--selected-bg);
 }
 .answer .t,
 .answer .td {
-  fill: var(--eel-blue);
+  fill: var(--selected-text);
 }
 .track {
   fill: var(--line);

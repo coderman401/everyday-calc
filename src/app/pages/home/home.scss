@@ -55,7 +55,7 @@
 }
 
 .hero {
-  min-height: calc(100svh - var(--nav-h));
+  min-height: min(calc(100svh - var(--nav-h)), 860px);
   display: flex;
   align-items: center;
   padding-block: var(--s-7) var(--s-8);
@@ -154,8 +154,8 @@
   gap: 6px;
   padding: 2px 10px;
   border-radius: var(--r-sm);
-  background: var(--eel-light);
-  color: var(--eel-blue);
+  background: var(--selected-bg);
+  color: var(--selected-text);
   font-size: 0.8125rem;
   font-weight: 800;
 
