@@ -229,6 +229,9 @@
         position: sticky;
         top: var(--stick);
         height: 27rem;
+        &.screen {
+          top: calc(var(--stick) + 20px);
+        }
       }
       .screen {
         animation-name: screen-in, screen-out;

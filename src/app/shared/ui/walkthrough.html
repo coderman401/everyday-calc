@@ -40,7 +40,7 @@
               {{ it.sum.result.label }} <b class="num">{{ it.sum.result.figure }}</b>
               {{ it.sum.result.note }}
             </p>
-            <a [routerLink]="it.path">Open the {{ it.sum.info.short }} calculator</a>
+            <a [routerLink]="it.path" mat-stroked-button >Open the {{ it.sum.info.short }} calculator</a>
           </div>
           <app-answer-card class="screen card" aria-hidden="true" [sum]="it.sum" />
         </li>

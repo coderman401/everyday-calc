@@ -28,7 +28,7 @@ export class Privacy {
 
   protected readonly updated = '9 November 2026';
   /** A stand-in address on .example: replace it with a real mailbox before launch. */
-  protected readonly contact = 'privacy@calculators.example';
+  protected readonly contact = 'coderman401.ai@gmail.com';
 
   protected readonly collected: DataRow[] = [
     { what: 'Pages you view', detail: 'The address and title of each page, and when you opened it.' },

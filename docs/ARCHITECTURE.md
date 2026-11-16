@@ -127,7 +127,7 @@ Dependencies point one way: `calculators` and `pages` use `shared` and `core`; `
 2. In `app.config.ts`: `provideAnalytics({ measurementId: 'G-…' })` (done: `G-5XX2M5182G`). A `GTM-…` Tag Manager ID does not work here: this app talks to GA4 directly.
 3. In GA4, register custom dimensions for event parameters you want in reports: `calculator`, `amount_band`, `rate`, `years`, `months`, `compounding`, `prepayment`, `extra_emi`, `step_up`, `units`, `standard`, `method`, `metric_name`, `metric_rating`. Custom metric for `metric_value`.
 4. Set data retention to 14 months (Admin → Data settings → Data retention); the privacy page says "up to 14 months".
-5. Replace the stand-in contact `privacy@calculators.example` in `pages/privacy/privacy.ts`.
+5. Replace the stand-in contact `coderman401.ai@gmail.com` in `pages/privacy/privacy.ts`.
 6. Have the privacy text reviewed against the laws that apply to your visitors (GDPR, India's DPDP Act). It is a sound draft, not legal advice.
 
 ## 7. What to revisit as it grows

@@ -79,25 +79,6 @@
         </table>
       </div>
     </section>
-
-    <section aria-labelledby="p-choices">
-      <h2 id="p-choices">Your choices</h2>
-      <p>
-        You decide on the banner, and Accept and Decline carry the same weight. The site works the same
-        either way. You can change your mind whenever you like:
-      </p>
-      <p>
-        <button type="button" class="linklike" (click)="consent.reopen()">Open cookie settings</button>
-        @if (consent.choice(); as c) {
-          <span class="muted"> Your current choice: {{ c === 'granted' ? 'analytics accepted' : 'analytics declined' }}.</span>
-        }
-      </p>
-      <p>
-        Declining, or withdrawing later, stops all reporting and removes the Google Analytics cookies from
-        this browser. You can also clear cookies in your browser’s settings.
-      </p>
-    </section>
-
     <section aria-labelledby="p-google">
       <h2 id="p-google">Google and where data goes</h2>
       <p>

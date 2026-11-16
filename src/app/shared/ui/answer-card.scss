@@ -9,6 +9,7 @@
   display: grid;
   grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
   gap: var(--s-6);
+  margin-bottom: var(--s-3);
 }
 
 .enter,
@@ -17,6 +18,9 @@
   flex-direction: column;
   gap: var(--s-2);
   min-width: 0;
+}
+p.label.bottom {
+  margin-bottom: var(--s-1);
 }
 
 /* The calculator's name, with its icon on a tile of its kind's colour */
