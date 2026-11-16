@@ -5,6 +5,7 @@ import { CATEGORIES, calculatorPath } from '../../core/registry/calculators';
 import { AnswerCard } from './answer-card';
 import { EVERYDAY } from './everyday';
 import { Mascot } from './mascot';
+import { MatButton } from '@angular/material/button';
 
 /**
  * "Everyday Calc, start to finish": five questions from an ordinary day, each taken from the
@@ -19,7 +20,7 @@ import { Mascot } from './mascot';
  */
 @Component({
   selector: 'app-walkthrough',
-  imports: [AnswerCard, MatIconModule, Mascot, RouterLink],
+  imports: [AnswerCard, MatIconModule, Mascot, RouterLink, MatButton],
   templateUrl: './walkthrough.html',
   styleUrl: './walkthrough.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -87,7 +87,7 @@ const FAQ: PageSeo = {
 };
 
 const PRIVACY: PageSeo = {
-  title: 'Privacy Policy: What Is Collected and Your Choices',
+  title: 'Privacy Policy: What Is Collected',
   description:
     'What Everyday Calculator collects if you accept analytics cookies, what is never sent, the cookies set, and how to change your choice at any time.',
   jsonLd: (site) => [
