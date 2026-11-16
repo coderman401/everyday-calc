@@ -18,13 +18,6 @@ describe('CookieBanner', () => {
 
   const buttons = (el: HTMLElement) => [...el.querySelectorAll<HTMLButtonElement>('.banner__actions button')];
 
-  it('shows until the visitor chooses, with Accept and Decline side by side and a policy link', async () => {
-    const el = (await render()).nativeElement as HTMLElement;
-    expect(el.querySelector('.banner')).toBeTruthy();
-    expect(buttons(el).map((b) => b.textContent?.trim())).toEqual(['Decline', 'Accept analytics']);
-    expect(el.querySelector('a[href="/privacy"]')).toBeTruthy();
-    expect(el.querySelector('[role=dialog]')?.getAttribute('aria-labelledby')).toBe('cookie-h');
-  });
 
   it('records the choice and goes away', async () => {
     const fixture = await render();

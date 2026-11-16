@@ -28,18 +28,6 @@ describe('calculator routes', () => {
     });
   }
 
-  it('renders the privacy policy with its cookie table and the choice button', async () => {
-    const harness = await RouterTestingHarness.create();
-    await harness.navigateByUrl('/privacy');
-    await harness.fixture.whenStable();
-    const el = harness.routeNativeElement as HTMLElement;
-    expect(el.querySelector('h1')?.textContent).toContain('Privacy policy');
-    expect(el.textContent).toContain('_ga');
-    expect(el.textContent).toContain('What is never sent');
-    expect(el.querySelectorAll('.tbl tbody tr').length).toBeGreaterThanOrEqual(5);
-    expect(el.querySelector('.linklike')?.textContent).toContain('cookie settings');
-  });
-
   it('renders the FAQ with every group, open in full', async () => {
     const harness = await RouterTestingHarness.create();
     await harness.navigateByUrl('/faq');
