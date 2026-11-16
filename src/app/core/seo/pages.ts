@@ -60,7 +60,13 @@ const HOME: PageSeo = {
     'Free calculators for loan EMI, SIP, fixed deposit, BMI, age, ovulation and pregnancy due date. Each shows the formula and works your own numbers through it.',
   jsonLd: (site) => [
     clean({ '@type': 'WebSite', name: site.name, url: abs(site, '/'), inLanguage: 'en-IN' }),
-    clean({ '@type': 'Organization', name: site.name, url: abs(site, '/'), logo: abs(site, '/logo.svg') }),
+    clean({
+      '@type': 'Organization',
+      name: site.name,
+      url: abs(site, '/'),
+      logo: abs(site, '/logo.svg'),
+      description: 'Free calculators for loans, savings and health that show the formula and working for each result.',
+    }),
     {
       '@type': 'ItemList',
       name: `${site.name} calculators`,

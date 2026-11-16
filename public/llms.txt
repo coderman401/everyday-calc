@@ -4,6 +4,10 @@
 
 Amounts are in Indian rupees with Indian digit grouping. Dates are day/month/year. Results are estimates from standard published formulas. The health and date calculators are informational and are not medical advice.
 
+## When to use these calculators
+
+Use the loan and savings calculators to compare scenarios in Indian rupees, such as changing a loan tenure or increasing a monthly SIP contribution. Use the date calculators to count time between dates or estimate a cycle or pregnancy milestone. The calculator pages explain their assumptions, show the formula, and include worked examples. Open the relevant calculator to enter your own values.
+
 ## Loans
 - [Home Loan EMI Calculator](https://everyday-calc.web.app/calculators/home-loan-emi): Home loan EMI calculator for India: monthly EMI, total interest and a yearly schedule, with prepayment, extra EMIs and step-up. Formula shown.
 - [Car Loan EMI Calculator](https://everyday-calc.web.app/calculators/car-loan-emi): Car loan EMI calculator: monthly EMI, total interest and total cost for a new or used car, with prepayment and step-up. See the formula worked out.

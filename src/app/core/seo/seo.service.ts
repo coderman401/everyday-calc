@@ -29,25 +29,30 @@ export class Seo {
   }
 
   apply(path: string): void {
-    const page = pageSeo(path);
-    const url = this.site.url ? this.site.url + (path === '/' ? '/' : path.replace(/\/+$/, '')) : '';
+    const canonicalPath = path.replace(/\/+$/, '') || '/';
+    const page = pageSeo(canonicalPath);
+    const url = this.site.url && !page.noindex ? this.site.url + canonicalPath : '';
 
     this.title.setTitle(page.title);
     this.set('name', 'description', page.description);
     this.set('name', 'robots', page.noindex ? 'noindex, follow' : 'index, follow');
 
-    this.set('property', 'og:type', path === '/' ? 'website' : 'article');
+    this.set('property', 'og:type', canonicalPath === '/' ? 'website' : 'article');
     this.set('property', 'og:site_name', this.site.name);
     this.set('property', 'og:locale', this.site.locale);
     this.set('property', 'og:title', page.title);
     this.set('property', 'og:description', page.description);
     this.set('property', 'og:url', url);
-    this.set('name', 'twitter:card', 'summary');
+    const image = url ? this.site.url + '/social-preview.png' : '';
+    this.set('property', 'og:image', image);
+    this.set('property', 'og:image:alt', image ? 'Everyday Calculator for loans, savings and health' : '');
+    this.set('name', 'twitter:card', image ? 'summary_large_image' : 'summary');
+    this.set('name', 'twitter:image', image);
     this.set('name', 'twitter:title', page.title);
     this.set('name', 'twitter:description', page.description);
 
     this.canonical(url);
-    this.jsonLd(page.noindex ? [] : page.jsonLd(this.site, path));
+    this.jsonLd(page.noindex ? [] : page.jsonLd(this.site, canonicalPath));
   }
 
   /** Sets a meta tag, or removes it when there is no value (no address yet means no og:url). */

@@ -80,7 +80,6 @@ Hosted on Firebase Hosting, project `everyday-calc`: https://everyday-calc.web.a
 
 ```bash
 npm run deploy             # build, then publish to everyday-calc
-npm run preview:hosting    # build, then publish to a temporary preview URL (7 days)
 ```
 
 Firebase is deployed by hand for now: you need the Firebase CLI signed in with access to the project (`firebase login`). There is no automatic Firebase workflow at the moment (the earlier one failed at the deploy step because the `FIREBASE_SERVICE_ACCOUNT_EVERYDAY_CALC` secret was not valid JSON; re-save the whole service-account key file as that secret before restoring it). GitHub Pages deploys automatically, below. Details in `docs/ARCHITECTURE.md`.
@@ -93,17 +92,14 @@ tests, builds with the right base path and deploys; it can also be run by hand f
 
 One-time set-up: repository **Settings > Pages > Build and deployment > Source: GitHub Actions**.
 
-The workflow takes the base path and public address from GitHub, so a custom domain later needs no
-change here. For that build only, it points `site.json` at the Pages address so canonical URLs, the
-sitemap and `robots.txt` agree (nothing is committed). Pages cannot set response headers, so the
-caching and security headers in `firebase.json` apply to Firebase only.
+The workflow uses the GitHub Pages base path for assets and navigation. Both hosts declare the Firebase
+URLs in `site.json` as canonical, and Firebase publishes the sitemap. The response headers in
+`firebase.json` apply to Firebase only.
 
 To try the Pages build locally:
 
 ```bash
-SITE_URL=https://coderman401.github.io/everyday-calc npm run seo
-npx ng build --base-href /everyday-calc/ && node scripts/post-build.mjs
-git checkout -- public src/app/core/seo/site.json   # undo the SEO files
+npm run build -- --base-href /everyday-calc/
 ```
 
 ## SEO

@@ -13,7 +13,6 @@ const url = raw || 'https://calculators.example';
 if (!raw) console.warn('No site address yet: set "url" in src/app/core/seo/site.json. These files use https://calculators.example until then.');
 
 const live = CALCULATORS.filter((c) => c.status === 'live');
-const today = new Date().toISOString().slice(0, 10);
 mkdirSync('public', { recursive: true });
 
 // --- robots.txt: everything is public, including the crawlers that feed AI search and assistants
@@ -28,7 +27,7 @@ const paths = ['/', ...live.map((c) => `/calculators/${c.slug}`), '/faq', '/priv
 writeFileSync(
   'public/sitemap.xml',
   `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${paths
-    .map((p) => `  <url><loc>${url}${p}</loc><lastmod>${today}</lastmod></url>`)
+    .map((p) => `  <url><loc>${url}${p}</loc></url>`)
     .join('\n')}\n</urlset>\n`,
 );
 
@@ -44,6 +43,10 @@ writeFileSync(
 > Free online calculators for loans (home, car and personal loan EMI), savings (SIP and fixed deposit) and health and dates (BMI, age, menstrual cycle and ovulation, pregnancy due date). Each page shows the formula it uses and works the visitor's own numbers through it step by step. Everything runs in the browser and nothing typed into a calculator is uploaded.
 
 Amounts are in Indian rupees with Indian digit grouping. Dates are day/month/year. Results are estimates from standard published formulas. The health and date calculators are informational and are not medical advice.
+
+## When to use these calculators
+
+Use the loan and savings calculators to compare scenarios in Indian rupees, such as changing a loan tenure or increasing a monthly SIP contribution. Use the date calculators to count time between dates or estimate a cycle or pregnancy milestone. The calculator pages explain their assumptions, show the formula, and include worked examples. Open the relevant calculator to enter your own values.
 
 ${sections.join('\n\n')}
 

@@ -41,22 +41,14 @@ jobs:
       # A failing test stops the deploy
       - run: npx ng test --watch=false
 
-      # The canonical and social URLs in every page, and robots.txt, sitemap.xml and llms.txt, all read
-      # the address in site.json. Point it at the Pages address for this build (nothing is committed).
-      - name: Use the Pages address as the site address
-        run: |
-          node -e "const fs=require('fs'),f='src/app/core/seo/site.json',j=JSON.parse(fs.readFileSync(f,'utf8'));j.url=process.env.SITE_URL.replace(/\/+\$/,'');fs.writeFileSync(f,JSON.stringify(j,null,2)+'\n')"
-          npm run seo
+      # Assets and routes resolve under the Pages base path. Canonicals come from site.json.
+      - name: Build mirror
         env:
-          SITE_URL: ${{ steps.pages.outputs.base_url }}
+          BASE_PATH: ${{ steps.pages.outputs.base_path }}
+        run: npm run build -- --base-href "${BASE_PATH}/"
 
-      # --base-href makes every asset and route resolve under /<repo>/
-      - name: Build
-        run: npx ng build --base-href "${{ steps.pages.outputs.base_path }}/"
-
-      # Unknown addresses get 404.html (a real 404 status on Pages), which boots the app's "not here" page
-      - name: Add the 404 page
-        run: node scripts/post-build.mjs
+      # Publish the sitemap on the canonical host.
+      - run: rm dist/calculators/browser/sitemap.xml
 
       # Pages runs Jekyll unless told not to; the app has no Jekyll content
       - run: touch dist/calculators/browser/.nojekyll

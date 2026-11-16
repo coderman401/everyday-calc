@@ -92,6 +92,22 @@ describe('Seo service', () => {
     expect(JSON.parse(document.head.querySelector('script#ld-json')!.textContent!)['@graph'][0]['@type']).toBe('WebPage');
   });
 
+  it('uses one URL for metadata and structured data and clears it on a missing page', () => {
+    setup(SITE.url);
+    const seo = TestBed.inject(Seo);
+    seo.apply('/calculators/sip/');
+    const canonical = SITE.url + '/calculators/sip';
+    expect(meta('meta[property="og:url"]')).toBe(canonical);
+    expect(meta('meta[property="og:image"]')).toBe(SITE.url + '/social-preview.png');
+    const graph = JSON.parse(document.head.querySelector('script#ld-json')!.textContent!)['@graph'];
+    expect(graph[0].url).toBe(canonical);
+
+    seo.apply('/missing');
+    expect(meta('meta[name=robots]')).toBe('noindex, follow');
+    expect(meta('meta[property="og:image"]')).toBeUndefined();
+    expect(document.head.querySelector('link[rel=canonical]')).toBeNull();
+  });
+
   it('writes no canonical or og:url without a site address, and marks unknown pages noindex', async () => {
     const router = setup('');
     await router.navigateByUrl('/calculators/sip');

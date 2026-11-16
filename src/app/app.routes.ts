@@ -53,5 +53,8 @@ export const routes: Routes = [
     path: 'calculators/:slug',
     loadComponent: () => import('./pages/coming-soon/coming-soon').then((m) => m.ComingSoon),
   },
-  { path: '**', redirectTo: '' },
+  {
+    path: '**',
+    loadComponent: () => import('./pages/coming-soon/coming-soon').then((m) => m.ComingSoon),
+  },
 ];
