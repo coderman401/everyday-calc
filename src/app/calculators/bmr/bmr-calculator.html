@@ -1,0 +1,74 @@
+<app-calc-shell
+  title="BMR Calculator"
+  lead="Basal metabolic rate: the calories your body burns at rest in a day, and the daily calories to keep your weight at each activity level. For adults."
+  barLabel="Your BMR"
+  [barText]="bmrText()"
+>
+  <form slot="inputs" class="card" aria-labelledby="inputs-h" (submit)="$event.preventDefault()">
+    <h2 id="inputs-h" class="inputs__h">Your details</h2>
+
+    <div class="fields">
+      <div class="toggle">
+        <span class="label" id="sex-label">Sex</span>
+        <mat-button-toggle-group
+          class="seg"
+          hideSingleSelectionIndicator
+          aria-labelledby="sex-label"
+          [value]="sex()"
+          (change)="setSex($event.value)"
+        >
+          <mat-button-toggle value="male">Male</mat-button-toggle>
+          <mat-button-toggle value="female">Female</mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+
+      <app-number-field label="Age" suffix="years" [(value)]="age" [min]="15" [max]="100" minLabel="15" maxLabel="100" />
+      <app-number-field
+        label="Height"
+        suffix="cm"
+        inputmode="decimal"
+        [decimals]="1"
+        [(value)]="cm"
+        [min]="100"
+        [max]="230"
+        minLabel="100 cm"
+        maxLabel="230 cm"
+      />
+      <app-number-field
+        label="Weight"
+        suffix="kg"
+        inputmode="decimal"
+        [decimals]="1"
+        [(value)]="kg"
+        [min]="20"
+        [max]="250"
+        [step]="0.5"
+        minLabel="20 kg"
+        maxLabel="250 kg"
+      />
+    </div>
+
+    <button mat-button type="button" class="reset" (click)="reset()">
+      <mat-icon fontIcon="restart_alt" />
+      Reset to defaults
+    </button>
+  </form>
+
+  <section slot="results" class="card res" aria-label="Results">
+    <p class="label" id="bmr-label">Your BMR</p>
+    <p class="hero-fig" aria-labelledby="bmr-label">{{ format(result().bmr) }} <span class="unit">kcal a day</span></p>
+
+    <h3 class="res__h">Calories to keep your weight</h3>
+    <div class="rows">
+      @for (a of result().maintenance; track a.id) {
+        <div class="row">
+          <p class="row__label">{{ a.label }}<span class="muted hint">{{ a.hint }}</span></p>
+          <p class="row__value num">{{ format(a.kcal) }} kcal</p>
+        </div>
+      }
+    </div>
+    <p class="note safe">An estimate for healthy adults, not medical advice. For a diet plan, talk to a doctor or dietitian.</p>
+  </section>
+
+  <app-explainer [content]="explainer()" />
+</app-calc-shell>

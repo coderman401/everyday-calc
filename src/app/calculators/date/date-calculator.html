@@ -1,0 +1,75 @@
+<app-calc-shell
+  title="Date Calculator"
+  lead="Count the days, weeks, months and years between two dates, or find the date that comes a set time after or before another."
+  barLabel="Date"
+  [barText]="heroText()"
+>
+  <form slot="inputs" class="card" aria-labelledby="inputs-h" (submit)="$event.preventDefault()">
+    <h2 id="inputs-h" class="inputs__h">Your dates</h2>
+
+    <div class="fields">
+      <div class="toggle">
+        <span class="label" id="mode-label">What do you want to find?</span>
+        <mat-button-toggle-group
+          class="seg"
+          hideSingleSelectionIndicator
+          aria-labelledby="mode-label"
+          [value]="mode()"
+          (change)="setMode($event.value)"
+        >
+          <mat-button-toggle value="between">Days between</mat-button-toggle>
+          <mat-button-toggle value="shift">Add or subtract</mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+
+      @if (mode() === 'between') {
+        <app-date-field label="From" [(value)]="from" [min]="minDate" [max]="maxDate" />
+        <app-date-field label="To" [(value)]="to" [min]="minDate" [max]="maxDate" />
+      } @else {
+        <app-date-field label="Start date" [(value)]="start" [min]="minDate" [max]="maxDate" />
+
+        <div class="toggle">
+          <span class="label" id="sign-label">Move the date</span>
+          <mat-button-toggle-group
+            class="seg"
+            hideSingleSelectionIndicator
+            aria-labelledby="sign-label"
+            [value]="sign()"
+            (change)="setSign($event.value)"
+          >
+            <mat-button-toggle [value]="1">Forward</mat-button-toggle>
+            <mat-button-toggle [value]="-1">Back</mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
+
+        <div class="trio">
+          <app-number-field label="Years" suffix="yr" [slider]="false" [(value)]="years" [min]="0" [max]="200" />
+          <app-number-field label="Months" suffix="mo" [slider]="false" [(value)]="months" [min]="0" [max]="2400" />
+          <app-number-field label="Days" suffix="d" [slider]="false" [(value)]="days" [min]="0" [max]="73000" />
+        </div>
+      }
+    </div>
+
+    <button mat-button type="button" class="reset" (click)="reset()">
+      <mat-icon fontIcon="restart_alt" />
+      Reset to today
+    </button>
+  </form>
+
+  <section slot="results" class="card res" aria-label="Results">
+    <p class="label" id="date-label">{{ mode() === 'shift' ? 'The date is' : 'Time between' }}</p>
+    <p class="hero-fig" aria-labelledby="date-label">{{ heroText() }}</p>
+    <p class="note">{{ noteText() }}</p>
+
+    <div class="rows">
+      @for (row of rows(); track row.label) {
+        <div class="row">
+          <p class="row__label">{{ row.label }}</p>
+          <p class="row__value num">{{ row.value }}</p>
+        </div>
+      }
+    </div>
+  </section>
+
+  <app-explainer [content]="explainer()" />
+</app-calc-shell>

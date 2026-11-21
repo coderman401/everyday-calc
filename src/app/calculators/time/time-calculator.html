@@ -1,0 +1,80 @@
+<app-calc-shell
+  title="Time Calculator"
+  lead="Find how long it is between two times, or the time that comes a set number of hours and minutes after or before another. Times use the 24-hour clock."
+  barLabel="Time"
+  [barText]="heroText()"
+>
+  <form slot="inputs" class="card" aria-labelledby="inputs-h" (submit)="$event.preventDefault()">
+    <h2 id="inputs-h" class="inputs__h">Your times</h2>
+
+    <div class="fields">
+      <div class="toggle">
+        <span class="label" id="mode-label">What do you want to find?</span>
+        <mat-button-toggle-group
+          class="seg"
+          hideSingleSelectionIndicator
+          aria-labelledby="mode-label"
+          [value]="mode()"
+          (change)="setMode($event.value)"
+        >
+          <mat-button-toggle value="between">Time between</mat-button-toggle>
+          <mat-button-toggle value="shift">Add or subtract</mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+
+      <div class="pair">
+        <app-number-field label="Start hour" suffix="h" [slider]="false" [(value)]="startH" [min]="0" [max]="23" />
+        <app-number-field label="Start minute" suffix="min" [slider]="false" [(value)]="startM" [min]="0" [max]="59" />
+      </div>
+
+      @if (mode() === 'between') {
+        <div class="pair">
+          <app-number-field label="End hour" suffix="h" [slider]="false" [(value)]="endH" [min]="0" [max]="23" />
+          <app-number-field label="End minute" suffix="min" [slider]="false" [(value)]="endM" [min]="0" [max]="59" />
+        </div>
+      } @else {
+        <div class="toggle">
+          <span class="label" id="sign-label">Move the time</span>
+          <mat-button-toggle-group
+            class="seg"
+            hideSingleSelectionIndicator
+            aria-labelledby="sign-label"
+            [value]="sign()"
+            (change)="setSign($event.value)"
+          >
+            <mat-button-toggle [value]="1">Forward</mat-button-toggle>
+            <mat-button-toggle [value]="-1">Back</mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
+        <div class="pair">
+          <app-number-field label="Hours" suffix="h" [slider]="false" [(value)]="spanH" [min]="0" [max]="999" />
+          <app-number-field label="Minutes" suffix="min" [slider]="false" [(value)]="spanM" [min]="0" [max]="59" />
+        </div>
+      }
+    </div>
+
+    <button mat-button type="button" class="reset" (click)="reset()">
+      <mat-icon fontIcon="restart_alt" />
+      Reset to defaults
+    </button>
+  </form>
+
+  <section slot="results" class="card res" aria-label="Results">
+    <p class="label" id="time-label">{{ mode() === 'shift' ? 'The time is' : 'Time between' }}</p>
+    <p class="hero-fig" aria-labelledby="time-label">{{ heroText() }}</p>
+    @if (noteText()) {
+      <p class="note">{{ noteText() }}</p>
+    }
+
+    <div class="rows">
+      @for (row of rows(); track row.label) {
+        <div class="row">
+          <p class="row__label">{{ row.label }}</p>
+          <p class="row__value num">{{ row.value }}</p>
+        </div>
+      }
+    </div>
+  </section>
+
+  <app-explainer [content]="explainer()" />
+</app-calc-shell>

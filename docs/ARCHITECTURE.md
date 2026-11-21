@@ -57,7 +57,7 @@ Calculation payloads (the only thing that leaves a calculator):
 | Fixed deposit | amount band, rate, months, compounding |
 | BMI | unit system, cut-off set (no height, weight or result) |
 | Pregnancy | method only (no dates) |
-| Age, menstrual cycle | nothing (the event only) |
+| Age, date, time, BMR, menstrual cycle | nothing (the event only) |
 
 The "all the calculation performed" request is met as *every calculation is counted*; exact inputs are deliberately not sent (see trade-offs).
 
@@ -78,7 +78,7 @@ src/app/
     charts/      donut-chart, scale, tile-visual
     ui/          breakup, count, fruit-icon, logo
   pages/         home, privacy, faq, coming-soon
-  calculators/   loan (home, car, personal), sip, fixed-deposit, bmi, age, menstrual-cycle, pregnancy
+  calculators/   loan (home, car, personal), sip, fixed-deposit, bmi, bmr, age, date, time, menstrual-cycle, pregnancy
                  date-calculators.routes.ts
 ```
 

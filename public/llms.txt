@@ -1,6 +1,6 @@
 # Everyday Calculator
 
-> Free online calculators for loans (home, car and personal loan EMI), savings (SIP and fixed deposit) and health and dates (BMI, age, menstrual cycle and ovulation, pregnancy due date). Each page shows the formula it uses and works the visitor's own numbers through it step by step. Everything runs in the browser and nothing typed into a calculator is uploaded.
+> Free online calculators for loans (home, car and personal loan EMI), savings (SIP and fixed deposit) and health and dates (BMI, BMR, age, date and time, menstrual cycle and ovulation, pregnancy due date). Each page shows the formula it uses and works the visitor's own numbers through it step by step. Everything runs in the browser and nothing typed into a calculator is uploaded.
 
 Amounts are in Indian rupees with Indian digit grouping. Dates are day/month/year. Results are estimates from standard published formulas. The health and date calculators are informational and are not medical advice.
 
@@ -22,6 +22,9 @@ Use the loan and savings calculators to compare scenarios in Indian rupees, such
 - [Age Calculator](https://everyday-calc.web.app/calculators/age): Age calculator: exact age in years, months and days from a date of birth, with total months, weeks, days and hours and the next birthday.
 - [Menstrual Cycle Calculator](https://everyday-calc.web.app/calculators/menstrual-cycle): Period and ovulation calculator: next period date, estimated ovulation and fertile window from your last period and cycle length, with each phase explained.
 - [Pregnancy Calculator](https://everyday-calc.web.app/calculators/pregnancy): Pregnancy due date calculator from your last period or conception date. See weeks pregnant, trimester dates and your baby's size week by week.
+- [Date Calculator](https://everyday-calc.web.app/calculators/date): Date calculator: count the days, weeks, months and years between two dates, or add and subtract years, months and days from a date. Formula shown.
+- [Time Calculator](https://everyday-calc.web.app/calculators/time): Time calculator: find the hours and minutes between two times, past midnight too, or add and subtract hours and minutes from a time. Formula shown.
+- [BMR Calculator](https://everyday-calc.web.app/calculators/bmr): BMR calculator using the Mifflin-St Jeor equation: calories your body burns at rest, and the daily calories to keep your weight at each activity level.
 
 ## Help and policies
 - [Frequently asked questions](https://everyday-calc.web.app/faq): how accurate the results are, how an EMI is worked out, how BMI, due date and cycle estimates work, and what happens to data.

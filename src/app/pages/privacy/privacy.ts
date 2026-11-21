@@ -35,7 +35,7 @@ export class Privacy {
     {
       what: 'Calculations you perform',
       detail:
-        'That a calculator was used, and for loans and savings its settings in broad ranges (for example "10-25 lakh", the rate, the term). For BMI only the unit and cut-off set. For age, menstrual cycle and pregnancy, nothing you entered.',
+        'That a calculator was used, and for loans and savings its settings in broad ranges (for example "10-25 lakh", the rate, the term). For BMI only the unit and cut-off set. For BMR, age, date, time, menstrual cycle and pregnancy, nothing you entered.',
     },
     {
       what: 'Browser and device',
