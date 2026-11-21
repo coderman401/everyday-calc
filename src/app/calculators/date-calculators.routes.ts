@@ -21,3 +21,7 @@ export const CYCLE_ROUTES = datePage(() =>
 export const PREGNANCY_ROUTES = datePage(() =>
   import('./pregnancy/pregnancy-calculator').then((m) => m.PregnancyCalculator),
 );
+
+export const DATE_ROUTES = datePage(() =>
+  import('./date/date-calculator').then((m) => m.DateCalculator),
+);

@@ -1,0 +1,13 @@
+:host {
+  display: block;
+}
+
+.res .rows {
+  margin-top: var(--s-4);
+}
+
+.trio {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--s-3);
+}

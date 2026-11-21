@@ -1,4 +1,7 @@
 import { calculateAge } from '../../calculators/age/age.engine';
+import { calculateBmr } from '../../calculators/bmr/bmr.engine';
+import { dateBetween } from '../../calculators/date/date.engine';
+import { formatSpan, timeBetween, toMinutes } from '../../calculators/time/time.engine';
 import {
   CATEGORIES as BMI_CATEGORIES,
   SCALE_MAX,
@@ -11,7 +14,7 @@ import { calculateLoan } from '../../calculators/loan/loan.engine';
 import { PREGNANCY_DAYS } from '../../calculators/pregnancy/pregnancy.engine';
 import { calculateSip } from '../../calculators/sip/sip.engine';
 import { startOfDay } from '../../core/dates/dates';
-import { formatInr } from '../../core/formatting/format';
+import { formatInr, formatPlain } from '../../core/formatting/format';
 import type { TileVisualSpec } from '../charts/tile-visual';
 
 /** Worked examples, one per calculator, shared by the home page's cards, walkthrough and diagram. */
@@ -54,6 +57,9 @@ export function examples(): Record<string, Example> {
   const fd = calculateFd({ principal: 500_000, annualRate: 7, months: 60, compounding: 4 });
   const bmi = calculateBmi(65, 170, 'who');
   const age = calculateAge(new Date(1995, 2, 14), startOfDay(new Date()))!;
+  const gap = dateBetween(new Date(2026, 0, 1), new Date(2026, 3, 11));
+  const minutes = timeBetween(toMinutes(9, 30), toMinutes(17, 45));
+  const bmr = calculateBmr('male', 30, 175, 70);
   const phases = phasesOf(28, 5);
   const fertile = phases.find((p) => p.id === 'fertile')!;
   return {
@@ -94,6 +100,39 @@ export function examples(): Record<string, Example> {
           { value: Math.max(1, age.sinceLast), color: 'var(--c-principal)' },
           { value: Math.max(1, age.yearLength - age.sinceLast), color: 'var(--line)' },
         ],
+      },
+    },
+    date: {
+      figure: `${gap.totalDays} days`,
+      caption: '1 Jan to 11 Apr 2026',
+      visual: {
+        type: 'bar',
+        parts: [
+          { value: gap.totalDays, color: 'var(--c-principal)' },
+          { value: 365 - gap.totalDays, color: 'var(--line)' },
+        ],
+      },
+    },
+    time: {
+      figure: formatSpan(minutes),
+      caption: '9:30 am to 5:45 pm',
+      visual: {
+        type: 'bar',
+        parts: [
+          { value: minutes, color: 'var(--c-principal)' },
+          { value: 1440 - minutes, color: 'var(--line)' },
+        ],
+      },
+    },
+    bmr: {
+      figure: `${formatPlain(bmr.bmr)} kcal`,
+      caption: 'At rest: a 30-year-old man, 175 cm, 70 kg',
+      visual: {
+        type: 'bar',
+        parts: bmr.maintenance.map((a, i) => ({
+          value: a.kcal,
+          color: `color-mix(in srgb, var(--accent) ${35 + i * 16}%, var(--card))`,
+        })),
       },
     },
     'menstrual-cycle': {

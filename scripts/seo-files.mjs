@@ -40,7 +40,7 @@ writeFileSync(
   'public/llms.txt',
   `# ${site.name}
 
-> Free online calculators for loans (home, car and personal loan EMI), savings (SIP and fixed deposit) and health and dates (BMI, age, menstrual cycle and ovulation, pregnancy due date). Each page shows the formula it uses and works the visitor's own numbers through it step by step. Everything runs in the browser and nothing typed into a calculator is uploaded.
+> Free online calculators for loans (home, car and personal loan EMI), savings (SIP and fixed deposit) and health and dates (BMI, BMR, age, date and time, menstrual cycle and ovulation, pregnancy due date). Each page shows the formula it uses and works the visitor's own numbers through it step by step. Everything runs in the browser and nothing typed into a calculator is uploaded.
 
 Amounts are in Indian rupees with Indian digit grouping. Dates are day/month/year. Results are estimates from standard published formulas. The health and date calculators are informational and are not medical advice.
 

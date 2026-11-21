@@ -57,7 +57,7 @@ function calculatorPage(c: CalculatorInfo): PageSeo {
 const HOME: PageSeo = {
   title: 'Everyday Calculator: EMI, SIP, FD, BMI, Age, Due Date',
   description:
-    'Free calculators for loan EMI, SIP, fixed deposit, BMI, age, ovulation and pregnancy due date. Each shows the formula and works your own numbers through it.',
+    'Free calculators for loan EMI, SIP, fixed deposit, BMI, BMR, age, dates, time and pregnancy. Each shows the formula and works your own numbers through it.',
   jsonLd: (site) => [
     clean({ '@type': 'WebSite', name: site.name, url: abs(site, '/'), inLanguage: 'en-IN' }),
     clean({

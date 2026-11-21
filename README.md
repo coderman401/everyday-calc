@@ -67,7 +67,7 @@ src/app/
   core/       analytics/ (consent, GA4, web vitals), formatting/, dates/, theme/, registry/
   shared/     layout/ (calc-shell, doc-page, explainer, data-table, cookie-banner), forms/, charts/, ui/
   pages/      home, privacy, faq, coming-soon
-  calculators/ loan (home, car, personal), sip, fixed-deposit, bmi, age, menstrual-cycle, pregnancy
+  calculators/ loan (home, car, personal), sip, fixed-deposit, bmi, bmr, age, date, time, menstrual-cycle, pregnancy
 docs/ARCHITECTURE.md   analytics design, what is collected, trade-offs, set-up checklist
 ```
 

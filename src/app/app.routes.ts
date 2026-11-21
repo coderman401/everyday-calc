@@ -38,6 +38,15 @@ export const routes: Routes = [
     path: 'calculators/bmi',
     loadComponent: () => import('./calculators/bmi/bmi-calculator').then((m) => m.BmiCalculator),
   },
+  {
+    path: 'calculators/bmr',
+    loadComponent: () => import('./calculators/bmr/bmr-calculator').then((m) => m.BmrCalculator),
+  },
+  {
+    path: 'calculators/time',
+    loadComponent: () => import('./calculators/time/time-calculator').then((m) => m.TimeCalculator),
+  },
+  { path: 'calculators/date', loadChildren: () => import('./calculators/date-calculators.routes').then((m) => m.DATE_ROUTES) },
   { path: 'calculators/age', loadChildren: () => import('./calculators/date-calculators.routes').then((m) => m.AGE_ROUTES) },
   { path: 'calculators/menstrual-cycle', loadChildren: () => import('./calculators/date-calculators.routes').then((m) => m.CYCLE_ROUTES) },
   { path: 'calculators/pregnancy', loadChildren: () => import('./calculators/date-calculators.routes').then((m) => m.PREGNANCY_ROUTES) },
