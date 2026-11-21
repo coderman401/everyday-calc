@@ -109,7 +109,7 @@ Dependencies point one way: `calculators` and `pages` use `shared` and `core`; `
    prebuild   scripts/seo-files.mjs   robots.txt, sitemap.xml, llms.txt  (address from core/seo/site.json)
    ng build   prerender 12 pages to static HTML   ->  dist/calculators/browser
    postbuild  scripts/post-build.mjs  index.csr.html -> 404.html
- npm run deploy  ->  firebase deploy --only hosting  ->  https://everyday-calc.web.app
+ npm run deploy  ->  firebase deploy --only hosting  ->  https://calculator.kishanpanchal.in/
 ```
 
 - **Firebase Hosting** (project `everyday-calc`, `.firebaserc`; rules in `firebase.json`): static files on a CDN with HTTPS, no server to run.

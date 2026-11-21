@@ -1,6 +1,6 @@
 # Search visibility
 
-Firebase Hosting serves the canonical site at https://everyday-calc.web.app. The GitHub Pages
+Firebase Hosting serves the canonical site at https://calculator.kishanpanchal.in/. The GitHub Pages
 mirror declares the corresponding Firebase URL as canonical on each page. Change the public
 address in `src/app/core/seo/site.json` if you move the primary site.
 
@@ -18,7 +18,7 @@ links to their canonical pages.
 ## Submit and check the sitemap
 
 - In [Google Search Console](https://search.google.com/search-console), open the
-  `https://everyday-calc.web.app/` URL-prefix property. The homepage contains the Google
+  `https://calculator.kishanpanchal.in//` URL-prefix property. The homepage contains the Google
   verification tag. Submit `sitemap.xml` in **Sitemaps**, then inspect the homepage and important
   calculator URLs in **URL Inspection** to see index status or request indexing.
 - In [Bing Webmaster Tools](https://www.bing.com/webmasters/), verify the Firebase site and

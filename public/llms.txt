@@ -9,23 +9,23 @@ Amounts are in Indian rupees with Indian digit grouping. Dates are day/month/yea
 Use the loan and savings calculators to compare scenarios in Indian rupees, such as changing a loan tenure or increasing a monthly SIP contribution. Use the date calculators to count time between dates or estimate a cycle or pregnancy milestone. The calculator pages explain their assumptions, show the formula, and include worked examples. Open the relevant calculator to enter your own values.
 
 ## Loans
-- [Home Loan EMI Calculator](https://everyday-calc.web.app/calculators/home-loan-emi): Home loan EMI calculator for India: monthly EMI, total interest and a yearly schedule, with prepayment, extra EMIs and step-up. Formula shown.
-- [Car Loan EMI Calculator](https://everyday-calc.web.app/calculators/car-loan-emi): Car loan EMI calculator: monthly EMI, total interest and total cost for a new or used car, with prepayment and step-up. See the formula worked out.
-- [Personal Loan EMI Calculator](https://everyday-calc.web.app/calculators/personal-loan-emi): Personal loan EMI calculator: monthly EMI and the interest an unsecured loan costs, with a prepayment option to test paying early. Formula shown.
+- [Home Loan EMI Calculator](https://calculator.kishanpanchal.in/calculators/home-loan-emi): Home loan EMI calculator for India: monthly EMI, total interest and a yearly schedule, with prepayment, extra EMIs and step-up. Formula shown.
+- [Car Loan EMI Calculator](https://calculator.kishanpanchal.in/calculators/car-loan-emi): Car loan EMI calculator: monthly EMI, total interest and total cost for a new or used car, with prepayment and step-up. See the formula worked out.
+- [Personal Loan EMI Calculator](https://calculator.kishanpanchal.in/calculators/personal-loan-emi): Personal loan EMI calculator: monthly EMI and the interest an unsecured loan costs, with a prepayment option to test paying early. Formula shown.
 
 ## Savings and investing
-- [SIP Calculator](https://everyday-calc.web.app/calculators/sip): SIP calculator: what a monthly mutual fund investment could be worth, your money against returns, with a yearly step-up and year-by-year table.
-- [Fixed Deposit Calculator](https://everyday-calc.web.app/calculators/fixed-deposit): Fixed deposit calculator: maturity amount and interest for monthly, quarterly, half-yearly or yearly compounding, with the effective yield compared.
+- [SIP Calculator](https://calculator.kishanpanchal.in/calculators/sip): SIP calculator: what a monthly mutual fund investment could be worth, your money against returns, with a yearly step-up and year-by-year table.
+- [Fixed Deposit Calculator](https://calculator.kishanpanchal.in/calculators/fixed-deposit): Fixed deposit calculator: maturity amount and interest for monthly, quarterly, half-yearly or yearly compounding, with the effective yield compared.
 
 ## Health and dates
-- [BMI Calculator](https://everyday-calc.web.app/calculators/bmi): BMI calculator for adults in metric or imperial units. See your category, a healthy weight range for your height, and WHO or Asia-Pacific cut-offs.
-- [Age Calculator](https://everyday-calc.web.app/calculators/age): Age calculator: exact age in years, months and days from a date of birth, with total months, weeks, days and hours and the next birthday.
-- [Menstrual Cycle Calculator](https://everyday-calc.web.app/calculators/menstrual-cycle): Period and ovulation calculator: next period date, estimated ovulation and fertile window from your last period and cycle length, with each phase explained.
-- [Pregnancy Calculator](https://everyday-calc.web.app/calculators/pregnancy): Pregnancy due date calculator from your last period or conception date. See weeks pregnant, trimester dates and your baby's size week by week.
-- [Date Calculator](https://everyday-calc.web.app/calculators/date): Date calculator: count the days, weeks, months and years between two dates, or add and subtract years, months and days from a date. Formula shown.
-- [Time Calculator](https://everyday-calc.web.app/calculators/time): Time calculator: find the hours and minutes between two times, past midnight too, or add and subtract hours and minutes from a time. Formula shown.
-- [BMR Calculator](https://everyday-calc.web.app/calculators/bmr): BMR calculator using the Mifflin-St Jeor equation: calories your body burns at rest, and the daily calories to keep your weight at each activity level.
+- [BMI Calculator](https://calculator.kishanpanchal.in/calculators/bmi): BMI calculator for adults in metric or imperial units. See your category, a healthy weight range for your height, and WHO or Asia-Pacific cut-offs.
+- [Age Calculator](https://calculator.kishanpanchal.in/calculators/age): Age calculator: exact age in years, months and days from a date of birth, with total months, weeks, days and hours and the next birthday.
+- [Menstrual Cycle Calculator](https://calculator.kishanpanchal.in/calculators/menstrual-cycle): Period and ovulation calculator: next period date, estimated ovulation and fertile window from your last period and cycle length, with each phase explained.
+- [Pregnancy Calculator](https://calculator.kishanpanchal.in/calculators/pregnancy): Pregnancy due date calculator from your last period or conception date. See weeks pregnant, trimester dates and your baby's size week by week.
+- [Date Calculator](https://calculator.kishanpanchal.in/calculators/date): Date calculator: count the days, weeks, months and years between two dates, or add and subtract years, months and days from a date. Formula shown.
+- [Time Calculator](https://calculator.kishanpanchal.in/calculators/time): Time calculator: find the hours and minutes between two times, past midnight too, or add and subtract hours and minutes from a time. Formula shown.
+- [BMR Calculator](https://calculator.kishanpanchal.in/calculators/bmr): BMR calculator using the Mifflin-St Jeor equation: calories your body burns at rest, and the daily calories to keep your weight at each activity level.
 
 ## Help and policies
-- [Frequently asked questions](https://everyday-calc.web.app/faq): how accurate the results are, how an EMI is worked out, how BMI, due date and cycle estimates work, and what happens to data.
-- [Privacy policy](https://everyday-calc.web.app/privacy): what is collected if analytics cookies are accepted, what is never sent, and the cookies set.
+- [Frequently asked questions](https://calculator.kishanpanchal.in/faq): how accurate the results are, how an EMI is worked out, how BMI, due date and cycle estimates work, and what happens to data.
+- [Privacy policy](https://calculator.kishanpanchal.in/privacy): what is collected if analytics cookies are accepted, what is never sent, and the cookies set.

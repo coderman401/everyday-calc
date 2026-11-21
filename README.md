@@ -76,7 +76,7 @@ the UI. Each explainer is a function of the live inputs, so the worked example a
 
 ## Deploy
 
-Hosted on Firebase Hosting, project `everyday-calc`: https://everyday-calc.web.app
+Hosted on Firebase Hosting, project `everyday-calc`: https://calculator.kishanpanchal.in/
 
 ```bash
 npm run deploy             # build, then publish to everyday-calc

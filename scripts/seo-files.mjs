@@ -3,14 +3,14 @@
 //   set "url" in src/app/core/seo/site.json, or SITE_URL=https://your-domain npm run build
 import { writeFileSync, mkdirSync } from 'node:fs';
 import { readFileSync } from 'node:fs';
-import { CALCULATORS, CATEGORIES } from '../src/app/core/registry/calculators.ts';
+import { CALCULATORS, CATEGORIES } from '../src/app/core/registry/calculators.js';
 
 // The address comes from src/app/core/seo/site.json (one place for the app and these files);
 // SITE_URL overrides it for a one-off build.
 const site = JSON.parse(readFileSync(new URL('../src/app/core/seo/site.json', import.meta.url), 'utf8'));
 const raw = (process.env.SITE_URL || site.url || '').trim().replace(/\/+$/, '');
-const url = raw || 'https://calculators.example';
-if (!raw) console.warn('No site address yet: set "url" in src/app/core/seo/site.json. These files use https://calculators.example until then.');
+const url = raw || 'https://calculator.kishanpanchal.in/';
+if (!raw) console.warn('No site address yet: set "url" in src/app/core/seo/site.json. These files use https://calculator.kishanpanchal.in// until then.');
 
 const live = CALCULATORS.filter((c) => c.status === 'live');
 mkdirSync('public', { recursive: true });

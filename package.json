@@ -4,10 +4,10 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "npm run prebuild && ng build && npm run postbuild",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "seo": "node --no-warnings scripts/seo-files.mjs",
+    "seo": "tsc src/app/core/registry/calculators.ts --ignoreConfig && node --no-warnings scripts/seo-files.mjs",
     "prebuild": "npm run seo",
     "postbuild": "node scripts/post-build.mjs",
     "deploy": "npm run build && npx --yes firebase-tools deploy --only hosting"
